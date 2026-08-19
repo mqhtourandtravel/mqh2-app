@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Maskapai {
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nama          String
+  logoUrl       String?         @map("logo_url")
+  keberangkatan Keberangkatan[]
+
+  @@map("maskapai")
+}
+
+model Hotel {
+  id                   String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nama                 String
+  kota                 String
+  googleMapsUrl        String?         @map("google_maps_url")
+  keberangkatanMadinah Keberangkatan[] @relation("HotelMadinah")
+  keberangkatanMekkah  Keberangkatan[] @relation("HotelMekkah")
+
+  @@map("hotel")
+}
+
+model Paket {
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug          String          @unique
+  namaPaket     String          @map("nama_paket")
+  kategori      String
+  tier          String?
+  deskripsi     String?
+  gambarUrl     String?         @map("gambar_url")
+  status        String          @default("aktif")
+  urutan        Int?            @default(0)
+  createdAt     DateTime?       @default(now()) @map("created_at") @db.Timestamptz(6)
+  keberangkatan Keberangkatan[]
+
+  @@index([kategori], map: "idx_paket_kategori")
+  @@index([tier], map: "idx_paket_tier")
+  @@map("paket")
+}
+
+model Keberangkatan {
+  id                  String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  paketId             String    @map("paket_id") @db.Uuid
+  tanggalBerangkat    DateTime  @map("tanggal_berangkat") @db.Date
+  durasiHari          Int?      @map("durasi_hari")
+  lokasiKeberangkatan String?   @map("lokasi_keberangkatan")
+  maskapaiId          String?   @map("maskapai_id") @db.Uuid
+  hotelMekkahId       String?   @map("hotel_mekkah_id") @db.Uuid
+  hotelMadinahId      String?   @map("hotel_madinah_id") @db.Uuid
+  hargaNormal         Decimal   @map("harga_normal") @db.Decimal
+  hargaPromo          Decimal?  @map("harga_promo") @db.Decimal
+  kuotaTotal          Int       @default(0) @map("kuota_total")
+  kuotaTersisa        Int       @default(0) @map("kuota_tersisa")
+  status              String    @default("tersedia")
+  createdAt           DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime? @default(now()) @map("updated_at") @db.Timestamptz(6)
+  hotelMadinah        Hotel?    @relation("HotelMadinah", fields: [hotelMadinahId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  hotelMekkah         Hotel?    @relation("HotelMekkah", fields: [hotelMekkahId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  maskapai            Maskapai? @relation(fields: [maskapaiId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  paket               Paket     @relation(fields: [paketId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([paketId], map: "idx_keberangkatan_paket")
+  @@index([status], map: "idx_keberangkatan_status")
+  @@index([tanggalBerangkat], map: "idx_keberangkatan_tanggal")
+  @@map("keberangkatan")
+}
+
+model Cabang {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nama          String
+  tipe          String    @default("representatif")
+  kota          String
+  alamat        String?
+  telepon       String?
+  whatsapp      String?
+  jamLayanan    String?   @map("jam_layanan")
+  email         String?
+  googleMapsUrl String?   @map("google_maps_url")
+  urutan        Int?      @default(0)
+  status        String    @default("aktif")
+  createdAt     DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([tipe], map: "idx_cabang_tipe")
+  @@map("cabang")
+}
+
+model Artikel {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug            String    @unique
+  judul           String
+  ringkasan       String?
+  konten          String
+  kategori        String?
+  gambarUrl       String?   @map("gambar_url")
+  status          String    @default("draft")
+  diterbitkanPada DateTime? @default(now()) @map("diterbitkan_pada") @db.Timestamptz(6)
+  createdAt       DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([slug], map: "idx_artikel_slug")
+  @@index([status], map: "idx_artikel_status")
+  @@map("artikel")
+}
+
+model TentangKami {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  cerita      String?
+  angka1Label String?   @map("angka_1_label")
+  angka1Nilai String?   @map("angka_1_nilai")
+  angka2Label String?   @map("angka_2_label")
+  angka2Nilai String?   @map("angka_2_nilai")
+  angka3Label String?   @map("angka_3_label")
+  angka3Nilai String?   @map("angka_3_nilai")
+  angka4Label String?   @map("angka_4_label")
+  angka4Nilai String?   @map("angka_4_nilai")
+  updatedAt   DateTime? @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  @@map("tentang_kami")
+}

@@ -1,0 +1,55 @@
+import type { Metadata } from 'next'
+import { Playfair_Display, Inter } from 'next/font/google'
+import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESC, HERO_IMG } from '@/lib/config'
+import './globals.css'
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  variable: '--font-playfair',
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-inter',
+})
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  // Catatan: tidak pakai title.template karena setiap page.tsx sudah
+  // menambahkan "| ${SITE_NAME}" sendiri di title-nya masing-masing.
+  title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+  description: SITE_DESC,
+  openGraph: {
+    type: 'website',
+    locale: 'id_ID',
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    description: SITE_DESC,
+    url: SITE_URL,
+    images: [{ url: HERO_IMG, width: 1200, height: 630, alt: SITE_NAME }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    description: SITE_DESC,
+    images: [HERO_IMG],
+  },
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="id">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          rel="stylesheet"
+        />
+      </head>
+      <body className={`${playfair.variable} ${inter.variable} font-sans bg-background text-foreground antialiased`}>
+        {children}
+      </body>
+    </html>
+  )
+}
