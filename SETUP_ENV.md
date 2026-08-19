@@ -6,13 +6,14 @@ Di root project (sejajar dengan package.json), buat:
 2. `.env` -- isi CUMA `DATABASE_URL` dan `DIRECT_URL` (dipakai Prisma CLI)
 
 Copy dari `.env.example` sebagai starting point untuk `.env.local`.
+File `.env.example` hanya berisi placeholder, bukan kredensial aktif.
 
 ## Langkah 2 -- Ambil kredensial Supabase Auth
 1. Buka https://supabase.com/dashboard
 2. Pilih project `mqhtourandtravel`
 3. Klik ikon gear (Settings) di sidebar kiri bawah > **API Keys**
 4. Copy **Project URL** -> jadi `NEXT_PUBLIC_SUPABASE_URL`
-5. Copy **Publishable key** (yang diawali `sb_publishable_...`) -> jadi
+5. Copy key publishable/anon dari dashboard -> jadi
    `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 ## Langkah 3 -- Ambil connection string Prisma
@@ -36,10 +37,23 @@ DATABASE_URL="postgresql://...(sama seperti di .env.local)"
 DIRECT_URL="postgresql://...(sama seperti di .env.local)"
 ```
 
+Variabel frontend opsional:
+
+```env
+NEXT_PUBLIC_NOMOR_WA=6285868969000
+NEXT_PUBLIC_SITE_URL=https://mqhtour.com
+NEXT_PUBLIC_HERO_IMG=https://...
+INSTAGRAM_ACCESS_TOKEN=
+INSTAGRAM_USER_ID=
+```
+
+`INSTAGRAM_ACCESS_TOKEN` dan `INSTAGRAM_USER_ID` tidak boleh memakai
+prefix `NEXT_PUBLIC_`; token harus tetap server-side.
+
 ## Langkah 5 -- Test koneksi Prisma
 ```
-npx prisma generate
 npx prisma db pull
+npx prisma generate
 ```
 Kalau berhasil tanpa error, koneksi sudah benar. `db pull` akan
 membandingkan schema.prisma dengan database asli -- kalau ada
@@ -50,6 +64,12 @@ bukan file schema.prisma).
 ```
 npm install
 npm run dev
+```
+
+Untuk cek production build:
+
+```bash
+npm run build
 ```
 
 ## Instagram (opsional, boleh dilewati dulu)

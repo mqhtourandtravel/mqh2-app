@@ -124,3 +124,18 @@ model TentangKami {
 
   @@map("tentang_kami")
 }
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Testimoni {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  isi        String
+  namaSumber String    @map("nama_sumber")
+  urutan     Int?      @default(0)
+  status     String    @default("aktif")
+  createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([status], map: "idx_testimoni_status")
+  @@index([urutan], map: "idx_testimoni_urutan")
+  @@map("testimoni")
+}

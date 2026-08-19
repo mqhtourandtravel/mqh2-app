@@ -1,6 +1,6 @@
 # MQH Tour & Travel (Web & Admin Portal)
 
-Aplikasi web modern untuk travel Umroh & Haji dengan desain *Majestic Voyage* berbasis **Next.js 15 (App Router)**, **TypeScript**, **Tailwind CSS v4**, dan **Supabase**.
+Aplikasi web modern untuk travel Umroh & Haji dengan desain *Majestic Voyage* berbasis **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS v4**, **Supabase Auth**, dan **Prisma**.
 
 ---
 
@@ -34,8 +34,8 @@ npm install
 pnpm install
 ```
 
-### 3. Setup Environment (.env.local)
-Salin `.env.example` menjadi `.env.local`:
+### 3. Setup Environment
+Salin `.env.example` menjadi `.env.local`, lalu isi nilainya:
 ```bash
 cp .env.example .env.local
 ```
@@ -45,11 +45,15 @@ NEXT_PUBLIC_SUPABASE_URL=https://xxxxxxxxxxxx.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOi...
 ```
 
+Prisma CLI membutuhkan file `.env` terpisah. Isi hanya `DATABASE_URL` dan
+`DIRECT_URL`. Detail lengkap ada di `SETUP_ENV.md`.
+
 ### 4. Setup Database Supabase
 1. Buka Dashboard Supabase project Anda.
 2. Masuk ke menu **SQL Editor**.
-3. Buka file `supabase/schema.sql` di repository ini, copy seluruh kodenya dan jalankan di SQL Editor.
-4. Buat akun Admin di menu **Authentication > Users** (Add User).
+3. Verifikasi schema yang sudah aktif dengan `npx prisma db pull`.
+4. Jalankan `npx prisma generate`.
+5. Buat akun Admin di menu **Authentication > Users** (Add User).
 
 ### 5. Jalankan Server Development
 ```bash
@@ -73,7 +77,10 @@ Buka browser di `http://localhost:3000`.
 │   └── page.tsx          # Homepage
 ├── components/           # Reusable UI Components
 ├── lib/
-│   └── supabase.ts       # Supabase Client & Interface Types
+│   ├── queries.ts         # Query server melalui Prisma
+│   ├── prisma.ts          # Prisma singleton
+│   ├── supabase.ts        # Supabase Auth client & types
+│   └── adminAuth.ts       # Validasi token admin API
 ├── supabase/
 │   └── schema.sql        # Database Table, RLS & Relations
 ├── public/               # Static assets

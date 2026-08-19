@@ -3,7 +3,16 @@
 Tech stack sekarang: React + Next.js + Supabase (Auth) + Prisma (ORM) +
 Tailwind + shadcn/ui.
 
-## Yang sudah disiapkan di tahap fondasi ini
+## Arsitektur sekarang
+
+- Public data query: Prisma melalui `lib/queries.ts`.
+- Admin login: Supabase Auth melalui `app/admin/login/page.tsx`.
+- Admin CRUD: API route `/api/admin/[resource]` dengan Prisma.
+- Validasi request admin: `lib/adminAuth.ts` memeriksa Bearer token Supabase.
+- `lib/supabase.ts` tetap dipakai untuk Auth client dan tipe data, bukan query
+  public utama.
+
+## Yang sudah disiapkan
 
 1. **prisma/schema.prisma** -- mencerminkan tabel yang SUDAH AKTIF di
    Supabase kamu (paket, keberangkatan, maskapai, hotel, cabang,
@@ -11,11 +20,12 @@ Tailwind + shadcn/ui.
    nama kolom asli lewat @map(), jadi TIDAK mengubah struktur database
    yang sudah ada.
 2. **lib/prisma.ts** -- client Prisma singleton
-3. **components.json** -- konfigurasi shadcn/ui, tema "new-york",
+3. **lib/queries.ts** -- query public melalui Prisma
+4. **components.json** -- konfigurasi shadcn/ui, tema "new-york",
    warna sudah dipetakan ke palet Majestic Voyage (krem/espresso/gold)
-4. **app/globals.css** -- variabel tema shadcn (--primary, --secondary,
+5. **app/globals.css** -- variabel tema shadcn (--primary, --secondary,
    dst) sudah diisi warna brand kita, BUKAN abu-abu default shadcn
-5. **package.json** -- ditambah dependency: @prisma/client, prisma,
+6. **package.json** -- dependency Prisma, Supabase, shadcn/ui, dan UI runtime
    clsx, tailwind-merge, class-variance-authority, lucide-react,
    @radix-ui/react-slot, tw-animate-css
 
@@ -32,7 +42,7 @@ Kamu butuh DUA jenis:
 - **Transaction pooler** (port 6543) -> untuk `DATABASE_URL`
 - **Direct connection** (port 5432) -> untuk `DIRECT_URL`
 
-Isi ke `.env.local` (copy dari `.env.example`, isi password Supabase kamu).
+Isi ke `.env` dan `.env.local` sesuai `SETUP_ENV.md`. Jangan commit file env.
 
 ### 3. Tarik struktur tabel yang SUDAH ADA ke Prisma (verifikasi)
 ```
@@ -63,16 +73,12 @@ npx shadcn@latest add button input select card badge dialog dropdown-menu
 
 ## PENTING
 
-- **Belum ada halaman yang dikonversi ke Prisma** -- semua halaman masih
-  pakai `lib/supabase.ts` (query langsung Supabase client) seperti biasa,
-  APLIKASI TETAP JALAN NORMAL seperti sebelumnya.
-- Fondasi Prisma ini baru DISIAPKAN, belum DIPAKAI di halaman manapun.
-  Konversi tiap halaman dari Supabase client ke Prisma akan dikerjakan
-  bertahap di sesi berikutnya.
-- RLS (Row Level Security) di Supabase tetap aktif dan tetap melindungi
-  akses lewat `lib/supabase.ts`. Nanti kalau halaman sudah pindah ke
-  Prisma, proteksi akses HARUS dipindah ke level kode (cek sesi di server),
-  karena koneksi Prisma tidak lewat RLS.
+- Prisma sudah dipakai oleh public query dan admin CRUD.
+- Prisma direct connection tidak otomatis menerapkan Supabase RLS.
+- Endpoint `/api/admin/*` wajib memvalidasi sesi melalui `lib/adminAuth.ts`.
+- Jangan memakai Prisma dari Client Component.
+- `npx prisma db pull` hanya untuk sinkronisasi schema dari database; jangan
+  menjalankan `prisma db push` tanpa review perubahan database.
 
 ## Instagram Feed (beranda)
 
