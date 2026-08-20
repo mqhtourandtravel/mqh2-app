@@ -16,6 +16,7 @@ export default function EditTentangKami() {
   const router = useRouter()
   const [data, setData] = useState<TentangKami | null>(null)
   const [loading, setLoading] = useState(true)
+  const field = (n: number, suffix: 'label' | 'nilai') => `angka_${n}_${suffix}` as keyof TentangKami
 
   useEffect(() => {
     async function muat() {
@@ -64,12 +65,12 @@ export default function EditTentangKami() {
               {[1, 2, 3, 4].map((n) => (
                 <div key={n} className="grid grid-cols-2 gap-2">
                   <Input
-                    value={(data as any)[`angka_${n}_nilai`] ?? ''}
-                    onChange={(e) => setData({ ...data, [`angka_${n}_nilai`]: e.target.value } as TentangKami)}
+                    value={data[field(n, 'nilai')] ?? ''}
+                    onChange={(e) => setData({ ...data, [field(n, 'nilai')]: e.target.value })}
                     placeholder={`Nilai ${n}, mis. 500+`} />
                   <Input
-                    value={(data as any)[`angka_${n}_label`] ?? ''}
-                    onChange={(e) => setData({ ...data, [`angka_${n}_label`]: e.target.value } as TentangKami)}
+                    value={data[field(n, 'label')] ?? ''}
+                    onChange={(e) => setData({ ...data, [field(n, 'label')]: e.target.value })}
                     placeholder={`Label ${n}, mis. Jamaah Diberangkatkan`} />
                 </div>
               ))}

@@ -21,7 +21,7 @@ function isPlainObject(v: unknown): v is Record<string, unknown> {
 
 // Prisma Decimal punya method .toNumber(), field created dari @db.Decimal.
 function isDecimalLike(v: unknown): v is { toNumber: () => number } {
-  return typeof v === 'object' && v !== null && typeof (v as any).toNumber === 'function'
+  return typeof v === 'object' && v !== null && 'toNumber' in v && typeof v.toNumber === 'function'
 }
 
 // Ubah semua key sebuah objek/array (rekursif) dari camelCase -> snake_case.

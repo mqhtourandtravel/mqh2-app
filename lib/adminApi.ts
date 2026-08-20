@@ -14,7 +14,7 @@ async function authHeader(): Promise<HeadersInit> {
     : { 'Content-Type': 'application/json' }
 }
 
-export async function adminList<T = any>(
+export async function adminList<T = unknown>(
   resource: string,
   opts: { orderBy?: string; dir?: 'asc' | 'desc'; filter?: Record<string, string> } = {}
 ): Promise<T[]> {
@@ -28,14 +28,14 @@ export async function adminList<T = any>(
   return res.json()
 }
 
-export async function adminGet<T = any>(resource: string, id: string): Promise<T | null> {
+export async function adminGet<T = unknown>(resource: string, id: string): Promise<T | null> {
   const headers = await authHeader()
   const res = await fetch(`/api/admin/${resource}/${id}`, { headers })
   if (!res.ok) return null
   return res.json()
 }
 
-export async function adminCreate<T = any>(resource: string, data: Record<string, unknown>): Promise<{ data: T | null; error: string | null }> {
+export async function adminCreate<T = unknown>(resource: string, data: Record<string, unknown>): Promise<{ data: T | null; error: string | null }> {
   const headers = await authHeader()
   const res = await fetch(`/api/admin/${resource}`, { method: 'POST', headers, body: JSON.stringify(data) })
   const json = await res.json()
@@ -43,7 +43,7 @@ export async function adminCreate<T = any>(resource: string, data: Record<string
   return { data: json, error: null }
 }
 
-export async function adminUpdate<T = any>(resource: string, id: string, data: Record<string, unknown>): Promise<{ data: T | null; error: string | null }> {
+export async function adminUpdate<T = unknown>(resource: string, id: string, data: Record<string, unknown>): Promise<{ data: T | null; error: string | null }> {
   const headers = await authHeader()
   const res = await fetch(`/api/admin/${resource}/${id}`, { method: 'PATCH', headers, body: JSON.stringify(data) })
   const json = await res.json()

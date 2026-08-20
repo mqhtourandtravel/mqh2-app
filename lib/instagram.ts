@@ -50,13 +50,13 @@ export async function getInstagramFeed(limit = 5): Promise<InstagramPost[]> {
     const json = await res.json()
     const data = Array.isArray(json?.data) ? json.data : []
 
-    return data.map((item: any) => ({
-      id: item.id,
-      caption: item.caption,
-      mediaType: item.media_type,
-      mediaUrl: item.media_type === 'VIDEO' ? (item.thumbnail_url ?? item.media_url) : item.media_url,
-      thumbnailUrl: item.thumbnail_url,
-      permalink: item.permalink,
+    return data.map((item: Record<string, unknown>) => ({
+      id: String(item.id),
+      caption: typeof item.caption === 'string' ? item.caption : undefined,
+      mediaType: item.media_type as InstagramPost['mediaType'],
+      mediaUrl: String(item.media_type === 'VIDEO' ? (item.thumbnail_url ?? item.media_url) : item.media_url),
+      thumbnailUrl: typeof item.thumbnail_url === 'string' ? item.thumbnail_url : undefined,
+      permalink: String(item.permalink),
     }))
   } catch (err) {
     console.error('[instagram] Gagal mengambil feed:', err)

@@ -1,4 +1,4 @@
-import { getKeberangkatanAktif, getMaskapaiList, getHotelList, getArtikelTerbit } from '@/lib/queries'
+import { getKeberangkatanAktif, getMaskapaiList, getHotelList, getArtikelTerbit, getTestimoniAktif } from '@/lib/queries'
 import { getInstagramFeed } from '@/lib/instagram'
 import { INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_BIO, HERO_IMG } from '@/lib/config'
 import Link from 'next/link'
@@ -13,11 +13,12 @@ import { Button } from '@/components/ui/button'
 export const revalidate = 60
 
 export default async function Home() {
-  const [keberangkatanList, maskapaiList, hotelList, artikelList, instagramPosts] = await Promise.all([
+  const [keberangkatanList, maskapaiList, hotelList, artikelList, testimoniList, instagramPosts] = await Promise.all([
     getKeberangkatanAktif({ limit: 5 }),
     getMaskapaiList(),
     getHotelList(),
     getArtikelTerbit({ limit: 3 }),
+    getTestimoniAktif(),
     getInstagramFeed(5),
   ])
 
@@ -154,6 +155,32 @@ export default async function Home() {
                     {a.judul}
                   </h3>
                 </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* TESTIMONI */}
+        {testimoniList.length > 0 && (
+          <section className="max-w-[1280px] mx-auto px-5 md:px-20">
+            <div className="text-center mb-10">
+              <h2 className="font-serif text-[26px] md:text-[32px] font-medium text-primary mb-3">
+                Apa Kata Jamaah
+              </h2>
+              <p className="text-[13.5px] text-muted-foreground max-w-xl mx-auto">
+                Pengalaman jamaah menjadi bagian dari komitmen kami dalam melayani perjalanan ibadah.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {testimoniList.map((testimoni) => (
+                <figure key={testimoni.id} className="bg-white rounded-xl border border-accent p-6">
+                  <blockquote className="text-[14px] leading-relaxed text-primary/90 italic">
+                    &ldquo;{testimoni.isi}&rdquo;
+                  </blockquote>
+                  <figcaption className="mt-5 text-[12.5px] font-semibold text-secondary-hover">
+                    {testimoni.nama_sumber}
+                  </figcaption>
+                </figure>
               ))}
             </div>
           </section>

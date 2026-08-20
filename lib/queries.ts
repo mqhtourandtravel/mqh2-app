@@ -18,7 +18,7 @@ const includeKeberangkatan = {
 // keysToSnake mengubah relasi `hotelMekkah` -> `hotel_mekkah` dan
 // `hotelMadinah` -> `hotel_madinah` secara otomatis (camel->snake per kata),
 // persis sama dengan nama yang dipakai select() Supabase sebelumnya.
-function toKeberangkatan(row: any): Keberangkatan {
+function toKeberangkatan(row: Record<string, unknown>): Keberangkatan {
   return keysToSnake(row) as Keberangkatan
 }
 
@@ -81,6 +81,14 @@ export async function getPaketBySlug(slug: string): Promise<Paket | null> {
 export async function getCabangAktif(): Promise<Cabang[]> {
   const rows = await prisma.cabang.findMany({ where: { status: 'aktif' }, orderBy: { urutan: 'asc' } })
   return rows.map((r) => keysToSnake(r) as Cabang)
+}
+
+export async function getTestimoniAktif(): Promise<Testimoni[]> {
+  const rows = await prisma.testimoni.findMany({
+    where: { status: 'aktif' },
+    orderBy: { urutan: 'asc' },
+  })
+  return rows.map((r) => keysToSnake(r) as Testimoni)
 }
 
 export async function getTentangKami(): Promise<TentangKami | null> {

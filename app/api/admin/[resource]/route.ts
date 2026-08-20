@@ -3,6 +3,15 @@ import { getResource } from '@/lib/adminResources'
 import { verifyAdmin } from '@/lib/adminAuth'
 import { keysToCamel, keysToSnake, snakeToCamel } from '@/lib/case'
 
+type AdminModel = {
+  findMany(args: { where: Record<string, unknown>; orderBy: Record<string, string> }): Promise<unknown[]>
+  create(args: { data: unknown }): Promise<unknown>
+}
+
+function errorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : 'Gagal menyimpan data.'
+}
+
 // Endpoint generik untuk semua resource admin (paket, keberangkatan, cabang,
 // testimoni, artikel, tentang, maskapai, hotel). Menggantikan pemanggilan
 // langsung `supabase.from(table)` dari komponen client -- karena Prisma cuma
@@ -26,7 +35,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     where[snakeToCamel(key)] = value
   })
 
-  const rows = await (config.model as any).findMany({
+  const rows = await (config.model as unknown as AdminModel).findMany({
     where,
     orderBy: { [orderByField]: dir },
   })
@@ -46,12 +55,12 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const data = keysToCamel(body)
 
   try {
-    const row = await (config.model as any).create({ data })
+    const row = await (config.model as unknown as AdminModel).create({ data })
     return NextResponse.json(keysToSnake(row))
-  } catch (err: any) {
-    if (err?.code === 'P2002') {
+  } catch (err: unknown) {
+    if (typeof err === 'object' && err !== null && 'code' in err && err.code === 'P2002') {
       return NextResponse.json({ error: 'duplicate: data dengan nilai unik ini sudah ada (slug bentrok).' }, { status: 409 })
     }
-    return NextResponse.json({ error: err?.message ?? 'Gagal menyimpan data.' }, { status: 500 })
+    return NextResponse.json({ error: errorMessage(err) }, { status: 500 })
   }
 }
