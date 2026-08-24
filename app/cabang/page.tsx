@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import { Cabang } from '@/lib/supabase'
 import { getCabangAktif } from '@/lib/queries'
 import SiteHeader from '@/components/SiteHeader'
-import SiteFooter from '@/components/SiteFooter'
 import PageHero from '@/components/PageHero'
 import Link from 'next/link'
 import { SITE_NAME } from '@/lib/config'
+import { Clock, MapPin } from 'lucide-react'
 
 export const revalidate = 60
 
@@ -26,18 +26,18 @@ export default async function HalamanCabang({
 
   function KartuCabang({ c }: { c: Cabang }) {
     return (
-      <div className="bg-white rounded-xl border border-accent p-6 hover:shadow-[0_8px_30px_rgba(60,42,33,0.06)] transition-shadow">
+      <div className="bg-white rounded-xl border border-accent p-6 hover:shadow-[var(--shadow-md-custom)] transition-shadow">
         <h3 className="font-serif text-lg font-medium text-primary mb-1">{c.nama}</h3>
         <p className="text-[12.5px] text-muted-foreground mb-4">{c.kota}</p>
         {c.alamat && (
           <p className="text-[13.5px] text-muted-foreground flex items-start gap-2 mb-2">
-            <span className="material-symbols-outlined text-[16px] text-secondary mt-0.5">location_on</span>
+            <MapPin className="text-[16px] text-secondary mt-0.5" aria-hidden="true" />
             {c.alamat}
           </p>
         )}
         {c.jam_layanan && (
           <p className="text-[13px] text-muted-foreground flex items-center gap-2 mb-4">
-            <span className="material-symbols-outlined text-[16px] text-secondary">schedule</span>
+            <Clock className="text-[16px] text-secondary" aria-hidden="true" />
             {c.jam_layanan}
           </p>
         )}
@@ -68,13 +68,13 @@ export default async function HalamanCabang({
         )}
         {pusat.length > 0 && (
           <div className="mb-12">
-            <h2 className="text-[11px] font-bold uppercase tracking-wider text-secondary-hover mb-5">Kantor Pusat</h2>
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.04em] text-secondary-hover mb-5">Kantor Pusat</h2>
             <div className="grid md:grid-cols-2 gap-5">{pusat.map((c) => <KartuCabang key={c.id} c={c} />)}</div>
           </div>
         )}
         {representatif.length > 0 && (
           <div>
-            <h2 className="text-[11px] font-bold uppercase tracking-wider text-secondary-hover mb-5">Cabang Representatif</h2>
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.04em] text-secondary-hover mb-5">Cabang Representatif</h2>
             <div className="grid md:grid-cols-2 gap-5">{representatif.map((c) => <KartuCabang key={c.id} c={c} />)}</div>
           </div>
         )}
@@ -83,7 +83,6 @@ export default async function HalamanCabang({
           <p className="text-muted-foreground text-sm text-center py-12">Belum ada data untuk kategori ini.</p>
         )}
       </div>
-      <SiteFooter />
-    </div>
+</div>
   )
 }

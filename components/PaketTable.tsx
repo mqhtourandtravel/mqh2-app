@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Hotel, Plane } from 'lucide-react'
 
 function KuotaBadge({ k }: { k: Keberangkatan }) {
   if (k.status === 'penuh')
@@ -48,7 +49,7 @@ export default function PaketTable({ data }: { data: Keberangkatan[] }) {
                     <PhotoBlock imageUrl={k.paket?.gambar_url} alt={k.paket?.nama_paket ?? ''} className="w-full h-full" sizes="64px" />
                   </div>
                   <div>
-                    <h3 className="text-[14px] font-bold text-primary mb-1">{k.paket?.nama_paket}</h3>
+                    <h3 className="text-[14px] font-semibold text-primary mb-1">{k.paket?.nama_paket}</h3>
                     {k.durasi_hari && (
                       <Badge variant="outline" className="bg-info/70 text-info-foreground border-transparent normal-case tracking-normal font-semibold rounded">{k.durasi_hari} Hari</Badge>
                     )}
@@ -58,7 +59,7 @@ export default function PaketTable({ data }: { data: Keberangkatan[] }) {
 
               <TableCell className="whitespace-normal">
                 <div className="flex flex-col gap-1">
-                  <span className="text-[14px] font-bold text-primary">
+                  <span className="text-[14px] font-semibold text-primary">
                     {new Date(k.tanggal_berangkat).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
                   </span>
                   <KuotaBadge k={k} />
@@ -67,7 +68,7 @@ export default function PaketTable({ data }: { data: Keberangkatan[] }) {
 
               <TableCell className="whitespace-normal">
                 <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-muted-foreground text-[18px]">flight</span>
+                  <Plane className="text-muted-foreground text-[18px]" aria-hidden="true" />
                   <span className="text-[13px] text-muted-foreground font-medium">{k.maskapai?.nama ?? '—'}</span>
                 </div>
               </TableCell>
@@ -76,13 +77,13 @@ export default function PaketTable({ data }: { data: Keberangkatan[] }) {
                 <div className="flex flex-col gap-1">
                   {k.hotel_mekkah?.nama && (
                     <div className="flex items-center gap-2">
-                      <span className="material-symbols-outlined text-secondary text-[15px]">hotel</span>
+                      <Hotel className="text-secondary text-[15px]" aria-hidden="true" />
                       <span className="text-[11.5px] text-muted-foreground font-medium">Mekkah: {k.hotel_mekkah.nama}</span>
                     </div>
                   )}
                   {k.hotel_madinah?.nama && (
                     <div className="flex items-center gap-2">
-                      <span className="material-symbols-outlined text-secondary text-[15px]">hotel</span>
+                      <Hotel className="text-secondary text-[15px]" aria-hidden="true" />
                       <span className="text-[11.5px] text-muted-foreground font-medium">Madinah: {k.hotel_madinah.nama}</span>
                     </div>
                   )}
@@ -93,7 +94,7 @@ export default function PaketTable({ data }: { data: Keberangkatan[] }) {
                 {k.harga_promo && (
                   <div className="text-[11.5px] text-muted-foreground line-through">{formatRupiah(k.harga_normal)}</div>
                 )}
-                <div className="text-[16px] font-bold text-secondary-hover">{formatRupiah(k.harga_promo ?? k.harga_normal)}</div>
+                <div className="font-serif text-[16px] font-bold text-secondary-hover">{formatRupiah(k.harga_promo ?? k.harga_normal)}</div>
               </TableCell>
 
               <TableCell className="pr-6 text-center">

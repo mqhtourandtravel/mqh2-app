@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { getArtikelTerbit } from '@/lib/queries'
 import Link from 'next/link'
 import SiteHeader from '@/components/SiteHeader'
-import SiteFooter from '@/components/SiteFooter'
 import PageHero from '@/components/PageHero'
 import PhotoBlock from '@/components/PhotoBlock'
 import { SITE_NAME } from '@/lib/config'
@@ -41,7 +40,6 @@ export default async function DaftarArtikel() {
           {artikelList.length === 0 && <p className="text-muted-foreground text-sm py-12">Belum ada artikel.</p>}
         </div>
       </div>
-      <SiteFooter />
-    </div>
+</div>
   )
 }

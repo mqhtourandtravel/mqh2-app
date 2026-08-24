@@ -6,7 +6,7 @@ export default function PageHero({ title, breadcrumb, desc }: { title: string; b
       <p className="text-[12px] text-muted-foreground mb-2">
         <Link href="/" className="hover:text-secondary-hover">Beranda</Link> / {breadcrumb}
       </p>
-      <h1 className="font-serif text-[36px] md:text-[48px] font-semibold text-primary mb-3">
+      <h1 className="font-serif text-[30px] md:text-[38px] font-bold leading-[1.15] text-primary mb-3 tracking-[-0.02em]">
         {title}
       </h1>
       {desc && <p className="text-[14.5px] text-muted-foreground max-w-lg mx-auto leading-relaxed">{desc}</p>}

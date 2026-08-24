@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import SiteHeader from '@/components/SiteHeader'
-import SiteFooter from '@/components/SiteFooter'
 import PageHero from '@/components/PageHero'
 import { getCabangAktif } from '@/lib/queries'
 import { waLink } from '@/lib/utils'
 import { SITE_NAME } from '@/lib/config'
+import { Clock, MapPin } from 'lucide-react'
 
 export const revalidate = 60
 
@@ -31,7 +31,7 @@ export default async function KontakPage() {
       <div className="max-w-[820px] mx-auto px-5 md:px-20 pb-24">
         <div className="grid md:grid-cols-2 gap-6">
           <div className="bg-white rounded-xl border border-accent p-7">
-            <span className="material-symbols-outlined text-secondary text-3xl mb-3 block">location_on</span>
+            <MapPin className="text-secondary text-3xl mb-3 block" aria-hidden="true" />
             <h3 className="font-serif text-lg font-medium text-primary mb-2">
               {pusat?.nama || 'Kantor Pusat'}
             </h3>
@@ -39,19 +39,18 @@ export default async function KontakPage() {
             <a
               href={nomorWaKontak ? `https://wa.me/${nomorWaKontak}` : waLink('Assalamualaikum, saya ingin bertanya tentang layanan MQH Tour & Travel')}
               target="_blank" rel="noopener noreferrer"
-              className="inline-block bg-secondary text-primary text-[13px] font-bold px-6 py-3 rounded-full hover:bg-secondary-hover hover:text-white transition"
+              className="inline-block bg-secondary text-primary text-[13px] font-semibold px-6 py-3 rounded-full hover:bg-secondary-hover hover:text-white transition"
             >
               Chat WhatsApp
             </a>
           </div>
           <div className="bg-white rounded-xl border border-accent p-7">
-            <span className="material-symbols-outlined text-secondary text-3xl mb-3 block">schedule</span>
+            <Clock className="text-secondary text-3xl mb-3 block" aria-hidden="true" />
             <h3 className="font-serif text-lg font-medium text-primary mb-2">Jam Layanan</h3>
             <p className="text-[13.5px] text-muted-foreground">{jamLayanan}</p>
           </div>
         </div>
       </div>
-      <SiteFooter />
-    </div>
+</div>
   )
 }

@@ -1,12 +1,27 @@
 import type { Metadata } from 'next'
 import SiteHeader from '@/components/SiteHeader'
-import SiteFooter from '@/components/SiteFooter'
 import PhotoBlock from '@/components/PhotoBlock'
 import { waLink } from '@/lib/utils'
 import { SITE_NAME } from '@/lib/config'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { ArrowRight, CheckCircle2, Info } from 'lucide-react'
+
+import { type LucideIcon, FolderOpen, Headset, Receipt } from 'lucide-react'
+
+// Resolver ikon: pengganti Material Symbols (zero external request)
+const ICON_MAP: Record<string, LucideIcon> = {
+  folder_open: FolderOpen,
+  payments: Receipt,
+  support_agent: Headset,
+}
+
+function Icon({ name, className }: { name: string; className?: string }) {
+  const Cmp = ICON_MAP[name] ?? Info
+  return <Cmp className={className} aria-hidden="true" />
+}
+
 
 export const metadata: Metadata = {
   title: `Program Kemitraan | ${SITE_NAME}`,
@@ -46,7 +61,7 @@ export default function PartnershipPage() {
       <section className="pt-40 pb-20 px-5 md:px-20">
         <div className="max-w-[1280px] mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <span className="inline-block text-secondary-hover text-[12px] font-bold uppercase tracking-wider mb-4">Program Kemitraan</span>
+            <span className="inline-block text-secondary-hover text-[12px] font-semibold uppercase tracking-[0.04em] mb-4">Program Kemitraan</span>
             <h1 className="font-serif text-[36px] md:text-[48px] font-semibold text-primary leading-[1.15] mb-5">
               Bertumbuh Bersama dalam Khidmat Ibadah
             </h1>
@@ -56,11 +71,11 @@ export default function PartnershipPage() {
             <Button asChild size="lg">
               <a href={waLink('Assalamualaikum, saya ingin daftar sebagai mitra MQH Tour & Travel')} target="_blank" rel="noopener noreferrer">
                 Daftar Sebagai Mitra
-                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                <ArrowRight className="text-[16px]" aria-hidden="true" />
               </a>
             </Button>
           </div>
-          <PhotoBlock className="h-80 rounded-2xl" />
+          <PhotoBlock imageUrl="/images/kaaba-closeup.jpg" alt="Ka'bah" className="h-80 rounded-2xl" />
         </div>
       </section>
 
@@ -68,7 +83,7 @@ export default function PartnershipPage() {
       <section className="bg-muted py-24 px-5 md:px-20">
         <div className="max-w-[1280px] mx-auto">
           <div className="text-center mb-14">
-            <h2 className="font-serif text-[30px] md:text-[36px] font-medium text-primary mb-3">Keunggulan Kemitraan</h2>
+            <h2 className="font-serif text-[28px] md:text-[34px] font-bold text-primary mb-3 leading-[1.15] tracking-[-0.02em]">Keunggulan Kemitraan</h2>
             <p className="text-[14px] text-muted-foreground max-w-lg mx-auto leading-relaxed">
               Kami menyediakan ekosistem bisnis yang solid untuk memastikan setiap mitra dapat berkembang dengan maksimal dan melayani jemaah dengan paripurna.
             </p>
@@ -77,7 +92,7 @@ export default function PartnershipPage() {
             {KEUNGGULAN.map((k) => (
               <Card key={k.title} className="bg-white p-8 border-none">
                 <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center mb-6">
-                  <span className="material-symbols-outlined text-primary">{k.icon}</span>
+                  <Icon name={ k.icon } className="text-primary" />
                 </div>
                 <h3 className="font-serif text-xl text-primary mb-3">{k.title}</h3>
                 <p className="text-[13.5px] text-muted-foreground leading-relaxed">{k.desc}</p>
@@ -91,7 +106,7 @@ export default function PartnershipPage() {
       <section className="py-24 px-5 md:px-20">
         <div className="max-w-[1280px] mx-auto">
           <div className="mb-14">
-            <h2 className="font-serif text-[30px] md:text-[36px] font-medium text-primary mb-3">Tipe Kemitraan</h2>
+            <h2 className="font-serif text-[28px] md:text-[34px] font-bold text-primary mb-3 leading-[1.15] tracking-[-0.02em]">Tipe Kemitraan</h2>
             <p className="text-[14px] text-muted-foreground max-w-lg leading-relaxed">Pilih skema kerjasama yang paling sesuai dengan kapasitas dan target bisnis Anda.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 items-start">
@@ -102,12 +117,12 @@ export default function PartnershipPage() {
                     {t.badge}
                   </Badge>
                 )}
-                <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-2">{t.label}</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.04em] text-muted-foreground mb-2">{t.label}</p>
                 <h3 className="font-serif text-xl text-primary mb-5">{t.title}</h3>
                 <ul className="space-y-3 mb-8">
                   {t.poin.map((p) => (
                     <li key={p} className="flex items-start gap-2 text-[13.5px] text-primary">
-                      <span className="material-symbols-outlined text-secondary-hover text-[18px] shrink-0">check_circle</span>
+                      <CheckCircle2 className="text-secondary-hover text-[18px] shrink-0" aria-hidden="true" />
                       {p}
                     </li>
                   ))}
@@ -129,10 +144,10 @@ export default function PartnershipPage() {
       {/* CTA CLOSING */}
       <section className="px-5 md:px-20 pb-24">
         <div className="max-w-[1280px] mx-auto relative rounded-3xl overflow-hidden">
-          <PhotoBlock className="h-72 w-full" />
+          <PhotoBlock imageUrl="/images/travel-planning.jpg" alt="Perencanaan perjalanan" className="h-72 w-full" />
           <div className="absolute inset-0 bg-primary/85 flex items-center justify-center text-center px-6">
             <div className="max-w-md">
-              <h2 className="font-serif text-[26px] md:text-[32px] font-semibold text-primary-foreground mb-4">
+              <h2 className="font-serif text-[24px] md:text-[30px] font-bold text-primary-foreground mb-4 leading-[1.15] tracking-[-0.02em]">
                 Siap Melangkah Bersama?
               </h2>
               <p className="text-[13.5px] text-primary-foreground/80 leading-relaxed mb-8">
@@ -147,8 +162,6 @@ export default function PartnershipPage() {
           </div>
         </div>
       </section>
-
-      <SiteFooter />
-    </div>
+</div>
   )
 }

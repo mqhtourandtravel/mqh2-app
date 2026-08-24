@@ -3,10 +3,10 @@ import { getPaketBySlug, getKeberangkatanByPaketId } from '@/lib/queries'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import SiteHeader from '@/components/SiteHeader'
-import SiteFooter from '@/components/SiteFooter'
 import PhotoBlock from '@/components/PhotoBlock'
 import { formatRupiah, linkWhatsApp } from '@/lib/utils'
 import { SITE_NAME } from '@/lib/config'
+import { CheckCircle2, Clock, Hotel, Plane } from 'lucide-react'
 
 export const revalidate = 60
 
@@ -91,21 +91,21 @@ export default async function DetailPaket({
               <div className="flex flex-wrap gap-8 pb-8 border-b border-accent">
                 {jadwalTerpilih.durasi_hari && (
                   <div>
-                    <span className="material-symbols-outlined text-secondary text-[22px] mb-1 block">schedule</span>
+                    <Clock className="text-secondary text-[22px] mb-1 block" aria-hidden="true" />
                     <p className="text-[11px] text-muted-foreground uppercase tracking-wide">Durasi</p>
                     <p className="text-[14px] font-semibold text-primary">{jadwalTerpilih.durasi_hari} Hari</p>
                   </div>
                 )}
                 {jadwalTerpilih.maskapai?.nama && (
                   <div>
-                    <span className="material-symbols-outlined text-secondary text-[22px] mb-1 block">flight</span>
+                    <Plane className="text-secondary text-[22px] mb-1 block" aria-hidden="true" />
                     <p className="text-[11px] text-muted-foreground uppercase tracking-wide">Maskapai</p>
                     <p className="text-[14px] font-semibold text-primary">{jadwalTerpilih.maskapai.nama}</p>
                   </div>
                 )}
                 {(jadwalTerpilih.hotel_mekkah?.nama || jadwalTerpilih.hotel_madinah?.nama) && (
                   <div>
-                    <span className="material-symbols-outlined text-secondary text-[22px] mb-1 block">hotel</span>
+                    <Hotel className="text-secondary text-[22px] mb-1 block" aria-hidden="true" />
                     <p className="text-[11px] text-muted-foreground uppercase tracking-wide">Akomodasi</p>
                     <p className="text-[14px] font-semibold text-primary">
                       {[jadwalTerpilih.hotel_mekkah?.nama, jadwalTerpilih.hotel_madinah?.nama].filter(Boolean).join(' & ')}
@@ -116,7 +116,7 @@ export default async function DetailPaket({
             )}
 
             <div>
-              <h2 className="font-serif text-[22px] font-medium text-primary mb-5">Pilih Jadwal Keberangkatan</h2>
+              <h2 className="font-serif text-[22px] font-semibold text-primary mb-5 leading-[1.2]">Pilih Jadwal Keberangkatan</h2>
               <div className="space-y-3">
                 {semuaJadwal.length === 0 && <p className="text-muted-foreground text-sm">Belum ada jadwal keberangkatan aktif.</p>}
                 {semuaJadwal.map((j) => {
@@ -162,15 +162,15 @@ export default async function DetailPaket({
                 </p>
               )}
               <div className="space-y-2 mb-6 text-[13px] text-muted-foreground">
-                <p className="flex items-center gap-2"><span className="material-symbols-outlined text-[16px] text-secondary-hover">check_circle</span> Tiket Pesawat PP</p>
-                <p className="flex items-center gap-2"><span className="material-symbols-outlined text-[16px] text-secondary-hover">check_circle</span> Visa Umroh</p>
-                <p className="flex items-center gap-2"><span className="material-symbols-outlined text-[16px] text-secondary-hover">check_circle</span> Akomodasi Hotel</p>
-                <p className="flex items-center gap-2"><span className="material-symbols-outlined text-[16px] text-secondary-hover">check_circle</span> Muthawwif &amp; Tour Guide</p>
+                <p className="flex items-center gap-2"><CheckCircle2 className="text-[16px] text-secondary-hover" aria-hidden="true" /> Tiket Pesawat PP</p>
+                <p className="flex items-center gap-2"><CheckCircle2 className="text-[16px] text-secondary-hover" aria-hidden="true" /> Visa Umroh</p>
+                <p className="flex items-center gap-2"><CheckCircle2 className="text-[16px] text-secondary-hover" aria-hidden="true" /> Akomodasi Hotel</p>
+                <p className="flex items-center gap-2"><CheckCircle2 className="text-[16px] text-secondary-hover" aria-hidden="true" /> Muthawwif &amp; Tour Guide</p>
               </div>
               <a
                 href={linkWhatsApp(paket.nama_paket, jadwalTerpilih ? new Date(jadwalTerpilih.tanggal_berangkat).toLocaleDateString('id-ID') : undefined)}
                 target="_blank" rel="noopener noreferrer"
-                className="block text-center bg-secondary text-primary font-bold py-3.5 rounded-full hover:bg-secondary-hover hover:text-white transition"
+                className="block text-center bg-secondary text-primary font-semibold py-3.5 rounded-full hover:bg-secondary-hover hover:text-white transition"
               >
                 Pesan Sekarang
               </a>
@@ -179,8 +179,6 @@ export default async function DetailPaket({
           </div>
         </div>
       </div>
-
-      <SiteFooter />
-    </div>
+</div>
   )
 }

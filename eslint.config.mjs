@@ -20,6 +20,10 @@ export default tseslint.config(
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
+      // Material Symbols (icon font) harus dimuat via <link> stylesheet —
+      // tidak didukung next/font, jadi rule font Next.js di-offline untuk file ini.
+      '@next/next/google-font-display': 'off',
+      '@next/next/no-page-custom-font': 'off',
     },
   },
 )

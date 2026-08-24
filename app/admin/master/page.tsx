@@ -87,7 +87,7 @@ export default function KelolaMasterData() {
           </CardHeader>
           <CardContent className="space-y-10 pb-8">
             <section>
-              <h2 className="text-[15px] font-bold text-primary mb-3">Maskapai</h2>
+              <h2 className="text-[15px] font-semibold text-primary mb-3">Maskapai</h2>
               <form onSubmit={tambahMaskapai} className="flex gap-2 mb-4">
                 <Input
                   value={namaMaskapai}
@@ -117,7 +117,7 @@ export default function KelolaMasterData() {
             <Separator />
 
             <section>
-              <h2 className="text-[15px] font-bold text-primary mb-3">Hotel</h2>
+              <h2 className="text-[15px] font-semibold text-primary mb-3">Hotel</h2>
               <form onSubmit={tambahHotel} className="space-y-2 mb-4">
                 <Input
                   value={namaHotel}

@@ -136,7 +136,7 @@ export default function SiteHeader() {
                   <Link href="/" className={mobileLinkClass('/')}>Home</Link>
                 </SheetClose>
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-wide text-secondary-hover mb-2">Paket</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.04em] text-secondary-hover mb-2">Paket</p>
                   <div className="flex flex-col gap-2 pl-2">
                     <SheetClose asChild>
                       <Link href="/paket?kategori=umroh" className="text-[13px] text-muted-foreground">Paket Umroh</Link>

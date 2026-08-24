@@ -54,7 +54,7 @@ export default function LoginAdmin() {
           />
           {error && (
             <Alert variant="destructive" className="bg-destructive/10 border-destructive/20">
-              <AlertDescription className="text-red-200">{error}</AlertDescription>
+              <AlertDescription className="text-destructive">{error}</AlertDescription>
             </Alert>
           )}
           <Button type="submit" variant="secondary" disabled={loading} className="w-full">

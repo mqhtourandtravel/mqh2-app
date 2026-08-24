@@ -4,11 +4,29 @@ import { INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_BIO, HERO_IMG } from '@/lib/
 import Link from 'next/link'
 import Image from 'next/image'
 import SiteHeader from '@/components/SiteHeader'
-import SiteFooter from '@/components/SiteFooter'
 import PaketTable from '@/components/PaketTable'
 import PhotoBlock from '@/components/PhotoBlock'
 import { waLink } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { ArrowRight, BadgeCheck, Camera, Info, MessageCircle } from 'lucide-react'
+
+import { type LucideIcon, Apple, Headset, Luggage, PlaneTakeoff, Play, Tag } from 'lucide-react'
+
+// Resolver ikon: pengganti Material Symbols (zero external request)
+const ICON_MAP: Record<string, LucideIcon> = {
+  apple: Apple,
+  flight_takeoff: PlaneTakeoff,
+  luggage: Luggage,
+  sell: Tag,
+  shop: Play,
+  support_agent: Headset,
+}
+
+function Icon({ name, className }: { name: string; className?: string }) {
+  const Cmp = ICON_MAP[name] ?? Info
+  return <Cmp className={className} aria-hidden="true" />
+}
+
 
 export const revalidate = 60
 
@@ -35,10 +53,10 @@ export default async function Home() {
           <div className="absolute inset-0 hero-overlay" />
         </div>
         <div className="relative z-10 text-center max-w-3xl px-5 mx-auto flex flex-col items-center">
-          <p className="text-secondary text-[12px] font-semibold uppercase tracking-[0.25em] mb-4">
+          <p className="text-secondary text-[12px] font-semibold uppercase tracking-[0.04em] mb-4">
             Terpercaya, Terbukti, Recommended
           </p>
-          <h1 className="font-serif text-[44px] md:text-[72px] font-semibold leading-[1.1] md:leading-[1.05] text-primary-foreground mb-6 tracking-tight">
+          <h1 className="font-serif text-[34px] md:text-[48px] font-bold leading-[1.12] md:leading-[1.1] text-primary-foreground mb-6 tracking-[-0.02em]">
             Perjalanan Spiritual yang Elegan &amp; Nyaman
           </h1>
           <p className="text-[16px] md:text-[18px] text-primary-foreground/85 mb-10 max-w-xl leading-relaxed">
@@ -47,7 +65,7 @@ export default async function Home() {
           <Button asChild variant="secondary" size="lg" className="hover:shadow-xl hover:scale-105">
             <Link href="/paket">
               Cek Jadwal Keberangkatan
-              <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+              <ArrowRight className="text-[16px]" aria-hidden="true" />
             </Link>
           </Button>
         </div>
@@ -62,9 +80,9 @@ export default async function Home() {
               { icon: 'luggage', title: 'Perlengkapan Eksklusif', desc: 'Fasilitas lengkap' },
             ].map((item, i) => (
               <div key={item.title} className={`flex items-center gap-3 px-2 ${i > 0 ? 'md:border-l md:border-white/10 md:pl-4' : ''}`}>
-                <span className="material-symbols-outlined text-secondary text-[28px] flex-shrink-0">{item.icon}</span>
+                <Icon name={ item.icon } className="text-secondary text-[28px] flex-shrink-0" />
                 <div>
-                  <h3 className="text-[13px] font-bold leading-tight">{item.title}</h3>
+                  <h3 className="text-[13px] font-semibold leading-tight">{item.title}</h3>
                   <p className="text-[10.5px] text-primary-foreground/70">{item.desc}</p>
                 </div>
               </div>
@@ -77,7 +95,7 @@ export default async function Home() {
         {/* PAKET */}
         <section className="max-w-[1280px] mx-auto px-5 md:px-20">
           <div className="text-center mb-14">
-            <h2 className="font-serif text-[32px] md:text-[40px] font-medium text-primary mb-4">
+            <h2 className="font-serif text-[28px] md:text-[36px] font-bold text-primary mb-4 leading-[1.15] tracking-[-0.02em]">
               Pilihan Paket Umroh Terbaik
             </h2>
             <p className="text-[15px] text-muted-foreground max-w-xl mx-auto leading-relaxed">
@@ -100,7 +118,7 @@ export default async function Home() {
             <PhotoBlock imageUrl={HERO_IMG} className="h-[280px] w-full" sizes="100vw" />
             <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/60 to-transparent flex items-center">
               <div className="px-8 md:px-14 max-w-md">
-                <h3 className="font-serif text-[26px] md:text-[32px] font-semibold text-primary-foreground mb-3">
+                <h3 className="font-serif text-[28px] md:text-[36px] font-bold text-primary-foreground mb-3 leading-[1.15] tracking-[-0.02em]">
                   Tabungan Umroh MQH
                 </h3>
                 <p className="text-[13.5px] text-primary-foreground/85 mb-6 leading-relaxed">
@@ -117,7 +135,7 @@ export default async function Home() {
         {/* PROMO CARD — Rencana Menuju Baitullah */}
         <section className="max-w-[1280px] mx-auto px-5 md:px-20">
           <div className="bg-muted rounded-2xl p-10 md:p-14 text-center">
-            <h3 className="font-serif text-[24px] md:text-[28px] font-medium text-primary mb-3">
+            <h3 className="font-serif text-[24px] md:text-[28px] font-semibold text-primary mb-3 leading-[1.2] tracking-[-0.02em]">
               Rencana Menuju Baitullah
             </h3>
             <p className="text-[14px] text-muted-foreground max-w-lg mx-auto mb-6 leading-relaxed">
@@ -125,7 +143,7 @@ export default async function Home() {
             </p>
             <Button asChild>
               <a href={waLink('Assalamualaikum, saya ingin konsultasi rencana perjalanan umroh')} target="_blank" rel="noopener noreferrer">
-                <span className="material-symbols-outlined text-[16px]">chat</span>
+                <MessageCircle className="text-[16px]" aria-hidden="true" />
                 Mulai Perencanaan
               </a>
             </Button>
@@ -136,7 +154,7 @@ export default async function Home() {
         {artikelList && artikelList.length > 0 && (
           <section className="max-w-[1280px] mx-auto px-5 md:px-20">
             <div className="flex justify-between items-end mb-10">
-              <h2 className="font-serif text-[26px] md:text-[32px] font-medium text-primary">
+              <h2 className="font-serif text-[28px] md:text-[34px] font-bold text-primary tracking-[-0.02em]">
                 Berita Terkini
               </h2>
               <Link href="/artikel" className="text-[13px] font-semibold text-secondary-hover hover:underline">Lihat Semua</Link>
@@ -164,7 +182,7 @@ export default async function Home() {
         {testimoniList.length > 0 && (
           <section className="max-w-[1280px] mx-auto px-5 md:px-20">
             <div className="text-center mb-10">
-              <h2 className="font-serif text-[26px] md:text-[32px] font-medium text-primary mb-3">
+              <h2 className="font-serif text-[28px] md:text-[34px] font-bold text-primary mb-3 tracking-[-0.02em]">
                 Apa Kata Jamaah
               </h2>
               <p className="text-[13.5px] text-muted-foreground max-w-xl mx-auto">
@@ -193,12 +211,12 @@ export default async function Home() {
         <section className="max-w-[1280px] mx-auto px-5 md:px-20">
           <div className="flex items-center gap-4 mb-8">
             <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-secondary shrink-0 bg-muted flex items-center justify-center">
-              <span className="material-symbols-outlined text-secondary-hover text-[22px]">photo_camera</span>
+              <Camera className="text-secondary-hover text-[22px]" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="text-[15px] font-bold text-primary flex items-center gap-1">
+              <h3 className="text-[15px] font-semibold text-primary flex items-center gap-1">
                 {INSTAGRAM_HANDLE}
-                <span className="material-symbols-outlined text-[15px] text-blue-500">verified</span>
+                <BadgeCheck className="text-[15px] text-info-foreground" aria-hidden="true" />
               </h3>
               <p className="text-[12.5px] text-muted-foreground">{INSTAGRAM_BIO}</p>
             </div>
@@ -240,7 +258,7 @@ export default async function Home() {
               </p>
               <Button asChild variant="secondary" className="shrink-0">
                 <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
-                  <span className="material-symbols-outlined text-[16px]">photo_camera</span>
+                  <Camera className="text-[16px]" aria-hidden="true" />
                   Kunjungi @{INSTAGRAM_HANDLE}
                 </a>
               </Button>
@@ -251,7 +269,7 @@ export default async function Home() {
         {/* PARTNER */}
         {((maskapaiList?.length ?? 0) > 0 || (hotelList?.length ?? 0) > 0) && (
           <section className="max-w-[1280px] mx-auto px-5 md:px-20 text-center">
-            <h2 className="font-serif text-[22px] font-medium text-primary mb-1">
+            <h2 className="font-serif text-[20px] md:text-[24px] font-semibold text-primary mb-1">
               Didukung Maskapai &amp; Hotel Terbaik
             </h2>
             <p className="text-[13px] text-muted-foreground mb-10">Kerjasama resmi dengan maskapai ternama dan hotel berstandar internasional</p>
@@ -278,7 +296,7 @@ export default async function Home() {
                     </div>
                     <div className="bg-primary/90 text-primary-foreground pt-9 pb-4 px-5 z-10">
                       <p className="text-[10px] opacity-70 mb-0.5">Selamat datang,</p>
-                      <p className="font-bold text-[13px]">Jamaah MQH</p>
+                      <p className="font-semibold text-[13px]">Jamaah MQH</p>
                     </div>
                     <div className="flex-1 p-5 space-y-3">
                       <div className="h-20 bg-white/50 rounded-xl border border-white/60 flex items-center justify-center">
@@ -295,17 +313,17 @@ export default async function Home() {
               </div>
               <div className="w-full md:w-1/2 text-center md:text-left">
                 <p className="text-[13px] font-semibold text-primary mb-2">Dalam Genggaman Anda</p>
-                <h2 className="font-serif text-[30px] md:text-[36px] font-semibold text-secondary-hover mb-5">MQH Mobile</h2>
+                <h2 className="font-serif text-[28px] md:text-[36px] font-bold text-secondary-hover mb-5 leading-[1.15] tracking-[-0.02em]">MQH Mobile</h2>
                 <p className="text-[14.5px] text-muted-foreground leading-relaxed mb-8 max-w-md mx-auto md:mx-0">
                   Nikmati kemudahan persiapan dan pelaksanaan ibadah melalui satu aplikasi terpadu. Akses jadwal perjalanan, panduan manasik, hingga doa-doa penting dengan mudah.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                   {['Google Play', 'App Store'].map((store) => (
                     <div key={store} aria-disabled="true" className="bg-primary/90 text-primary-foreground px-5 py-3 rounded-xl flex items-center gap-3 border border-white/10 relative cursor-not-allowed opacity-90">
-                      <span className="material-symbols-outlined text-2xl">{store === 'Google Play' ? 'shop' : 'apple'}</span>
+                      <Icon name={ store === 'Google Play' ? 'shop' : 'apple' } className="text-2xl" />
                       <div className="text-left">
-                        <p className="text-[9px] uppercase tracking-wider opacity-70">Segera Hadir di</p>
-                        <p className="font-bold text-[13px] leading-tight">{store}</p>
+                        <p className="text-[9px] uppercase tracking-[0.04em] opacity-70">Segera Hadir di</p>
+                        <p className="font-semibold text-[13px] leading-tight">{store}</p>
                       </div>
                     </div>
                   ))}
@@ -315,8 +333,6 @@ export default async function Home() {
           </div>
         </section>
       </main>
-
-      <SiteFooter />
-    </div>
+</div>
   )
 }

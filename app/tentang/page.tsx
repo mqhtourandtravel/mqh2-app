@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { getTentangKami } from '@/lib/queries'
 import SiteHeader from '@/components/SiteHeader'
-import SiteFooter from '@/components/SiteFooter'
 import PageHero from '@/components/PageHero'
 import { SITE_NAME } from '@/lib/config'
 
@@ -41,7 +40,6 @@ export default async function TentangKamiPage() {
           </div>
         )}
       </div>
-      <SiteFooter />
-    </div>
+</div>
   )
 }

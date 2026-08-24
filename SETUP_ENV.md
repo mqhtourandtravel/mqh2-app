@@ -41,7 +41,7 @@ Variabel frontend opsional:
 
 ```env
 NEXT_PUBLIC_NOMOR_WA=6285868969000
-NEXT_PUBLIC_SITE_URL=https://mqhtour.com
+NEXT_PUBLIC_SITE_URL=https://mqhtourandtravel.com
 NEXT_PUBLIC_HERO_IMG=https://...
 INSTAGRAM_ACCESS_TOKEN=
 INSTAGRAM_USER_ID=

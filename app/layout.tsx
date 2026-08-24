@@ -1,18 +1,25 @@
 import type { Metadata } from 'next'
-import { Playfair_Display, Inter } from 'next/font/google'
+import { Plus_Jakarta_Sans, Manrope } from 'next/font/google'
 import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESC, HERO_IMG } from '@/lib/config'
 import './globals.css'
+import SiteFooter from '@/components/SiteFooter'
 
-const playfair = Playfair_Display({
+// Display font untuk heading/H1-H4/hero/KPI (weights 600, 700)
+const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   weight: ['500', '600', '700'],
-  variable: '--font-playfair',
+  variable: '--font-jakarta',
+  display: 'swap',
 })
 
-const inter = Inter({
+// Body/UI font untuk body/nav/button/form/table (weights 400-600)
+// 700 tidak di-load: semua bold di body/UI sudah dinormalisasi ke 600 (semibold);
+// angka penting/heading memakai Plus Jakarta Sans 700 via token --font-display.
+const manrope = Manrope({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-inter',
+  weight: ['400', '500', '600'],
+  variable: '--font-manrope',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -41,14 +48,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-          rel="stylesheet"
-        />
-      </head>
-      <body className={`${playfair.variable} ${inter.variable} font-sans bg-background text-foreground antialiased`}>
+      <body className={`${jakarta.variable} ${manrope.variable} bg-background text-foreground antialiased`}>
         {children}
+        <SiteFooter />
       </body>
     </html>
   )

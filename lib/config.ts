@@ -2,11 +2,13 @@
 // Edit di sini, bukan hardcode di setiap page
 
 export const NOMOR_WA = process.env.NEXT_PUBLIC_NOMOR_WA || '6285868969000'
-export const HERO_IMG = process.env.NEXT_PUBLIC_HERO_IMG || 'https://images.unsplash.com/photo-1564769662533-4f00a87b4056?w=1920&q=80&auto=format&fit=crop'
+// Hero image: self-hosted di /public agar tidak dependensi ke Unsplash saat runtime.
+// NEXT_PUBLIC_HERO_IMG tetap bisa override (mis. ke URL absolut untuk OG card).
+export const HERO_IMG = process.env.NEXT_PUBLIC_HERO_IMG || '/images/hero-kaaba.jpg'
 
 // Dipakai untuk metadataBase & URL absolut di Open Graph/Twitter card.
-// Set NEXT_PUBLIC_SITE_URL di env production ke domain asli (mis. https://mqhtour.com).
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://mqhtour.com'
+// Set NEXT_PUBLIC_SITE_URL di env production ke domain asli (https://mqhtourandtravel.com).
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://mqhtourandtravel.com'
 
 export const SITE_NAME = 'MQH Tour & Travel'
 export const SITE_TAGLINE = 'Perjalanan Spiritual yang Elegan'

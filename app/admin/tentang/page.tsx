@@ -61,7 +61,7 @@ export default function EditTentangKami() {
 
               <Separator />
 
-              <h2 className="text-[13px] font-bold text-primary">Angka Pencapaian</h2>
+              <h2 className="text-[13px] font-semibold text-primary">Angka Pencapaian</h2>
               {[1, 2, 3, 4].map((n) => (
                 <div key={n} className="grid grid-cols-2 gap-2">
                   <Input
