@@ -28,6 +28,8 @@ function Icon({ name, className }: { name: string; className?: string }) {
 }
 
 
+import ScrollExpandMedia from '@/components/blocks/scroll-expansion-hero'
+
 export const revalidate = 60
 
 export default async function Home() {
@@ -46,50 +48,16 @@ export default async function Home() {
     <div className="bg-background text-foreground overflow-x-hidden">
       <SiteHeader />
 
-      {/* HERO */}
-      <header className="relative h-screen min-h-[600px] w-full flex items-center justify-center pt-20">
-        <div className="absolute inset-0 z-0">
-          <Image src={HERO_IMG} alt="" fill priority sizes="100vw" className="object-cover" />
-          <div className="absolute inset-0 hero-overlay" />
-        </div>
-        <div className="relative z-10 text-center max-w-3xl px-5 mx-auto flex flex-col items-center">
-          <p className="text-secondary text-[12px] font-semibold uppercase tracking-[0.04em] mb-4">
-            Terpercaya, Terbukti, Recommended
-          </p>
-          <h1 className="font-serif text-[34px] md:text-[48px] font-bold leading-[1.12] md:leading-[1.1] text-primary-foreground mb-6 tracking-[-0.02em]">
-            Perjalanan Spiritual yang Elegan &amp; Nyaman
-          </h1>
-          <p className="text-[16px] md:text-[18px] text-primary-foreground/85 mb-10 max-w-xl leading-relaxed">
-            Hadirkan ketenangan dalam setiap langkah ibadah Anda dengan layanan premium dan pendampingan profesional dari MQH Tour &amp; Travel.
-          </p>
-          <Button asChild variant="secondary" size="lg" className="hover:shadow-xl hover:scale-105">
-            <Link href="/paket">
-              Cek Jadwal Keberangkatan
-              <ArrowRight className="text-[16px]" aria-hidden="true" />
-            </Link>
-          </Button>
-        </div>
-
-        {/* Trust strip */}
-        <div className="absolute bottom-0 left-0 w-full z-20 bg-primary/90 backdrop-blur-md border-t border-white/10 text-primary-foreground">
-          <div className="max-w-[1280px] mx-auto px-5 md:px-20 py-4 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 items-center">
-            {[
-              { icon: 'flight_takeoff', title: 'Keberangkatan Pasti', desc: 'Sesuai jadwal' },
-              { icon: 'sell', title: 'Harga Kompetitif', desc: 'Fasilitas terbaik' },
-              { icon: 'support_agent', title: 'Pelayanan Responsif', desc: 'Cepat dan ramah' },
-              { icon: 'luggage', title: 'Perlengkapan Eksklusif', desc: 'Fasilitas lengkap' },
-            ].map((item, i) => (
-              <div key={item.title} className={`flex items-center gap-3 px-2 ${i > 0 ? 'md:border-l md:border-white/10 md:pl-4' : ''}`}>
-                <Icon name={ item.icon } className="text-secondary text-[28px] flex-shrink-0" />
-                <div>
-                  <h3 className="text-[13px] font-semibold leading-tight">{item.title}</h3>
-                  <p className="text-[10.5px] text-primary-foreground/70">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </header>
+      {/* HERO — Scroll Expansion */}
+                        <ScrollExpandMedia
+                          mediaType="image"
+                          mediaSrc={HERO_IMG}
+                          bgImageSrc={HERO_IMG}
+                          title="Perjalanan Spiritual yang Elegan & Nyaman"
+                          date="MQH Tour & Travel"
+                          scrollToExpand="Scroll to Explore"
+                          textBlend
+                        />
 
       <main className="py-24 space-y-24">
         {/* PAKET */}
