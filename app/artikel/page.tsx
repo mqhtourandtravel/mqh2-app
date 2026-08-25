@@ -4,6 +4,7 @@ import Link from 'next/link'
 import SiteHeader from '@/components/SiteHeader'
 import PageHero from '@/components/PageHero'
 import PhotoBlock from '@/components/PhotoBlock'
+import { formatTanggal } from '@/lib/utils'
 import { SITE_NAME } from '@/lib/config'
 
 export const revalidate = 60
@@ -28,7 +29,7 @@ export default async function DaftarArtikel() {
                 <PhotoBlock imageUrl={a.gambar_url} alt={a.judul} className="w-full h-full group-hover:scale-105 transition-transform duration-500" />
               </div>
               <p className="text-[11px] text-muted-foreground mb-1.5">
-                {new Date(a.diterbitkan_pada).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                {formatTanggal(a.diterbitkan_pada)}
                 {a.kategori && ` · ${a.kategori}`}
               </p>
               <h3 className="font-serif text-[18px] font-medium text-primary leading-snug group-hover:text-secondary-hover transition mb-2">

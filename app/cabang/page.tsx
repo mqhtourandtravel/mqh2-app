@@ -1,13 +1,10 @@
 import type { Metadata } from 'next'
-import { Cabang } from '@/lib/supabase'
-import { getCabangAktif } from '@/lib/queries'
+import { CABANG_LIST } from '@/lib/config'
 import SiteHeader from '@/components/SiteHeader'
 import PageHero from '@/components/PageHero'
 import Link from 'next/link'
 import { SITE_NAME } from '@/lib/config'
 import { Clock, MapPin } from 'lucide-react'
-
-export const revalidate = 60
 
 export const metadata: Metadata = {
   title: `Cabang & Kantor Layanan | ${SITE_NAME}`,
@@ -20,11 +17,11 @@ export default async function HalamanCabang({
   searchParams: Promise<{ tipe?: string }>
 }) {
   const { tipe } = await searchParams
-  const cabangList = await getCabangAktif()
+  const cabangList = CABANG_LIST
   const pusat = tipe && tipe !== 'pusat' ? [] : cabangList.filter((c) => c.tipe === 'pusat')
   const representatif = tipe && tipe !== 'representatif' ? [] : cabangList.filter((c) => c.tipe === 'representatif')
 
-  function KartuCabang({ c }: { c: Cabang }) {
+  function KartuCabang({ c }: { c: (typeof CABANG_LIST)[number] }) {
     return (
       <div className="bg-white rounded-xl border border-accent p-6 hover:shadow-[var(--shadow-md-custom)] transition-shadow">
         <h3 className="font-serif text-lg font-medium text-primary mb-1">{c.nama}</h3>
@@ -35,18 +32,18 @@ export default async function HalamanCabang({
             {c.alamat}
           </p>
         )}
-        {c.jam_layanan && (
+        {c.jamLayanan && (
           <p className="text-[13px] text-muted-foreground flex items-center gap-2 mb-4">
             <Clock className="text-[16px] text-secondary" aria-hidden="true" />
-            {c.jam_layanan}
+            {c.jamLayanan}
           </p>
         )}
         <div className="flex flex-wrap gap-4 text-[13px] font-semibold pt-2 border-t border-accent">
           {c.whatsapp && (
             <a href={`https://wa.me/${c.whatsapp}`} target="_blank" rel="noopener noreferrer" className="text-secondary-hover hover:underline pt-2">Chat WhatsApp</a>
           )}
-          {c.google_maps_url && (
-            <a href={c.google_maps_url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline pt-2">Lihat di Maps</a>
+          {c.googleMapsUrl && (
+            <a href={c.googleMapsUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline pt-2">Lihat di Maps</a>
           )}
         </div>
       </div>
@@ -69,13 +66,13 @@ export default async function HalamanCabang({
         {pusat.length > 0 && (
           <div className="mb-12">
             <h2 className="text-[11px] font-semibold uppercase tracking-[0.04em] text-secondary-hover mb-5">Kantor Pusat</h2>
-            <div className="grid md:grid-cols-2 gap-5">{pusat.map((c) => <KartuCabang key={c.id} c={c} />)}</div>
+            <div className="grid md:grid-cols-2 gap-5">{pusat.map((c, i) => <KartuCabang key={i} c={c} />)}</div>
           </div>
         )}
         {representatif.length > 0 && (
           <div>
             <h2 className="text-[11px] font-semibold uppercase tracking-[0.04em] text-secondary-hover mb-5">Cabang Representatif</h2>
-            <div className="grid md:grid-cols-2 gap-5">{representatif.map((c) => <KartuCabang key={c.id} c={c} />)}</div>
+            <div className="grid md:grid-cols-2 gap-5">{representatif.map((c, i) => <KartuCabang key={i} c={c} />)}</div>
           </div>
         )}
         {cabangList.length === 0 && <p className="text-muted-foreground text-sm text-center py-12">Belum ada data cabang.</p>}

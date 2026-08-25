@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import SiteHeader from '@/components/SiteHeader'
 import PhotoBlock from '@/components/PhotoBlock'
+import { formatTanggal } from '@/lib/utils'
 import { SITE_NAME } from '@/lib/config'
 
 export const revalidate = 60
@@ -44,7 +45,7 @@ export default async function DetailArtikel({ params }: { params: Promise<{ slug
           {artikel.judul}
         </h1>
         <p className="text-[13px] text-muted-foreground pb-8 mb-8 border-b border-accent">
-          {new Date(artikel.diterbitkan_pada).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+          {formatTanggal(artikel.diterbitkan_pada)}
         </p>
         <PhotoBlock imageUrl={artikel.gambar_url} alt={artikel.judul} className="h-[320px] w-full rounded-xl mb-10" sizes="100vw" />
         <div className="text-[15.5px] leading-[1.9] text-primary/90 whitespace-pre-wrap">{artikel.konten}</div>

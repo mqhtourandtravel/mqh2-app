@@ -8,7 +8,7 @@ export const revalidate = 3600
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [paketRows, artikelRows] = await Promise.all([
-    prisma.paket.findMany({ select: { slug: true } }),
+    prisma.paket.findMany({ where: { status: 'aktif' }, select: { slug: true } }),
     getArtikelTerbit(),
   ])
 
