@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import SiteHeader from '@/components/SiteHeader'
 import PageHero from '@/components/PageHero'
-import { getCabangAktif } from '@/lib/queries'
+import { CABANG_LIST } from '@/lib/config'
 import { waLink } from '@/lib/utils'
 import { SITE_NAME } from '@/lib/config'
 import { Clock, MapPin } from 'lucide-react'
@@ -14,14 +14,14 @@ export const metadata: Metadata = {
 }
 
 export default async function KontakPage() {
-  const cabangList = await getCabangAktif()
+  const cabangList = CABANG_LIST
   // Pakai data cabang bertipe "pusat" yang sama dengan yang tampil di /cabang,
   // jadi alamat kantor pusat tidak lagi hardcode dan otomatis sinkron kalau
   // diubah dari admin.
   const pusat = cabangList.find((c) => c.tipe === 'pusat')
 
   const alamat = pusat?.alamat || pusat?.kota || 'Alamat kantor pusat belum tersedia'
-  const jamLayanan = pusat?.jam_layanan || 'Senin – Sabtu, 08.00 – 16.00 WIB'
+  const jamLayanan = pusat?.jamLayanan || 'Senin – Sabtu, 08.00 – 16.00 WIB'
   const nomorWaKontak = pusat?.whatsapp
 
   return (

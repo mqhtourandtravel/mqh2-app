@@ -6,11 +6,8 @@ import { prisma } from '@/lib/prisma'
 export const adminResources = {
   paket: { model: prisma.paket, defaultOrderBy: 'urutan' },
   keberangkatan: { model: prisma.keberangkatan, defaultOrderBy: 'tanggalBerangkat' },
-  cabang: { model: prisma.cabang, defaultOrderBy: 'urutan' },
-  testimoni: { model: prisma.testimoni, defaultOrderBy: 'urutan' },
 
   artikel: { model: prisma.artikel, defaultOrderBy: 'diterbitkanPada' },
-  tentang: { model: prisma.tentangKami, defaultOrderBy: 'updatedAt' },
   maskapai: { model: prisma.maskapai, defaultOrderBy: 'nama' },
   hotel: { model: prisma.hotel, defaultOrderBy: 'nama' },
 } as const

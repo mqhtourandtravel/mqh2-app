@@ -45,3 +45,47 @@ export const BULAN_LABELS = [
   { value: '11', label: 'November' },
   { value: '12', label: 'Desember' },
 ] as const
+
+// ===== DATA STATIK (ex-database: tentang, cabang, testimoni) =====
+// Konten ini sengaja tidak pakai database — cukup edit file ini.
+
+export const TENTANG_CERITA = `MQH Tour & Travel adalah biro perjalanan ibadah yang berdedikasi menemani perjalanan spiritual Anda ke Tanah Suci dengan pelayanan profesional, pembimbingan syar'i, dan kenyamanan ibadah paripurna.`
+
+export const TENTANG_ANGKA = [
+  { label: 'Jamaah Terlayani', nilai: '500+' },
+  { label: 'Keberangkatan', nilai: '20+' },
+  { label: 'Tahun Pengalaman', nilai: '5+' },
+  { label: 'Kepuasan Jamaah', nilai: '98%' },
+]
+
+export const CABANG_LIST = [
+  {
+    nama: 'MQH Tour & Travel - Kantor Pusat',
+    tipe: 'pusat',
+    kota: 'Pekalongan',
+    alamat: 'Pekalongan, Jawa Tengah',
+    telepon: null,
+    whatsapp: '6285868969000',
+    jamLayanan: 'Senin-Sabtu, 08.00-16.00',
+    email: null,
+    googleMapsUrl: null,
+  },
+  {
+    nama: 'MQH Tour & Travel - Magelang',
+    tipe: 'representatif',
+    kota: 'Magelang',
+    alamat: 'Magelang, Jawa Tengah',
+    telepon: null,
+    whatsapp: '6285868969000',
+    jamLayanan: 'Senin-Sabtu, 08.00-16.00',
+    email: null,
+    googleMapsUrl: null,
+  },
+]
+
+export const TESTIMONI_LIST = [
+  { isi: 'Pelayanan sangat memuaskan, mulai dari pendaftaran hingga kepulangan berjalan tertib dan profesional.', namaSumber: 'Jamaah Kloter 12' },
+  { isi: 'Pembimbing ibadahnya sabar dan berpengalaman, jamaah lansia pun terbantu dengan baik.', namaSumber: 'Jamaah Kloter 08' },
+  { isi: 'Alhamdulillah keberangkatan sesuai jadwal, hotel dekat dengan Masjidil Haram, sangat nyaman.', namaSumber: 'Jamaah Kloter 15' },
+  { isi: 'Tim MQH sangat responsif menjawab pertanyaan, dari sebelum berangkat sampai selesai ibadah.', namaSumber: 'Jamaah Kloter 21' },
+]

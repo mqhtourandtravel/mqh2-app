@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { keysToSnake } from '@/lib/case'
 import type {
-  Paket, Keberangkatan, Cabang, Testimoni, Artikel, TentangKami, Maskapai, Hotel,
+  Paket, Keberangkatan, Artikel, Maskapai, Hotel,
 } from '@/lib/supabase'
 
 // Semua fungsi di sini pakai Prisma (server-only) dan mengembalikan data dengan
@@ -78,20 +78,3 @@ export async function getPaketBySlug(slug: string): Promise<Paket | null> {
   return row ? (keysToSnake(row) as Paket) : null
 }
 
-export async function getCabangAktif(): Promise<Cabang[]> {
-  const rows = await prisma.cabang.findMany({ where: { status: 'aktif' }, orderBy: { urutan: 'asc' } })
-  return rows.map((r) => keysToSnake(r) as Cabang)
-}
-
-export async function getTestimoniAktif(): Promise<Testimoni[]> {
-  const rows = await prisma.testimoni.findMany({
-    where: { status: 'aktif' },
-    orderBy: { urutan: 'asc' },
-  })
-  return rows.map((r) => keysToSnake(r) as Testimoni)
-}
-
-export async function getTentangKami(): Promise<TentangKami | null> {
-  const row = await prisma.tentangKami.findFirst()
-  return row ? (keysToSnake(row) as TentangKami) : null
-}

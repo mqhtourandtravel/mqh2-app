@@ -30,29 +30,6 @@ export type Paket = {
   urutan: number
 }
 
-export type Cabang = {
-  id: string
-  nama: string
-  tipe: 'pusat' | 'representatif'
-  kota: string
-  alamat: string | null
-  telepon: string | null
-  whatsapp: string | null
-  jam_layanan: string | null
-  email: string | null
-  google_maps_url: string | null
-  urutan: number
-  status: 'aktif' | 'nonaktif'
-}
-
-export type Testimoni = {
-  id: string
-  isi: string
-  nama_sumber: string
-  urutan: number
-  status: 'aktif' | 'nonaktif'
-}
-
 export type Artikel = {
   id: string
   slug: string
@@ -63,19 +40,6 @@ export type Artikel = {
   gambar_url: string | null
   status: 'draft' | 'terbit'
   diterbitkan_pada: string
-}
-
-export type TentangKami = {
-  id: string
-  cerita: string | null
-  angka_1_label: string | null
-  angka_1_nilai: string | null
-  angka_2_label: string | null
-  angka_2_nilai: string | null
-  angka_3_label: string | null
-  angka_3_nilai: string | null
-  angka_4_label: string | null
-  angka_4_nilai: string | null
 }
 
 export type PaketGaleri = {

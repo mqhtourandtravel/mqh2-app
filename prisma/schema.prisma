@@ -73,25 +73,6 @@ model Keberangkatan {
   @@map("keberangkatan")
 }
 
-model Cabang {
-  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  nama          String
-  tipe          String    @default("representatif")
-  kota          String
-  alamat        String?
-  telepon       String?
-  whatsapp      String?
-  jamLayanan    String?   @map("jam_layanan")
-  email         String?
-  googleMapsUrl String?   @map("google_maps_url")
-  urutan        Int?      @default(0)
-  status        String    @default("aktif")
-  createdAt     DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  @@index([tipe], map: "idx_cabang_tipe")
-  @@map("cabang")
-}
-
 model Artikel {
   id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   slug            String    @unique
@@ -109,33 +90,3 @@ model Artikel {
   @@map("artikel")
 }
 
-model TentangKami {
-  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  cerita      String?
-  angka1Label String?   @map("angka_1_label")
-  angka1Nilai String?   @map("angka_1_nilai")
-  angka2Label String?   @map("angka_2_label")
-  angka2Nilai String?   @map("angka_2_nilai")
-  angka3Label String?   @map("angka_3_label")
-  angka3Nilai String?   @map("angka_3_nilai")
-  angka4Label String?   @map("angka_4_label")
-  angka4Nilai String?   @map("angka_4_nilai")
-  updatedAt   DateTime? @default(now()) @map("updated_at") @db.Timestamptz(6)
-
-  @@map("tentang_kami")
-}
-
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model Testimoni {
-  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  isi        String
-  namaSumber String    @map("nama_sumber")
-  urutan     Int?      @default(0)
-  status     String    @default("aktif")
-  createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  @@index([status], map: "idx_testimoni_status")
-  @@index([urutan], map: "idx_testimoni_urutan")
-  @@map("testimoni")
-}

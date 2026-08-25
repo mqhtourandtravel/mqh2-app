@@ -8,10 +8,7 @@ import { ExternalLink } from 'lucide-react'
 
 const MENU = [
   { href: '/admin/paket', label: 'Paket & Jadwal' },
-  { href: '/admin/cabang', label: 'Cabang' },
-  { href: '/admin/testimoni', label: 'Testimoni' },
   { href: '/admin/artikel', label: 'Artikel' },
-  { href: '/admin/tentang', label: 'Tentang Kami' },
   { href: '/admin/master', label: 'Master Data' },
 ]
 
