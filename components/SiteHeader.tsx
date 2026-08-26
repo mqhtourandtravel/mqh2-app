@@ -100,7 +100,7 @@ export default function SiteHeader() {
           transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
         }}
       >
-        {/* Logo — scales with navbar */}
+        {/* Logo */}
         <Link href="/" className="flex items-center gap-3 shrink-0" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
           <div className="shrink-0" style={{
             width: scrolled ? '40px' : '44px',
@@ -142,7 +142,6 @@ export default function SiteHeader() {
           <NavLink href="/artikel">Artikel</NavLink>
           <NavLink href="/tentang">Tentang</NavLink>
           <NavLink href="/kontak">Kontak</NavLink>
-          <NavLink href="/partnership">Partnership</NavLink>
         </div>
 
         {/* Desktop CTA — scales with navbar */}
@@ -214,14 +213,9 @@ export default function SiteHeader() {
               ))}
             </div>
           </div>
-          {[
-            { href: '/artikel', label: 'Artikel' },
-            { href: '/tentang', label: 'Tentang' },
-            { href: '/kontak', label: 'Kontak' },
-            { href: '/partnership', label: 'Partnership' },
-          ].map((item) => (
-            <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)} className="py-3 px-3 rounded-lg text-[16px] font-semibold transition-colors" style={{ color: pathname === item.href ? '#c8956c' : '#1a1a2e' }}>{item.label}</Link>
-          ))}
+          <Link href="/artikel" onClick={() => setMenuOpen(false)} className="py-3 px-3 rounded-lg text-[16px] font-semibold transition-colors" style={{ color: pathname === '/artikel' ? '#c8956c' : '#1a1a2e' }}>Artikel</Link>
+          <Link href="/tentang" onClick={() => setMenuOpen(false)} className="py-3 px-3 rounded-lg text-[16px] font-semibold transition-colors" style={{ color: pathname === '/tentang' ? '#c8956c' : '#1a1a2e' }}>Tentang</Link>
+          <Link href="/kontak" onClick={() => setMenuOpen(false)} className="py-3 px-3 rounded-lg text-[16px] font-semibold transition-colors" style={{ color: pathname === '/kontak' ? '#c8956c' : '#1a1a2e' }}>Kontak</Link>
           <div className="mt-3 px-3">
             <Button asChild className="w-full text-[14px] font-semibold text-white rounded-lg py-3" style={{ background: '#c8956c', boxShadow: '0 2px 8px rgba(26,92,58,0.2)' }}>
               <a href={`https://wa.me/${NOMOR_WA}`} target="_blank" rel="noopener noreferrer">
