@@ -70,8 +70,8 @@ export default function SiteHeader() {
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
       scrolled
-        ? 'bg-primary-darker/95 backdrop-blur-[16px] shadow-[var(--shadow-lg)]'
-        : 'bg-primary-darker/80 backdrop-blur-sm'
+        ? 'bg-[#071f14]/95 backdrop-blur-[16px] shadow-[var(--shadow-lg)]'
+        : 'bg-[#071f14]'
     }`}>
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 flex justify-between items-center h-16 md:h-[72px]">
         {/* Logo */}
@@ -130,7 +130,7 @@ export default function SiteHeader() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="lg:hidden bg-primary-darker border-t border-white/10 animate-fade-in-up">
+        <div className="lg:hidden bg-[#071f14] border-t border-white/10 animate-fade-in-up">
           <div className="max-w-[1200px] mx-auto px-4 py-4 flex flex-col gap-1">
             <SheetClose asChild>
               <Link href="/" className={`py-3 px-3 rounded-lg transition-colors ${mobileLinkClass('/')}`}>Beranda</Link>
