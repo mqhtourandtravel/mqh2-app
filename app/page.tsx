@@ -49,17 +49,16 @@ export default async function Home() {
       <SiteHeader />
 
       {/* HERO — Scroll Expansion */}
-                        <ScrollExpandMedia
-                          mediaType="image"
-                          mediaSrc={HERO_IMG}
-                          bgImageSrc={HERO_IMG}
-                          title="Perjalanan Spiritual yang Elegan & Nyaman"
-                          date="MQH Tour & Travel"
-                          scrollToExpand="Scroll to Explore"
-                          textBlend
-                        />
+              <ScrollExpandMedia
+        mediaType="image"
+        mediaSrc={HERO_IMG}
+        bgImageSrc={HERO_IMG}
+        title="Perjalanan Spiritual yang Elegan & Nyaman"
+        date="MQH Tour & Travel"
+        textBlend
+      />
 
-      <main className="pb-24 space-y-24">
+      <main className="py-12 space-y-20">
         {/* PAKET */}
         <section className="max-w-[1280px] mx-auto px-5 md:px-20">
           <div className="text-center mb-14">

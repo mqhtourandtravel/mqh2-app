@@ -55,7 +55,7 @@ const ScrollExpandMedia = ({
         e.preventDefault();
       } else if (!mediaFullyExpanded) {
         e.preventDefault();
-        const scrollDelta = e.deltaY * 0.0009;
+        const scrollDelta = e.deltaY * 0.0025;
         const newProgress = Math.min(
           Math.max(scrollProgress + scrollDelta, 0),
           1
@@ -86,8 +86,7 @@ const ScrollExpandMedia = ({
         e.preventDefault();
       } else if (!mediaFullyExpanded) {
         e.preventDefault();
-        // Increase sensitivity for mobile, especially when scrolling back
-        const scrollFactor = deltaY < 0 ? 0.008 : 0.005; // Higher sensitivity for scrolling back
+        const scrollFactor = deltaY < 0 ? 0.02 : 0.012;
         const scrollDelta = deltaY * scrollFactor;
         const newProgress = Math.min(
           Math.max(scrollProgress + scrollDelta, 0),
@@ -111,9 +110,7 @@ const ScrollExpandMedia = ({
     };
 
     const handleScroll = (): void => {
-      if (!mediaFullyExpanded) {
-        window.scrollTo(0, 0);
-      }
+      // Hapus scroll lock — biarkan halaman lanjut natural setelah expand
     };
 
     window.addEventListener('wheel', handleWheel as unknown as EventListener, {
@@ -134,8 +131,7 @@ const ScrollExpandMedia = ({
 
     return () => {
       window.removeEventListener(
-        'wheel',
-        handleWheel as unknown as EventListener
+        'wheel', handleWheel as unknown as EventListener
       );
       window.removeEventListener('scroll', handleScroll as EventListener);
       window.removeEventListener(

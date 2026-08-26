@@ -1,6 +1,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Hide scrollbar on hero section */
+html, body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
 /* ===== Animasi tambahan mqh2 ===== */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(16px); }

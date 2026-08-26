@@ -48,7 +48,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id">
-      <body className={`${jakarta.variable} ${manrope.variable} bg-background text-foreground antialiased`}>
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: '::-webkit-scrollbar{display:none}' }} />
+      </head>
+      <body className={`${jakarta.variable} ${manrope.variable} bg-background text-foreground antialiased`} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}>
         {children}
         <SiteFooter />
       </body>
