@@ -1,63 +1,61 @@
-import * as React from 'react'
-import { Slot } from '@radix-ui/react-slot'
-import { cva, type VariantProps } from 'class-variance-authority'
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
 
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils"
 
-// Varian tombol MQH: base rounded-full mengikuti bahasa visual "Majestic
-// Voyage" di seluruh situs (semua CTA situs berbentuk pill, bukan kotak).
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-colors disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-ring/50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-[0.85rem] font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        // Solid espresso -- CTA utama di atas background terang
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
-        // Solid gold -- CTA utama sekunder (WhatsApp, booking, dst.)
-        secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary-hover hover:text-primary-foreground',
-        // Outline terang -- dipakai di atas background gelap (hero image/overlay)
-        outlineLight:
-          'border border-white/30 text-primary-foreground bg-transparent hover:border-secondary hover:text-secondary',
-        // Outline standar -- dipakai di atas background terang
+        default:
+          "bg-primary text-primary-foreground shadow-[var(--shadow-green)] hover:bg-primary-hover hover:shadow-[var(--shadow-md)] hover:-translate-y-0.5",
+        destructive:
+          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          'border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline font-medium',
+          "border border-primary/50 bg-transparent text-primary hover:bg-primary/5",
+        outlineLight:
+          "border border-white/30 bg-transparent text-white hover:bg-white/10",
+        secondary:
+          "bg-secondary text-white shadow-[var(--shadow-gold)] hover:bg-secondary-hover hover:shadow-[var(--shadow-gold-hover)] hover:-translate-y-0.5",
+        ghost:
+          "text-primary hover:bg-primary/5",
+        link:
+          "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: 'h-10 px-6 py-2.5 text-[13px]',
-        sm: 'h-9 px-4 text-[12.5px] gap-1.5',
-        lg: 'h-12 px-8 text-[13.5px]',
-        icon: 'size-10',
+        default: "h-10 px-5 py-2 rounded-lg",
+        sm: "h-9 px-4 rounded-lg text-[0.8rem]",
+        lg: "h-12 px-8 rounded-lg text-[0.9rem]",
+        icon: "h-10 w-10 rounded-lg",
       },
     },
     defaultVariants: {
-      variant: 'default',
-      size: 'default',
+      variant: "default",
+      size: "default",
     },
   }
 )
 
-function Button({
-  className,
-  variant,
-  size,
-  asChild = false,
-  ...props
-}: React.ComponentProps<'button'> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
-  const Comp = asChild ? Slot : 'button'
-
-  return (
-    <Comp
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  )
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
 }
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Button.displayName = "Button"
 
 export { Button, buttonVariants }

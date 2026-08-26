@@ -1,26 +1,28 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Hide scrollbar on hero section */
+/* Hide scrollbar */
 html, body {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 html::-webkit-scrollbar, body::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+  display: none;
 }
 
-/* ===== Animasi tambahan mqh2 ===== */
+/* ===== Animasi mqh2 ===== */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-fade-in-up {
-  animation: fadeInUp 0.7s ease-out both;
+  animation: fadeInUp 0.8s ease-out both;
 }
 .delay-100 { animation-delay: 0.1s; }
 .delay-200 { animation-delay: 0.2s; }
 .delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
 
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -33,114 +35,119 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   animation-play-state: paused;
 }
 
-/* ===== Sistem desain "Royal Serenity" ===== */
+/* Gold section divider — 60px × 3px */
+.gold-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--secondary), var(--secondary-light));
+  border-radius: 2px;
+}
 
+/* ===== Glass panel ===== */
 .glass-panel {
   background: rgba(255,255,255,.72);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(221,230,227,.8);
-  box-shadow: 0 8px 30px rgba(23,37,43,.06);
+  border: 1px solid rgba(0,0,0,.05);
+  box-shadow: var(--shadow-md);
 }
 
+/* Hero overlay */
 .hero-overlay {
   background:
     linear-gradient(
-      90deg,
-      rgba(23,59,77,.82) 0%,
-      rgba(23,59,77,.42) 45%,
-      rgba(23,59,77,.04) 100%
+      to bottom,
+      rgba(10,46,26,.65) 0%,
+      rgba(10,46,26,.4) 100%
     );
 }
 
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 200px;
-  background: #FFFFFF;
-  border: 1px solid #DDE6E3;
-  box-shadow: 0 12px 30px rgba(23,37,43,.08);
-  border-radius: 0.5rem;
-  z-index: 40;
-}
-.dropdown-item {
-  display: block;
-  padding: 0.6rem 1rem;
-  font-size: 13px;
-  font-weight: 500;
-  color: #17252B;
-  transition: all 0.2s ease;
-}
-.dropdown-item:hover {
-  background: #EEF3F1;
-  color: #173B4D;
-}
-
-/* ===== Variabel tema "Royal Serenity" ===== */
+/* ===== Design Tokens — Forest Green & Gold ===== */
 :root {
-  --radius: 0.75rem;
+  --radius: 8px;
 
-  /* Primary - Deep Navy */
-  --primary: #173B4D;
+  /* Primary - Forest Green */
+  --primary: #1a5c3a;
+  --primary-light: #2d8f5e;
+  --primary-dark: #0e3d26;
+  --primary-darker: #0a2e1a;
   --primary-foreground: #FFFFFF;
-  --primary-hover: #0F3040;
+  --primary-hover: #0e3d26;
 
-  /* Secondary - Muted Sage Teal */
-  --secondary: #9DB5AD;
-  --secondary-foreground: #173B4D;
-  --secondary-hover: #829F96;
+  /* Secondary - Warm Gold */
+  --secondary: #c8956c;
+  --secondary-light: #d4b896;
+  --secondary-foreground: #FFFFFF;
+  --secondary-hover: #b37f5a;
 
-  /* Background - Near White */
-  --background: #F8FAF9;
-  --foreground: #17252B;
+  /* Accent Gold */
+  --accent-gold: #b8860b;
+
+  /* Background */
+  --background: #f8f9fa;
+  --background-cream: #faf8f5;
+  --foreground: #1a1a2e;
 
   /* Card */
   --card: #FFFFFF;
-  --card-foreground: #17252B;
+  --card-foreground: #1a1a2e;
 
   /* Popover */
   --popover: #FFFFFF;
-  --popover-foreground: #17252B;
+  --popover-foreground: #1a1a2e;
 
   /* Muted */
-  --muted: #EEF3F1;
-  --muted-foreground: #65747A;
+  --muted: #f0f0f0;
+  --muted-foreground: #6b7280;
 
-  /* Accent - Champagne (5% usage only) */
-  --accent: #F3E9CE;
-  --accent-foreground: #173B4D;
+  /* Accent - Gold subtle */
+  --accent: rgba(200,149,108,.08);
+  --accent-foreground: #1a5c3a;
 
   /* Destructive */
   --destructive: #C64B4B;
   --destructive-foreground: #FFFFFF;
 
   /* Border & Form */
-  --border: #DDE6E3;
-  --input: #D5E0DD;
-  --ring: #9DB5AD;
+  --border: rgba(0,0,0,.08);
+  --input: #e5e7eb;
+  --ring: #c8956c;
 
   /* Info */
   --info: #DCEDEF;
   --info-foreground: #365860;
 
-  /* Success / Warning (optional) */
-  --success: #64877C;
+  /* Success / Warning */
+  --success: #2d8f5e;
   --success-foreground: #FFFFFF;
-  --warning: #B99B55;
-  --warning-foreground: #173B4D;
+  --warning: #b8860b;
+  --warning-foreground: #FFFFFF;
 
-  /* Secondary hover for nav links */
-  --secondary-hover: #829F96;
+  /* Nav link hover */
+  --secondary-hover: #b37f5a;
 
-  /* Sidebar muted text */
-  --sidebar-muted: #C7D5D7;
+  /* Sidebar */
+  --sidebar-muted: #071f14;
 
-  /* ===== Typography tokens — "Royal Serenity" ===== */
-  /* Display (heading/H1-H4/hero/KPI) = Plus Jakarta Sans */
-  /* Body/UI (nav/button/form/table)   = Manrope */
-  --font-display: var(--font-jakarta);
-  --font-body: var(--font-manrope);
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 20px rgba(0,0,0,.08);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.12);
+  --shadow-xl: 0 20px 60px rgba(0,0,0,.15);
+  --shadow-gold: 0 2px 12px rgba(200,149,108,.4);
+  --shadow-gold-hover: 0 4px 16px rgba(200,149,108,.5);
+  --shadow-green: 0 2px 8px rgba(26,92,58,.2);
+
+  /* Legacy shadows (for backwards compat) */
+  --shadow-sm-custom: var(--shadow-sm);
+  --shadow-md-custom: var(--shadow-md);
+  --shadow-lg-custom: var(--shadow-lg);
+  --shadow-xl-custom: var(--shadow-xl);
+  --shadow-overlay: var(--shadow-lg);
+
+  /* Typography */
+  --font-display: var(--font-playfair);
+  --font-body: var(--font-inter);
   --font-sans-var: var(--font-body);
   --font-serif-var: var(--font-display);
 }
@@ -154,12 +161,17 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-darker: var(--primary-darker);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-light: var(--secondary-light);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-accent-gold: var(--accent-gold);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -174,58 +186,53 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
 
   --font-sans: var(--font-sans-var);
   --font-serif: var(--font-serif-var);
-  /* Semantic typography utilities: className="font-display" / "font-body" */
-  --font-display: var(--font-jakarta);
-  --font-body: var(--font-manrope);
+  --font-display: var(--font-playfair);
+  --font-body: var(--font-inter);
 
-  /* Semantic shadow tokens — neutral navy-tinted, no brown */
-  --shadow-sm-custom: 0 4px 20px rgba(23, 37, 43, 0.05);
-  --shadow-md-custom: 0 8px 30px rgba(23, 37, 43, 0.06);
-  --shadow-lg-custom: 0 8px 30px rgba(23, 37, 43, 0.12);
-  --shadow-xl-custom: 0 12px 32px rgba(23, 37, 43, 0.12);
-  --shadow-overlay: 0 12px 40px rgba(23, 37, 43, 0.18);
+  --shadow-sm-custom: var(--shadow-sm);
+  --shadow-md-custom: var(--shadow-md);
+  --shadow-lg-custom: var(--shadow-lg);
+  --shadow-xl-custom: var(--shadow-xl);
+  --shadow-overlay: var(--shadow-lg);
 }
 
-/* Dark Mode Dashboard */
+/* Dark Mode */
 .dark {
-  --background: #10191D;
-  --foreground: #ECF3F1;
-  --card: #172329;
-  --card-foreground: #ECF3F1;
-  --popover: #172329;
-  --popover-foreground: #ECF3F1;
-  --primary: #8FB6B0;
-  --primary-foreground: #102126;
-  --primary-hover: #A5C8C0;
-  --secondary: #304B51;
-  --secondary-foreground: #ECF3F1;
-  --secondary-hover: #45727A;
-  --muted: #202D31;
+  --background: #0a1a12;
+  --foreground: #ecf3f1;
+  --card: #0e261a;
+  --card-foreground: #ecf3f1;
+  --popover: #0e261a;
+  --popover-foreground: #ecf3f1;
+  --primary: #2d8f5e;
+  --primary-foreground: #0a2e1a;
+  --primary-hover: #3aab72;
+  --secondary: #c8956c;
+  --secondary-foreground: #0a2e1a;
+  --secondary-hover: #d4b896;
+  --muted: #152e22;
   --muted-foreground: #9BAEAE;
   --accent: #DCC98F;
-  --accent-foreground: #102126;
+  --accent-foreground: #0a2e1a;
   --destructive: #D96B6B;
   --destructive-foreground: #FFFFFF;
-  --border: #304047;
-  --input: #304047;
-  --ring: #8FB6B0;
-  --muted-foreground: #9BAEAE;
-  --accent-foreground: #102126;
-  --secondary-hover: #45727A;
+  --border: rgba(255,255,255,.1);
+  --input: rgba(255,255,255,.1);
+  --ring: #c8956c;
   --sidebar-muted: #9BAEAE;
-  --info: #2A4B5A;
+  --info: #1a3a2a;
   --info-foreground: #DCEDEF;
-  --success: #5A9E85;
+  --success: #2d8f5e;
   --success-foreground: #FFFFFF;
-  --warning: #D4B56A;
-  --warning-foreground: #102126;
+  --warning: #d4b56a;
+  --warning-foreground: #0a2e1a;
 }
 
 body {
@@ -234,31 +241,6 @@ body {
   font-family: var(--font-body);
 }
 
-/* Heading pakai display font; UI elements (input/button/table/nav)
-   tetap mewarisi body font dari komponennya masing-masing. */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-}
-
-/* ===== Animasi ===== */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-in-up {
-  animation: fadeInUp 0.7s ease-out both;
-}
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-.animate-marquee {
-  animation: marquee 30s linear infinite;
-}
-.animate-marquee:hover {
-  animation-play-state: paused;
 }

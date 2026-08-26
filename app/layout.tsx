@@ -1,31 +1,27 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans, Manrope } from 'next/font/google'
+import { Inter, Playfair_Display } from 'next/font/google'
 import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESC, HERO_IMG } from '@/lib/config'
 import './globals.css'
 import SiteFooter from '@/components/SiteFooter'
 
-// Display font untuk heading/H1-H4/hero/KPI (weights 600, 700)
-const jakarta = Plus_Jakarta_Sans({
+// Body font — Inter (sesuai referensi)
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  variable: '--font-jakarta',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-inter',
   display: 'swap',
 })
 
-// Body/UI font untuk body/nav/button/form/table (weights 400-600)
-// 700 tidak di-load: semua bold di body/UI sudah dinormalisasi ke 600 (semibold);
-// angka penting/heading memakai Plus Jakarta Sans 700 via token --font-display.
-const manrope = Manrope({
+// Heading/Display font — Playfair Display (sesuai referensi)
+const playfair = Playfair_Display({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  variable: '--font-manrope',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-playfair',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  // Catatan: tidak pakai title.template karena setiap page.tsx sudah
-  // menambahkan "| ${SITE_NAME}" sendiri di title-nya masing-masing.
   title: `${SITE_NAME} — ${SITE_TAGLINE}`,
   description: SITE_DESC,
   openGraph: {
@@ -51,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <style dangerouslySetInnerHTML={{ __html: '::-webkit-scrollbar{display:none}' }} />
       </head>
-      <body className={`${jakarta.variable} ${manrope.variable} bg-background text-foreground antialiased`} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}>
+      <body className={`${inter.variable} ${playfair.variable} bg-background text-foreground antialiased`} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}>
         {children}
         <SiteFooter />
       </body>
