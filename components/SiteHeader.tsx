@@ -83,23 +83,26 @@ export default function SiteHeader() {
 
   return (
     <nav
-      className="fixed top-0 w-full"
-      style={{
-        zIndex: 1100,
-        background: scrolled ? 'rgba(7,31,20,0.95)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(16px)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
-        boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.12)' : 'none',
-        transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-        padding: scrolled ? '0' : '16px 0',
-      }}
-    >
+          className="fixed top-0 w-full"
+          style={{
+            zIndex: 1100,
+            background: scrolled ? 'rgba(7,31,20,0.95)' : 'transparent',
+            backdropFilter: scrolled ? 'blur(16px)' : 'none',
+            WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
+            boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.12)' : 'none',
+            transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
+            paddingTop: scrolled ? '0' : '16px',
+            paddingBottom: scrolled ? '0' : '16px',
+          }}
+        >
       <div
-              className="max-w-[1200px] mx-auto px-6 md:px-8 flex justify-between items-center"
-              style={{
-                transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-              }}
-            >
+                      className="max-w-[1200px] mx-auto px-6 md:px-8 flex justify-between items-center"
+                      style={{
+                        height: '100%',
+                        alignItems: 'center',
+                        transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
+                      }}
+                    >
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 shrink-0" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
           <div className="shrink-0" style={{
@@ -146,37 +149,37 @@ export default function SiteHeader() {
                   </div>
 
         {/* Desktop CTA — scales with navbar */}
-                <div className="hidden min-[900px]:flex items-center" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
-                  <Button asChild
-                    className="text-[14px] font-semibold text-white rounded-lg transition-all duration-300"
-                    style={{
-                      background: '#c8956c',
-                      boxShadow: '0 2px 8px rgba(26,92,58,0.2)',
-                      padding: scrolled ? '6px 16px' : '8px 20px',
-                      fontSize: scrolled ? '13px' : '14px',
-                      borderRadius: '8px',
-                      transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-                    }}
-                  >
-                    <a
-                      href={`https://wa.me/${NOMOR_WA}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = '#b37f5a'
-                        e.currentTarget.style.transform = 'translateY(-1px)'
-                        e.currentTarget.style.boxShadow = '0 4px 16px rgba(200,149,108,0.5)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = '#c8956c'
-                        e.currentTarget.style.transform = 'translateY(0)'
-                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(26,92,58,0.2)'
-                      }}
-                    >
-                      Konsultasi
-                    </a>
-                  </Button>
-                </div>
+                        <div className="hidden min-[900px]:flex items-center mr-4 md:mr-6" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
+                          <Button asChild
+                            className="text-[14px] font-semibold text-white rounded-lg transition-all duration-300"
+                            style={{
+                              background: '#c8956c',
+                              boxShadow: '0 2px 8px rgba(26,92,58,0.2)',
+                              padding: scrolled ? '6px 16px' : '8px 20px',
+                              fontSize: scrolled ? '13px' : '14px',
+                              borderRadius: '8px',
+                              transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
+                            }}
+                          >
+                            <a
+                              href={`https://wa.me/${NOMOR_WA}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.background = '#b37f5a'
+                                e.currentTarget.style.transform = 'translateY(-1px)'
+                                e.currentTarget.style.boxShadow = '0 4px 16px rgba(200,149,108,0.5)'
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.background = '#c8956c'
+                                e.currentTarget.style.transform = 'translateY(0)'
+                                e.currentTarget.style.boxShadow = '0 2px 8px rgba(26,92,58,0.2)'
+                              }}
+                            >
+                              Konsultasi
+                            </a>
+                          </Button>
+                        </div>
 
         {/* Mobile hamburger */}
         <button
