@@ -12,27 +12,20 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet'
 
 type DropdownItem = { href: string; label: string }
 
 function NavDropdown({ label, items }: { label: string; items: DropdownItem[] }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center gap-1 text-[0.85rem] font-medium text-white/80 transition hover:text-secondary focus-visible:ring-2 focus-visible:ring-secondary rounded outline-none data-[state=open]:text-secondary">
-        {label} <ChevronDown className="size-3.5" />
+      <DropdownMenuTrigger className="flex items-center gap-1 text-[14px] font-semibold text-white/80 hover:text-secondary transition-colors duration-300 focus-visible:outline-none rounded">
+        {label}
+        <ChevronDown className="size-3.5 opacity-70" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="bg-white border border-border shadow-lg min-w-[200px]">
+      <DropdownMenuContent align="start" className="bg-white border border-black/5 shadow-[0_12px_40px_rgba(0,0,0,.12)] rounded-xl min-w-[220px] py-2">
         {items.map((item) => (
           <DropdownMenuItem key={item.href} asChild>
-            <Link href={item.href} className="text-[0.85rem] font-medium text-foreground hover:bg-muted transition-colors">{item.label}</Link>
+            <Link href={item.href} className="text-[14px] font-medium text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors px-4 py-2.5 cursor-pointer">{item.label}</Link>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
@@ -58,30 +51,35 @@ export default function SiteHeader() {
   }, [pathname])
 
   const navLinkClass = (href: string) =>
-    `text-[0.85rem] font-medium transition-colors duration-300 ${
+    `text-[14px] font-semibold transition-colors duration-300 ${
       pathname === href
         ? 'text-secondary'
         : 'text-white/80 hover:text-white'
     }`
 
   const mobileLinkClass = (href: string) =>
-    `text-[1rem] font-medium ${pathname === href ? 'text-secondary' : 'text-foreground'}`
+    `text-[16px] font-semibold ${pathname === href ? 'text-secondary' : 'text-foreground'}`
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
-      scrolled
-        ? 'bg-[#071f14]/95 backdrop-blur-[16px] shadow-[var(--shadow-lg)]'
-        : 'bg-[#071f14]'
-    }`}>
-      <div className="max-w-[1200px] mx-auto px-4 md:px-6 flex justify-between items-center h-16 md:h-[72px]">
+    <nav
+      className="fixed top-0 w-full z-50"
+      style={{
+        background: scrolled ? 'rgba(7,31,20,0.95)' : '#071f14',
+        backdropFilter: scrolled ? 'blur(16px)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
+        boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.12)' : 'none',
+        transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
+      }}
+    >
+      <div className="max-w-[1200px] mx-auto px-4 md:px-6 flex justify-between items-center" style={{ height: scrolled ? '56px' : '72px', transition: 'height 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-secondary flex items-center justify-center shrink-0">
+          <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: '#c8956c' }}>
             <span className="text-white font-bold text-lg font-serif">M</span>
           </div>
           <div className="hidden sm:block">
-            <p className="font-serif text-[1.125rem] font-bold text-white leading-tight">MQH</p>
-            <p className="text-[0.6rem] uppercase tracking-[2px] text-white/50 leading-none">Tour & Travel</p>
+            <p className="font-serif text-[20px] font-bold text-white leading-tight" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>MQH</p>
+            <p className="text-[10px] uppercase tracking-[2px] text-white/50 leading-none">Tour & Travel</p>
           </div>
         </Link>
 
@@ -109,70 +107,81 @@ export default function SiteHeader() {
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center">
-          <Button asChild className="bg-secondary text-white hover:bg-secondary-hover shadow-[var(--shadow-gold)] hover:shadow-[var(--shadow-gold-hover)] hover:-translate-y-0.5 transition-all duration-300 rounded-lg px-5 py-2 text-[0.85rem] font-semibold">
-            <a href={`https://wa.me/${NOMOR_WA}`} target="_blank" rel="noopener noreferrer">
+          <Button asChild
+            className="text-[14px] font-semibold text-white rounded-lg px-6 py-2.5 transition-all duration-300"
+            style={{
+              background: '#c8956c',
+              boxShadow: '0 2px 12px rgba(200,149,108,0.4)',
+            }}
+          >
+            <a
+              href={`https://wa.me/${NOMOR_WA}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#b37f5a'
+                e.currentTarget.style.transform = 'translateY(-1px)'
+                e.currentTarget.style.boxShadow = '0 4px 16px rgba(200,149,108,0.5)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#c8956c'
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 2px 12px rgba(200,149,108,0.4)'
+              }}
+            >
               Konsultasi
             </a>
           </Button>
         </div>
 
         {/* Mobile hamburger */}
-        <div className="flex items-center lg:hidden">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-            className="text-white focus:outline-none p-1"
-          >
-            {menuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
-          </button>
-        </div>
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+          className="lg:hidden text-white focus:outline-none p-1 transition-colors"
+        >
+          {menuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+        </button>
       </div>
 
       {/* Mobile menu */}
-      {menuOpen && (
-        <div className="lg:hidden bg-[#071f14] border-t border-white/10 animate-fade-in-up">
-          <div className="max-w-[1200px] mx-auto px-4 py-4 flex flex-col gap-1">
-            <SheetClose asChild>
-              <Link href="/" className={`py-3 px-3 rounded-lg transition-colors ${mobileLinkClass('/')}`}>Beranda</Link>
-            </SheetClose>
-            <div className="py-3 px-3">
-              <p className="text-[0.65rem] font-semibold uppercase tracking-[3px] text-secondary mb-3">Paket</p>
-              <div className="flex flex-col gap-1 pl-3 border-l-2 border-secondary/20">
-                {[
-                  { href: '/paket?kategori=umroh', label: 'Paket Umroh' },
-                  { href: '/paket?kategori=haji', label: 'Paket Haji' },
-                  { href: '/paket?kategori=tour', label: 'Halal Tour' },
-                  { href: '/paket?tier=Privat', label: 'Privat Umroh' },
-                  { href: '/tabungan-umroh', label: 'Tabungan Umroh' },
-                ].map((item) => (
-                  <SheetClose key={item.href} asChild>
-                    <Link href={item.href} className="text-[0.85rem] text-foreground/70 hover:text-primary transition py-1.5">{item.label}</Link>
-                  </SheetClose>
-                ))}
-              </div>
-            </div>
-            <SheetClose asChild>
-              <Link href="/artikel" className={`py-3 px-3 rounded-lg transition-colors ${mobileLinkClass('/artikel')}`}>Artikel</Link>
-            </SheetClose>
-            <SheetClose asChild>
-              <Link href="/tentang" className={`py-3 px-3 rounded-lg transition-colors ${mobileLinkClass('/tentang')}`}>Tentang</Link>
-            </SheetClose>
-            <SheetClose asChild>
-              <Link href="/kontak" className={`py-3 px-3 rounded-lg transition-colors ${mobileLinkClass('/kontak')}`}>Kontak</Link>
-            </SheetClose>
-            <SheetClose asChild>
-              <Link href="/partnership" className={`py-3 px-3 rounded-lg transition-colors ${mobileLinkClass('/partnership')}`}>Partnership</Link>
-            </SheetClose>
-            <div className="mt-3 px-3">
-              <Button asChild className="w-full bg-secondary text-white hover:bg-secondary-hover shadow-[var(--shadow-gold)] rounded-lg py-2.5 text-[0.85rem] font-semibold">
-                <a href={`https://wa.me/${NOMOR_WA}`} target="_blank" rel="noopener noreferrer">
-                  Konsultasi Sekarang
-                </a>
-              </Button>
+      <div
+        className="lg:hidden overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)]"
+        style={{
+          maxHeight: menuOpen ? '600px' : '0',
+          background: '#071f14',
+          borderTop: menuOpen ? '1px solid rgba(255,255,255,0.1)' : 'none',
+        }}
+      >
+        <div className="max-w-[1200px] mx-auto px-4 py-4 flex flex-col gap-0.5">
+          <Link href="/" onClick={() => setMenuOpen(false)} className={`py-3 px-3 rounded-lg transition-colors ${mobileLinkClass('/')}`}>Beranda</Link>
+          <div className="py-3 px-3">
+            <p className="text-[10px] font-semibold uppercase tracking-[3px] text-[#c8956c] mb-3">Paket</p>
+            <div className="flex flex-col gap-0.5 pl-3 border-l-2 border-[#c8956c]/20">
+              {[
+                { href: '/paket?kategori=umroh', label: 'Paket Umroh' },
+                { href: '/paket?kategori=haji', label: 'Paket Haji' },
+                { href: '/paket?kategori=tour', label: 'Halal Tour' },
+                { href: '/paket?tier=Privat', label: 'Privat Umroh' },
+                { href: '/tabungan-umroh', label: 'Tabungan Umroh' },
+              ].map((item) => (
+                <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)} className="text-[14px] font-medium text-white/60 hover:text-white transition-colors py-2">{item.label}</Link>
+              ))}
             </div>
           </div>
+          <Link href="/artikel" onClick={() => setMenuOpen(false)} className={`py-3 px-3 rounded-lg transition-colors ${mobileLinkClass('/artikel')}`}>Artikel</Link>
+          <Link href="/tentang" onClick={() => setMenuOpen(false)} className={`py-3 px-3 rounded-lg transition-colors ${mobileLinkClass('/tentang')}`}>Tentang</Link>
+          <Link href="/kontak" onClick={() => setMenuOpen(false)} className={`py-3 px-3 rounded-lg transition-colors ${mobileLinkClass('/kontak')}`}>Kontak</Link>
+          <Link href="/partnership" onClick={() => setMenuOpen(false)} className={`py-3 px-3 rounded-lg transition-colors ${mobileLinkClass('/partnership')}`}>Partnership</Link>
+          <div className="mt-3 px-3">
+            <Button asChild className="w-full text-[14px] font-semibold text-white rounded-lg py-3" style={{ background: '#c8956c', boxShadow: '0 2px 12px rgba(200,149,108,0.4)' }}>
+              <a href={`https://wa.me/${NOMOR_WA}`} target="_blank" rel="noopener noreferrer">
+                Konsultasi Sekarang
+              </a>
+            </Button>
+          </div>
         </div>
-      )}
+      </div>
     </nav>
   )
 }
