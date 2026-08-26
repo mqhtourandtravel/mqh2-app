@@ -91,8 +91,7 @@ export default function SiteHeader() {
         WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
         boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.12)' : 'none',
         transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-        paddingTop: scrolled ? '0' : '16px',
-        paddingBottom: scrolled ? '0' : '16px',
+        height: '65px',
       }}
     >
       <div
@@ -104,14 +103,8 @@ export default function SiteHeader() {
         }}
       >
         {/* Logo — fixed size, no scaling */}
-        <Link href="/" className="flex items-center gap-3 shrink-0" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
-          <div className="shrink-0 w-11 h-11 rounded-full flex items-center justify-center" style={{ background: '#c8956c' }}>
-            <span className="text-white font-bold font-serif text-[20px]">M</span>
-          </div>
-          <div className="hidden sm:block">
-            <p className="font-serif font-bold text-white leading-tight text-[20px]" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>MQH</p>
-            <p className="text-[10px] uppercase tracking-[2px] text-white/50 leading-none">Tour & Travel</p>
-          </div>
+        <Link href="/" className="flex items-center shrink-0" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
+          <img src="/logo.png" alt="MQH Logo" className="w-11 h-11 rounded-md" />
         </Link>
 
         {/* Desktop nav — displayed ≥900px */}
@@ -137,19 +130,19 @@ export default function SiteHeader() {
         </div>
 
         {/* Desktop CTA — fixed size per reference */}
-        <div className="hidden min-[900px]:flex items-center mr-4 md:mr-6" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
+        <div className="hidden min-[900px]:flex items-center mr-12 md:mr-16" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
           <Button asChild
-            className="text-[13.6px] font-semibold text-white rounded-[8px] transition-all duration-300"
-            style={{
-              background: '#c8956c',
-              boxShadow: '0 2px 12px rgba(26,92,58,0.2)',
-              padding: '10px 24px',
-              fontSize: '13.6px',
-              fontWeight: 600,
-              borderRadius: '8px',
-              transition: 'all 0.3s ease',
-            }}
-          >
+          className="text-[14px] font-semibold text-white rounded-[8px] transition-all duration-300"
+          style={{
+            background: '#c8956c',
+            boxShadow: '0 2px 12px rgba(26,92,58,0.2)',
+            padding: '2px 17px',
+            fontSize: '14px',
+            fontWeight: 600,
+            borderRadius: '8px',
+            transition: 'all 0.3s ease',
+          }}>
+
             <a
               href={`https://wa.me/${NOMOR_WA}`}
               target="_blank"
