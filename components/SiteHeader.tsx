@@ -86,7 +86,7 @@ export default function SiteHeader() {
           className="fixed top-0 w-full"
           style={{
             zIndex: 1100,
-            background: scrolled ? '#163926' : 'transparent',
+            background: scrolled ? 'rgba(22, 57, 38, 0.9)' : 'transparent',
             backdropFilter: scrolled ? 'blur(16px)' : 'none',
             WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
             boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.12)' : 'none',
