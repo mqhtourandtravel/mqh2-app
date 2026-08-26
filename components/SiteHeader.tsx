@@ -42,9 +42,9 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
       href={href}
       aria-current={isActive ? 'page' : undefined}
       className="group relative text-[14px] font-semibold transition-colors duration-300 py-1"
-      style={{ color: isActive ? '#c8956c' : 'rgba(255,255,255,0.8)' }}
+      style={{ color: isActive ? '#c8956c' : '#ffffff' }}
     >
-      <span className="group-hover:text-white transition-colors duration-300">{children}</span>
+      <span className="group-hover:text-[#c8956c] transition-colors duration-300">{children}</span>
       {/* Underline animation — grows from center on hover */}
       <span
         className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px] rounded-full transition-all duration-300 ease-out"
