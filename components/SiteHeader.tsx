@@ -86,7 +86,7 @@ export default function SiteHeader() {
           className="fixed top-0 w-full"
           style={{
             zIndex: 1100,
-            background: scrolled ? 'rgba(7,31,20,0.95)' : 'transparent',
+            background: scrolled ? '#163926' : 'transparent',
             backdropFilter: scrolled ? 'blur(16px)' : 'none',
             WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
             boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.12)' : 'none',
@@ -197,7 +197,7 @@ export default function SiteHeader() {
         className="min-[900px]:hidden overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)]"
         style={{
           maxHeight: menuOpen ? '600px' : '0',
-          background: '#071f14',
+          background: '#163926',
           borderTop: menuOpen ? '1px solid rgba(255,255,255,0.1)' : 'none',
         }}
       >
