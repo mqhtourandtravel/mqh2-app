@@ -95,11 +95,11 @@ export default function SiteHeader() {
       }}
     >
       <div
-        className="max-w-[1200px] mx-auto px-4 md:px-6 flex justify-between items-center"
-        style={{
-          transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-        }}
-      >
+              className="max-w-[1200px] mx-auto px-6 md:px-8 flex justify-between items-center"
+              style={{
+                transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
+              }}
+            >
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 shrink-0" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
           <div className="shrink-0" style={{
@@ -142,7 +142,8 @@ export default function SiteHeader() {
           <NavLink href="/artikel">Artikel</NavLink>
           <NavLink href="/tentang">Tentang</NavLink>
           <NavLink href="/kontak">Kontak</NavLink>
-        </div>
+                    <NavLink href="/partnership">Partnership</NavLink>
+                  </div>
 
         {/* Desktop CTA — scales with navbar */}
         <div className="hidden min-[900px]:flex items-center" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
