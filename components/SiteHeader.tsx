@@ -18,7 +18,7 @@ type DropdownItem = { href: string; label: string }
 function NavDropdown({ label, items }: { label: string; items: DropdownItem[] }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="group relative flex items-center gap-1 text-[14px] font-semibold text-white/80 hover:text-white transition-colors duration-300 focus-visible:outline-none py-1">
+      <DropdownMenuTrigger className="group relative text-[14px] font-semibold text-white/80 hover:text-white transition-colors duration-300 focus-visible:outline-none py-1">
         {label}
         <ChevronDown className="size-3.5 opacity-70" />
       </DropdownMenuTrigger>
@@ -100,14 +100,26 @@ export default function SiteHeader() {
           transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
         }}
       >
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: '#c8956c' }}>
-            <span className="text-white font-bold text-lg font-serif">M</span>
+        {/* Logo — scales with navbar */}
+        <Link href="/" className="flex items-center gap-3 shrink-0" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
+          <div className="shrink-0" style={{
+            width: scrolled ? '40px' : '44px',
+            height: scrolled ? '40px' : '44px',
+            transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
+            background: '#c8956c',
+          }}>
+            <span className="text-white font-bold font-serif" style={{
+              fontSize: scrolled ? '18px' : '20px',
+              transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
+            }}>M</span>
           </div>
-          <div className="hidden sm:block">
-            <p className="font-serif text-[20px] font-bold text-white leading-tight">MQH</p>
-            <p className="text-[10px] uppercase tracking-[2px] text-white/50 leading-none">Tour & Travel</p>
+          <div className="hidden sm:block" style={{ opacity: scrolled ? 0.8 : 1, transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
+            <p className="font-serif font-bold text-white leading-tight" style={{
+              fontSize: scrolled ? '18px' : '20px',
+              transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
+              fontFamily: 'Playfair Display, Georgia, serif',
+            }}>MQH</p>
+            <p className="text-[10px] uppercase tracking-[2px] text-white/50 leading-none" style={{ opacity: scrolled ? 0 : 1, transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>Tour & Travel</p>
           </div>
         </Link>
 
@@ -133,13 +145,17 @@ export default function SiteHeader() {
           <NavLink href="/partnership">Partnership</NavLink>
         </div>
 
-        {/* Desktop CTA */}
-        <div className="hidden min-[900px]:flex items-center">
+        {/* Desktop CTA — scales with navbar */}
+        <div className="hidden min-[900px]:flex items-center" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
           <Button asChild
-            className="text-[14px] font-semibold text-white rounded-lg px-6 py-2.5 transition-all duration-300"
+            className="text-[14px] font-semibold text-white rounded-lg transition-all duration-300"
             style={{
               background: '#c8956c',
               boxShadow: '0 2px 8px rgba(26,92,58,0.2)',
+              padding: scrolled ? '8px 20px' : '10px 24px',
+              fontSize: scrolled ? '13px' : '14px',
+              borderRadius: '8px',
+              transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
             }}
           >
             <a
@@ -166,7 +182,8 @@ export default function SiteHeader() {
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
-          className="min-[900px]:hidden text-white focus:outline-none p-1 transition-colors"
+          className="min-[900px]:hidden text-white focus:outline-none p-1 transition-colors shrink-0"
+          style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}
         >
           {menuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
         </button>
