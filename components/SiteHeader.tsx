@@ -83,46 +83,34 @@ export default function SiteHeader() {
 
   return (
     <nav
-          className="fixed top-0 w-full"
-          style={{
-            zIndex: 1100,
-            background: scrolled ? 'rgba(22, 57, 38, 0.9)' : 'transparent',
-            backdropFilter: scrolled ? 'blur(16px)' : 'none',
-            WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
-            boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.12)' : 'none',
-            transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-            paddingTop: scrolled ? '0' : '16px',
-            paddingBottom: scrolled ? '0' : '16px',
-          }}
-        >
+      className="fixed top-0 w-full"
+      style={{
+        zIndex: 1100,
+        background: scrolled ? 'rgba(22,57,38,0.9)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(16px)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
+        boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.12)' : 'none',
+        transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
+        paddingTop: scrolled ? '0' : '16px',
+        paddingBottom: scrolled ? '0' : '16px',
+      }}
+    >
       <div
-                      className="max-w-[1200px] mx-auto px-6 md:px-8 flex justify-between items-center"
-                      style={{
-                        height: '100%',
-                        alignItems: 'center',
-                        transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-                      }}
-                    >
-        {/* Logo */}
+        className="max-w-[1200px] mx-auto px-6 md:px-8 flex justify-between items-center"
+        style={{
+          height: '100%',
+          alignItems: 'center',
+          transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
+        }}
+      >
+        {/* Logo — fixed size, no scaling */}
         <Link href="/" className="flex items-center gap-3 shrink-0" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
-          <div className="shrink-0" style={{
-            width: scrolled ? '40px' : '44px',
-            height: scrolled ? '40px' : '44px',
-            transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-            background: '#c8956c',
-          }}>
-            <span className="text-white font-bold font-serif" style={{
-              fontSize: scrolled ? '18px' : '20px',
-              transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-            }}>M</span>
+          <div className="shrink-0 w-11 h-11 rounded-full flex items-center justify-center" style={{ background: '#c8956c' }}>
+            <span className="text-white font-bold font-serif text-[20px]">M</span>
           </div>
-          <div className="hidden sm:block" style={{ opacity: scrolled ? 0.8 : 1, transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
-            <p className="font-serif font-bold text-white leading-tight" style={{
-              fontSize: scrolled ? '18px' : '20px',
-              transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-              fontFamily: 'Playfair Display, Georgia, serif',
-            }}>MQH</p>
-            <p className="text-[10px] uppercase tracking-[2px] text-white/50 leading-none" style={{ opacity: scrolled ? 0 : 1, transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>Tour & Travel</p>
+          <div className="hidden sm:block">
+            <p className="font-serif font-bold text-white leading-tight text-[20px]" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>MQH</p>
+            <p className="text-[10px] uppercase tracking-[2px] text-white/50 leading-none">Tour & Travel</p>
           </div>
         </Link>
 
@@ -145,41 +133,42 @@ export default function SiteHeader() {
           <NavLink href="/artikel">Artikel</NavLink>
           <NavLink href="/tentang">Tentang</NavLink>
           <NavLink href="/kontak">Kontak</NavLink>
-                    <NavLink href="/partnership">Partnership</NavLink>
-                  </div>
+          <NavLink href="/partnership">Partnership</NavLink>
+        </div>
 
-        {/* Desktop CTA — scales with navbar */}
-                        <div className="hidden min-[900px]:flex items-center mr-4 md:mr-6" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
-                          <Button asChild
-                            className="text-[14px] font-semibold text-white rounded-lg transition-all duration-300"
-                            style={{
-                              background: '#c8956c',
-                              boxShadow: '0 2px 8px rgba(26,92,58,0.2)',
-                              padding: scrolled ? '6px 16px' : '8px 20px',
-                              fontSize: scrolled ? '13px' : '14px',
-                              borderRadius: '8px',
-                              transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-                            }}
-                          >
-                            <a
-                              href={`https://wa.me/${NOMOR_WA}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.background = '#b37f5a'
-                                e.currentTarget.style.transform = 'translateY(-1px)'
-                                e.currentTarget.style.boxShadow = '0 4px 16px rgba(200,149,108,0.5)'
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.background = '#c8956c'
-                                e.currentTarget.style.transform = 'translateY(0)'
-                                e.currentTarget.style.boxShadow = '0 2px 8px rgba(26,92,58,0.2)'
-                              }}
-                            >
-                              Konsultasi
-                            </a>
-                          </Button>
-                        </div>
+        {/* Desktop CTA — fixed size per reference */}
+        <div className="hidden min-[900px]:flex items-center mr-4 md:mr-6" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
+          <Button asChild
+            className="text-[13.6px] font-semibold text-white rounded-[8px] transition-all duration-300"
+            style={{
+              background: '#c8956c',
+              boxShadow: '0 2px 12px rgba(26,92,58,0.2)',
+              padding: '10px 24px',
+              fontSize: '13.6px',
+              fontWeight: 600,
+              borderRadius: '8px',
+              transition: 'all 0.3s ease',
+            }}
+          >
+            <a
+              href={`https://wa.me/${NOMOR_WA}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#b37f5a'
+                e.currentTarget.style.transform = 'translateY(-1px)'
+                e.currentTarget.style.boxShadow = '0 4px 16px rgba(200,149,108,0.5)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#c8956c'
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 2px 12px rgba(26,92,58,0.2)'
+              }}
+            >
+              Konsultasi
+            </a>
+          </Button>
+        </div>
 
         {/* Mobile hamburger */}
         <button
@@ -220,6 +209,7 @@ export default function SiteHeader() {
           <Link href="/artikel" onClick={() => setMenuOpen(false)} className="py-3 px-3 rounded-lg text-[16px] font-semibold transition-colors" style={{ color: pathname === '/artikel' ? '#c8956c' : '#1a1a2e' }}>Artikel</Link>
           <Link href="/tentang" onClick={() => setMenuOpen(false)} className="py-3 px-3 rounded-lg text-[16px] font-semibold transition-colors" style={{ color: pathname === '/tentang' ? '#c8956c' : '#1a1a2e' }}>Tentang</Link>
           <Link href="/kontak" onClick={() => setMenuOpen(false)} className="py-3 px-3 rounded-lg text-[16px] font-semibold transition-colors" style={{ color: pathname === '/kontak' ? '#c8956c' : '#1a1a2e' }}>Kontak</Link>
+          <Link href="/partnership" onClick={() => setMenuOpen(false)} className="py-3 px-3 rounded-lg text-[16px] font-semibold transition-colors" style={{ color: pathname === '/partnership' ? '#c8956c' : '#1a1a2e' }}>Partnership</Link>
           <div className="mt-3 px-3">
             <Button asChild className="w-full text-[14px] font-semibold text-white rounded-lg py-3" style={{ background: '#c8956c', boxShadow: '0 2px 8px rgba(26,92,58,0.2)' }}>
               <a href={`https://wa.me/${NOMOR_WA}`} target="_blank" rel="noopener noreferrer">
