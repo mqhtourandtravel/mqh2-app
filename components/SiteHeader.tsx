@@ -18,9 +18,9 @@ type DropdownItem = { href: string; label: string }
 function NavDropdown({ label, items }: { label: string; items: DropdownItem[] }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="group relative text-[14px] font-semibold text-white/80 hover:text-white transition-colors duration-300 focus-visible:outline-none py-1">
+      <DropdownMenuTrigger className="group relative inline-flex items-center gap-1.5 text-[14px] font-semibold text-white/80 hover:text-white transition-colors duration-300 focus-visible:outline-none py-1">
         {label}
-        <ChevronDown className="size-3.5 opacity-70" />
+        <ChevronDown className="size-3.5 opacity-70 shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-180" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="bg-white border border-black/5 shadow-[0_12px_40px_rgba(0,0,0,.12)] rounded-xl min-w-[220px] py-2">
         {items.map((item) => (
@@ -146,37 +146,37 @@ export default function SiteHeader() {
                   </div>
 
         {/* Desktop CTA — scales with navbar */}
-        <div className="hidden min-[900px]:flex items-center" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
-          <Button asChild
-            className="text-[14px] font-semibold text-white rounded-lg transition-all duration-300"
-            style={{
-              background: '#c8956c',
-              boxShadow: '0 2px 8px rgba(26,92,58,0.2)',
-              padding: scrolled ? '8px 20px' : '10px 24px',
-              fontSize: scrolled ? '13px' : '14px',
-              borderRadius: '8px',
-              transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-            }}
-          >
-            <a
-              href={`https://wa.me/${NOMOR_WA}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#b37f5a'
-                e.currentTarget.style.transform = 'translateY(-1px)'
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(200,149,108,0.5)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#c8956c'
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(26,92,58,0.2)'
-              }}
-            >
-              Konsultasi
-            </a>
-          </Button>
-        </div>
+                <div className="hidden min-[900px]:flex items-center" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
+                  <Button asChild
+                    className="text-[14px] font-semibold text-white rounded-lg transition-all duration-300"
+                    style={{
+                      background: '#c8956c',
+                      boxShadow: '0 2px 8px rgba(26,92,58,0.2)',
+                      padding: scrolled ? '6px 16px' : '8px 20px',
+                      fontSize: scrolled ? '13px' : '14px',
+                      borderRadius: '8px',
+                      transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
+                    }}
+                  >
+                    <a
+                      href={`https://wa.me/${NOMOR_WA}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#b37f5a'
+                        e.currentTarget.style.transform = 'translateY(-1px)'
+                        e.currentTarget.style.boxShadow = '0 4px 16px rgba(200,149,108,0.5)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = '#c8956c'
+                        e.currentTarget.style.transform = 'translateY(0)'
+                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(26,92,58,0.2)'
+                      }}
+                    >
+                      Konsultasi
+                    </a>
+                  </Button>
+                </div>
 
         {/* Mobile hamburger */}
         <button
