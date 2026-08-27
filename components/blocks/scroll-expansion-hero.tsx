@@ -206,7 +206,15 @@ const ScrollExpandMedia = ({
               >
                 {mediaType === 'video' ? (
                   mediaSrc.includes('youtube.com') || mediaSrc.includes('youtu.be') ? (
-                    <div className='relative w-full h-full pointer-events-none overflow-hidden rounded-2xl'>
+                    <div className='relative w-full h-full pointer-events-none overflow-hidden rounded-2xl bg-black'>
+                      {posterSrc && (
+                        <Image
+                          src={posterSrc}
+                          alt=""
+                          fill
+                          className="object-cover -z-10"
+                        />
+                      )}
                       {(() => {
                         let videoId = ''
                         if (mediaSrc.includes('youtu.be/')) {
@@ -217,7 +225,7 @@ const ScrollExpandMedia = ({
                           videoId = mediaSrc.split('embed/')[1]?.split('?')[0]?.split('&')[0] || ''
                         }
                         const embedUrl = videoId
-                          ? `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&disablekb=1&modestbranding=1&playlist=${videoId}`
+                          ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&disablekb=1&modestbranding=1&playsinline=1&enablejsapi=1&playlist=${videoId}`
                           : mediaSrc
 
                         return (
@@ -225,9 +233,9 @@ const ScrollExpandMedia = ({
                             width='100%'
                             height='100%'
                             src={embedUrl}
-                            className='w-full h-full rounded-2xl scale-125 pointer-events-none'
+                            className='w-full h-full rounded-2xl scale-125'
                             frameBorder='0'
-                            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
                             allowFullScreen
                           />
                         )
