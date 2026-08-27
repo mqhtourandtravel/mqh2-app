@@ -1,7 +1,7 @@
 import { getKeberangkatanAktif, getMaskapaiList, getHotelList, getArtikelTerbit } from '@/lib/queries'
 import { TESTIMONI_LIST } from '@/lib/config'
 import { getInstagramFeed } from '@/lib/instagram'
-import { INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_BIO, HERO_IMG } from '@/lib/config'
+import { INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_BIO, HERO_IMG, HERO_VIDEO } from '@/lib/config'
 import Link from 'next/link'
 import Image from 'next/image'
 import SiteHeader from '@/components/SiteHeader'
@@ -30,11 +30,12 @@ export default async function Home() {
     <div className="bg-background text-foreground overflow-x-hidden">
       <SiteHeader />
 
-      {/* HERO — Scroll Expansion (tidak diubah) */}
+      {/* HERO — Scroll Expansion: 1 Gambar Latar + 1 Video Mekkah */}
       <ScrollExpandMedia
-        mediaType="image"
-        mediaSrc={HERO_IMG}
+        mediaType="video"
+        mediaSrc={HERO_VIDEO}
         bgImageSrc={HERO_IMG}
+        posterSrc={HERO_IMG}
         title="Perjalanan Spiritual yang Elegan & Nyaman"
         date="MQH Tour & Travel"
         textBlend
