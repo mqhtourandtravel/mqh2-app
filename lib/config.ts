@@ -2,8 +2,8 @@
 // Edit di sini, bukan hardcode di setiap page
 
 export const NOMOR_WA = process.env.NEXT_PUBLIC_NOMOR_WA || '6285868969000'
-// Hero image & video: self-hosted di public folder agar tidak bergantung external URL/embed
-export const HERO_IMG = process.env.NEXT_PUBLIC_HERO_IMG || '/images/hero-kaaba.jpg'
+// Hero image & video: self-hosted di public folder
+export const HERO_IMG = process.env.NEXT_PUBLIC_HERO_IMG || '/images/hero.jpg'
 export const HERO_VIDEO = process.env.NEXT_PUBLIC_HERO_VIDEO || '/videos/hero.mp4'
 
 // Dipakai untuk metadataBase & URL absolut di Open Graph/Twitter card.
