@@ -26,7 +26,8 @@ export default function LoginAdmin() {
       setError('Email atau password salah.')
       return
     }
-    router.push(next.startsWith('/') && !next.startsWith('//') ? next : '/admin/paket')
+    const target = next.startsWith('/') && !next.startsWith('//') ? next : '/admin/paket'
+    window.location.href = target
   }
 
   async function handleGoogleLogin() {
