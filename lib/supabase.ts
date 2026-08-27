@@ -67,6 +67,19 @@ export type TipeKamar = {
   urutan: number
 }
 
+export type User = {
+  id: string
+  auth_id: string
+  email: string
+  nama: string | null
+  role: 'staff_admin' | 'jamaah' | 'agen'
+  no_whatsapp: string | null
+  alamat: string | null
+  photo_url: string | null
+  agen_id: string | null
+  created_at: string
+}
+
 export type Keberangkatan = {
   id: string
   paket_id: string
@@ -85,4 +98,21 @@ export type Keberangkatan = {
   maskapai?: Maskapai
   hotel_mekkah?: Hotel
   hotel_madinah?: Hotel
+  // Mapped fields from /api/paket response
+  nama_paket?: string
+  tipe_paket?: string
+  kota_asal?: string
+  sisa_kuota?: number | null
+}
+
+export type Booking = {
+  id: string
+  user_id: string
+  keberangkatan_id: string
+  status: 'pending' | 'confirmed' | 'cancelled' | 'completed'
+  catatan: string | null
+  jumlah_bayar: number | null
+  created_at: string
+  user?: User
+  keberangkatan?: Keberangkatan
 }

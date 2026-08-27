@@ -9,7 +9,7 @@ import PaketTable from '@/components/PaketTable'
 import PhotoBlock from '@/components/PhotoBlock'
 import { waLink, formatTanggal } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { BadgeCheck, Camera, MessageCircle, ArrowRight } from 'lucide-react'
+import { Camera, MessageCircle, ArrowRight } from 'lucide-react'
 
 import ScrollExpandMedia from '@/components/blocks/scroll-expansion-hero'
 

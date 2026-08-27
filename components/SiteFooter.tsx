@@ -1,10 +1,9 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { NOMOR_PPIU, NOMOR_PIHK, NOMOR_WA, INSTAGRAM_URL } from '@/lib/config'
-import { ChevronDown, MapPin, Phone, Mail, Clock, ShieldCheck, ArrowRight } from 'lucide-react'
+import { NOMOR_PPIU, NOMOR_WA, INSTAGRAM_URL } from '@/lib/config'
+import { MapPin, Phone, Mail, Clock, ShieldCheck, ArrowRight } from 'lucide-react'
 
 const mainMenu = [
   { href: '/', label: 'Beranda' },
@@ -29,13 +28,8 @@ const services = [
 
 export default function SiteFooter() {
   const pathname = usePathname()
-  const [openAccordion, setOpenAccordion] = useState<string | null>(null)
 
   if (pathname?.startsWith('/admin')) return null
-
-  const toggleAccordion = (id: string) => {
-    setOpenAccordion(openAccordion === id ? null : id)
-  }
 
   return (
     <>

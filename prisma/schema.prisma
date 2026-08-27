@@ -66,6 +66,7 @@ model Keberangkatan {
   hotelMekkah         Hotel?    @relation("HotelMekkah", fields: [hotelMekkahId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   maskapai            Maskapai? @relation(fields: [maskapaiId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   paket               Paket     @relation(fields: [paketId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  bookings            Booking[]
 
   @@index([paketId], map: "idx_keberangkatan_paket")
   @@index([status], map: "idx_keberangkatan_status")
@@ -88,5 +89,47 @@ model Artikel {
   @@index([slug], map: "idx_artikel_slug")
   @@index([status], map: "idx_artikel_status")
   @@map("artikel")
+}
+
+model User {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  authId      String    @unique @map("auth_id") @db.Uuid
+  email       String    @unique
+  nama        String?
+  role        String    @default("jamaah") // staff_admin | jamaah | agen
+  noWhatsApp  String?   @map("no_whatsapp")
+  alamat      String?
+  photoUrl    String?   @map("photo_url")
+  agenId      String?   @map("agen_id") @db.Uuid
+  createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime? @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  agen        User?     @relation("AgenBinaan", fields: [agenId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  binaan      User[]    @relation("AgenBinaan")
+
+  bookings     Booking[]
+
+  @@index([role], map: "idx_user_role")
+  @@index([agenId], map: "idx_user_agen")
+  @@map("users")
+}
+
+model Booking {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId            String    @map("user_id") @db.Uuid
+  keberangkatanId   String    @map("keberangkatan_id") @db.Uuid
+  status            String    @default("pending") // pending | confirmed | cancelled | completed
+  catatan           String?
+  jumlahBayar       Decimal?  @map("jumlah_bayar") @db.Decimal
+  createdAt         DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime? @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  keberangkatan   Keberangkatan @relation(fields: [keberangkatanId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId], map: "idx_booking_user")
+  @@index([keberangkatanId], map: "idx_booking_keberangkatan")
+  @@index([status], map: "idx_booking_status")
+  @@map("bookings")
 }
 

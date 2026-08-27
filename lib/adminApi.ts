@@ -58,3 +58,127 @@ export async function adminDelete(resource: string, id: string): Promise<{ ok: b
   if (!res.ok) return { ok: false, error: json.error ?? 'Gagal menghapus data.' }
   return { ok: true, error: null }
 }
+
+/**
+ * Ubah role user. Hanya staff_admin yang bisa.
+ * Endpoint terpisah: /api/admin/users/[id]/role
+ */
+export async function adminChangeRole(
+  userId: string,
+  role: string,
+): Promise<{ data: unknown | null; error: string | null }> {
+  const headers = await authHeader()
+  const res = await fetch(`/api/admin/users/${userId}/role`, {
+    method: 'PATCH',
+    headers,
+    body: JSON.stringify({ role }),
+  })
+  const json = await res.json()
+  if (!res.ok) return { data: null, error: json.error ?? 'Gagal mengubah role.' }
+  return { data: json, error: null }
+}
+
+/**
+ * Assign jamaah ke agen. Staff admin only.
+ */
+export async function agentAssignJamaah(
+  userId: string,
+  agenId: string | null,
+): Promise<{ data: unknown | null; error: string | null }> {
+  const headers = await authHeader()
+  const res = await fetch('/api/agent/jamaah/assign', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ user_id: userId, agen_id: agenId }),
+  })
+  const json = await res.json()
+  if (!res.ok) return { data: null, error: json.error ?? 'Gagal assign jamaah.' }
+  return { data: json, error: null }
+}
+
+/**
+ * Lihat jamaah binaan. Agen lihat sendiri, admin lihat semua.
+ */
+export async function agentListJamaah<T = unknown>(
+  opts: { search?: string } = {},
+): Promise<T[]> {
+  const headers = await authHeader()
+  const sp = new URLSearchParams()
+  if (opts.search) sp.set('search', opts.search)
+  const res = await fetch(`/api/agent/jamaah?${sp.toString()}`, { headers })
+  if (!res.ok) return []
+  return res.json()
+}
+
+// ── Bookings ──
+
+export async function bookingList<T = unknown>(
+  opts: { status?: string } = {},
+): Promise<T[]> {
+  const headers = await authHeader()
+  const sp = new URLSearchParams()
+  if (opts.status) sp.set('status', opts.status)
+  const res = await fetch(`/api/bookings?${sp.toString()}`, { headers })
+  if (!res.ok) return []
+  return res.json()
+}
+
+export async function bookingGet<T = unknown>(id: string): Promise<T | null> {
+  const headers = await authHeader()
+  const res = await fetch(`/api/bookings/${id}`, { headers })
+  if (!res.ok) return null
+  return res.json()
+}
+
+export async function bookingCreate(
+  keberangkatanId: string,
+  catatan?: string,
+): Promise<{ data: unknown | null; error: string | null }> {
+  const headers = await authHeader()
+  const res = await fetch('/api/bookings', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ keberangkatan_id: keberangkatanId, catatan }),
+  })
+  const json = await res.json()
+  if (!res.ok) return { data: null, error: json.error ?? 'Gagal membuat booking.' }
+  return { data: json, error: null }
+}
+
+export async function bookingUpdateStatus(
+  id: string,
+  status: string,
+): Promise<{ data: unknown | null; error: string | null }> {
+  const headers = await authHeader()
+  const res = await fetch(`/api/bookings/${id}`, {
+    method: 'PATCH',
+    headers,
+    body: JSON.stringify({ status }),
+  })
+  const json = await res.json()
+  if (!res.ok) return { data: null, error: json.error ?? 'Gagal update status.' }
+  return { data: json, error: null }
+}
+
+// ── Me (profil user sendiri) ──
+
+export async function meGet<T = unknown>(): Promise<T | null> {
+  const headers = await authHeader()
+  const res = await fetch('/api/me', { headers })
+  if (!res.ok) return null
+  return res.json()
+}
+
+export async function meUpdate(
+  data: Record<string, string>,
+): Promise<{ data: unknown | null; error: string | null }> {
+  const headers = await authHeader()
+  const res = await fetch('/api/me', {
+    method: 'PATCH',
+    headers,
+    body: JSON.stringify(data),
+  })
+  const json = await res.json()
+  if (!res.ok) return { data: null, error: json.error ?? 'Gagal menyimpan profil.' }
+  return { data: json, error: null }
+}

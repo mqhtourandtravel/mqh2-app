@@ -10,6 +10,10 @@ export const adminResources = {
   artikel: { model: prisma.artikel, defaultOrderBy: 'diterbitkanPada' },
   maskapai: { model: prisma.maskapai, defaultOrderBy: 'nama' },
   hotel: { model: prisma.hotel, defaultOrderBy: 'nama' },
+
+  // User management — admin bisa lihat & ubah data user.
+  // Role assignment PUNYA guard terpisah di /api/admin/users/[id]/role.
+  user: { model: prisma.user, defaultOrderBy: 'createdAt' },
 } as const
 
 export type AdminResourceName = keyof typeof adminResources

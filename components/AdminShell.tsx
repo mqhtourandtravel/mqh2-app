@@ -7,18 +7,32 @@ import { Button } from '@/components/ui/button'
 import { ExternalLink } from 'lucide-react'
 
 const MENU = [
+  { href: '/admin', label: 'Dashboard', exact: true },
   { href: '/admin/paket', label: 'Paket & Jadwal' },
   { href: '/admin/artikel', label: 'Artikel' },
+  { href: '/admin/users', label: 'Users' },
+  { href: '/admin/agents', label: 'Agen & Jamaah' },
   { href: '/admin/master', label: 'Master Data' },
+]
+
+const JAMAAH_MENU = [
+  { href: '/jamaah', label: 'Booking Saya', exact: true },
+  { href: '/jamaah/paket', label: 'Paket Tersedia' },
+  { href: '/jamaah/profil', label: 'Profil' },
 ]
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
+  const isJamaah = pathname?.startsWith('/jamaah')
+  const isAgent = pathname?.startsWith('/agent')
+  const menu = isJamaah ? JAMAAH_MENU : MENU
 
   async function logout() {
     await supabase.auth.signOut()
-    router.push('/admin/login')
+    if (isJamaah) router.push('/jamaah')
+    else if (isAgent) router.push('/agent')
+    else router.push('/admin/login')
   }
 
   return (
@@ -28,11 +42,15 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           <Link href="/" className="font-serif text-lg font-bold text-primary-foreground">
             MQH<span className="text-secondary">·</span>Tour
           </Link>
-          <p className="text-[10px] uppercase tracking-wide text-sidebar-muted/60 mt-1">Admin Panel</p>
+          <p className="text-[10px] uppercase tracking-wide text-sidebar-muted/60 mt-1">
+            {isJamaah ? 'Jamaah Panel' : 'Admin Panel'}
+          </p>
         </div>
         <nav className="flex-1 py-4">
-          {MENU.map((item) => {
-            const active = pathname?.startsWith(item.href)
+          {menu.map((item) => {
+            const active = item.exact
+              ? pathname === item.href
+              : pathname?.startsWith(item.href)
             return (
               <Link
                 key={item.href}
@@ -79,7 +97,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
       <main className="flex-1 min-w-0 pt-14 md:pt-0">
         <div className="md:hidden overflow-x-auto flex gap-1 px-4 py-3 bg-white border-b border-accent">
-          {MENU.map((item) => (
+          {menu.map((item) => (
             <Button key={item.href} asChild variant="outline" size="sm" className="whitespace-nowrap rounded-full">
               <Link href={item.href}>{item.label}</Link>
             </Button>
