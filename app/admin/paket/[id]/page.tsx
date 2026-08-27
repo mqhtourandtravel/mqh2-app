@@ -4,7 +4,6 @@ import { useEffect, useState, use } from 'react'
 import { supabase, Paket, Keberangkatan, Maskapai, Hotel } from '@/lib/supabase'
 import { adminGet, adminList, adminCreate, adminUpdate, adminDelete } from '@/lib/adminApi'
 import { useRouter } from 'next/navigation'
-import AdminShell from '@/components/AdminShell'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -120,7 +119,7 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
   if (loading || !paket) return <p className="p-8 text-muted-foreground text-sm">Memuat...</p>
 
   return (
-    <AdminShell>
+    <>
       <main className="max-w-3xl mx-auto px-6 py-10 md:py-14">
         <Card>
           <CardContent className="space-y-10 pt-6 pb-8">
@@ -287,6 +286,6 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
           </CardContent>
         </Card>
       </main>
-    </AdminShell>
+    </>
   )
 }

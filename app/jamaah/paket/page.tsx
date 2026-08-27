@@ -5,7 +5,6 @@ import { supabase, Keberangkatan } from '@/lib/supabase'
 import { bookingCreate } from '@/lib/adminApi'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import AdminShell from '@/components/AdminShell'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -67,7 +66,7 @@ export default function JamaahPaket() {
   if (loading) return <p className="p-8 text-muted-foreground text-sm">Memuat...</p>
 
   return (
-    <AdminShell>
+    <>
       <main className="max-w-5xl mx-auto px-6 py-10 md:py-14">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -180,6 +179,6 @@ export default function JamaahPaket() {
           </CardContent>
         </Card>
       </main>
-    </AdminShell>
+    </>
   )
 }

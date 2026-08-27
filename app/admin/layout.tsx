@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
+import AdminShell from '@/components/AdminShell'
 
-// Panel internal (admin, jamaah, agent) — tidak boleh ke-index Google.
-// Top-level layout membungkus semua halaman panel.
 export const metadata: Metadata = {
   robots: {
     index: false,
@@ -11,5 +10,5 @@ export const metadata: Metadata = {
 }
 
 export default function PanelLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+  return <AdminShell>{children}</AdminShell>
 }

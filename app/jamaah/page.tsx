@@ -5,7 +5,6 @@ import { supabase, Booking } from '@/lib/supabase'
 import { bookingList, bookingUpdateStatus } from '@/lib/adminApi'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import AdminShell from '@/components/AdminShell'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import {
@@ -59,7 +58,7 @@ export default function JamaahDashboard() {
   const cancelledBookings = bookings.filter((b) => b.status === 'cancelled')
 
   return (
-    <AdminShell>
+    <>
       <main className="max-w-5xl mx-auto px-6 py-10 md:py-14">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-serif font-bold text-primary">Booking Saya</h1>
@@ -216,6 +215,6 @@ export default function JamaahDashboard() {
           </Card>
         )}
       </main>
-    </AdminShell>
+    </>
   )
 }

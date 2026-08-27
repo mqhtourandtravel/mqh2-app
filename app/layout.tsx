@@ -45,9 +45,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="id">
       <head>
-        <style dangerouslySetInnerHTML={{ __html: '::-webkit-scrollbar{display:none}' }} />
       </head>
-      <body className={`${inter.variable} ${playfair.variable} bg-background text-foreground antialiased`} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}>
+      <body className={`${inter.variable} ${playfair.variable} bg-background text-foreground antialiased`}>
         {children}
         <SiteFooter />
       </body>

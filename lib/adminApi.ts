@@ -14,6 +14,11 @@ async function authHeader(): Promise<HeadersInit> {
     : { 'Content-Type': 'application/json' }
 }
 
+function apiError(json: Record<string, unknown>, fallback: string): string {
+  const err = json.error
+  return typeof err === 'string' ? err : fallback
+}
+
 export async function adminList<T = unknown>(
   resource: string,
   opts: { orderBy?: string; dir?: 'asc' | 'desc'; filter?: Record<string, string> } = {}
@@ -38,24 +43,39 @@ export async function adminGet<T = unknown>(resource: string, id: string): Promi
 export async function adminCreate<T = unknown>(resource: string, data: Record<string, unknown>): Promise<{ data: T | null; error: string | null }> {
   const headers = await authHeader()
   const res = await fetch(`/api/admin/${resource}`, { method: 'POST', headers, body: JSON.stringify(data) })
-  const json = await res.json()
-  if (!res.ok) return { data: null, error: json.error ?? 'Gagal menyimpan data.' }
-  return { data: json, error: null }
+  let json: Record<string, unknown>
+  try {
+    json = await res.json()
+  } catch {
+    return { data: null, error: `Server error (${res.status})` }
+  }
+  if (!res.ok) return { data: null, error: apiError(json, 'Gagal menyimpan data.') }
+  return { data: json as T, error: null }
 }
 
 export async function adminUpdate<T = unknown>(resource: string, id: string, data: Record<string, unknown>): Promise<{ data: T | null; error: string | null }> {
   const headers = await authHeader()
   const res = await fetch(`/api/admin/${resource}/${id}`, { method: 'PATCH', headers, body: JSON.stringify(data) })
-  const json = await res.json()
-  if (!res.ok) return { data: null, error: json.error ?? 'Gagal menyimpan data.' }
-  return { data: json, error: null }
+  let json: Record<string, unknown>
+  try {
+    json = await res.json()
+  } catch {
+    return { data: null, error: `Server error (${res.status})` }
+  }
+  if (!res.ok) return { data: null, error: apiError(json, 'Gagal menyimpan data.') }
+  return { data: json as T, error: null }
 }
 
 export async function adminDelete(resource: string, id: string): Promise<{ ok: boolean; error: string | null }> {
   const headers = await authHeader()
   const res = await fetch(`/api/admin/${resource}/${id}`, { method: 'DELETE', headers })
-  const json = await res.json()
-  if (!res.ok) return { ok: false, error: json.error ?? 'Gagal menghapus data.' }
+  let json: Record<string, unknown>
+  try {
+    json = await res.json()
+  } catch {
+    return { ok: false, error: `Server error (${res.status})` }
+  }
+  if (!res.ok) return { ok: false, error: apiError(json, 'Gagal menghapus data.') }
   return { ok: true, error: null }
 }
 
@@ -73,8 +93,13 @@ export async function adminChangeRole(
     headers,
     body: JSON.stringify({ role }),
   })
-  const json = await res.json()
-  if (!res.ok) return { data: null, error: json.error ?? 'Gagal mengubah role.' }
+  let json: Record<string, unknown>
+  try {
+    json = await res.json()
+  } catch {
+    return { data: null, error: `Server error (${res.status})` }
+  }
+  if (!res.ok) return { data: null, error: apiError(json, 'Gagal mengubah role.') }
   return { data: json, error: null }
 }
 
@@ -91,8 +116,13 @@ export async function agentAssignJamaah(
     headers,
     body: JSON.stringify({ user_id: userId, agen_id: agenId }),
   })
-  const json = await res.json()
-  if (!res.ok) return { data: null, error: json.error ?? 'Gagal assign jamaah.' }
+  let json: Record<string, unknown>
+  try {
+    json = await res.json()
+  } catch {
+    return { data: null, error: `Server error (${res.status})` }
+  }
+  if (!res.ok) return { data: null, error: apiError(json, 'Gagal assign jamaah.') }
   return { data: json, error: null }
 }
 
@@ -140,8 +170,13 @@ export async function bookingCreate(
     headers,
     body: JSON.stringify({ keberangkatan_id: keberangkatanId, catatan }),
   })
-  const json = await res.json()
-  if (!res.ok) return { data: null, error: json.error ?? 'Gagal membuat booking.' }
+  let json: Record<string, unknown>
+  try {
+    json = await res.json()
+  } catch {
+    return { data: null, error: `Server error (${res.status})` }
+  }
+  if (!res.ok) return { data: null, error: apiError(json, 'Gagal membuat booking.') }
   return { data: json, error: null }
 }
 
@@ -155,8 +190,13 @@ export async function bookingUpdateStatus(
     headers,
     body: JSON.stringify({ status }),
   })
-  const json = await res.json()
-  if (!res.ok) return { data: null, error: json.error ?? 'Gagal update status.' }
+  let json: Record<string, unknown>
+  try {
+    json = await res.json()
+  } catch {
+    return { data: null, error: `Server error (${res.status})` }
+  }
+  if (!res.ok) return { data: null, error: apiError(json, 'Gagal update status.') }
   return { data: json, error: null }
 }
 
@@ -178,7 +218,12 @@ export async function meUpdate(
     headers,
     body: JSON.stringify(data),
   })
-  const json = await res.json()
-  if (!res.ok) return { data: null, error: json.error ?? 'Gagal menyimpan profil.' }
+  let json: Record<string, unknown>
+  try {
+    json = await res.json()
+  } catch {
+    return { data: null, error: `Server error (${res.status})` }
+  }
+  if (!res.ok) return { data: null, error: apiError(json, 'Gagal menyimpan profil.') }
   return { data: json, error: null }
 }

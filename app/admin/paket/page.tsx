@@ -5,7 +5,6 @@ import { supabase, Paket } from '@/lib/supabase'
 import { adminList, adminDelete } from '@/lib/adminApi'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import AdminShell from '@/components/AdminShell'
 import { Card, CardContent, CardHeader, CardTitle, CardAction } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -47,7 +46,7 @@ export default function AdminListPaket() {
   if (loading) return <p className="p-8 text-muted-foreground text-sm">Memuat...</p>
 
   return (
-    <AdminShell>
+    <>
       <main className="max-w-4xl mx-auto px-6 py-10 md:py-14">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
@@ -99,6 +98,6 @@ export default function AdminListPaket() {
           </CardContent>
         </Card>
       </main>
-    </AdminShell>
+    </>
   )
 }

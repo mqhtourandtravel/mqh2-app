@@ -1,5 +1,3 @@
-'use client'
-
 import Image from 'next/image'
 
 // Fallback bergilir agar placeholder DB kosong tidak monoton

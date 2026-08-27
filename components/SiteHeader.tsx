@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -140,7 +141,7 @@ export default function SiteHeader() {
       >
         {/* Logo — fixed height, width auto untuk jaga rasio */}
         <Link href="/" className="flex items-center shrink-0" style={{ transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
-          <img src="/logo.png" alt="MQH Logo" width={493} height={220} className="h-11 w-auto rounded-md object-contain" />
+          <Image src="/logo.png" alt="MQH Logo" width={493} height={220} className="h-11 w-auto rounded-md object-contain" priority />
         </Link>
 
         {/* Desktop nav — displayed ≥900px */}

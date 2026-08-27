@@ -5,7 +5,6 @@ import { supabase, User } from '@/lib/supabase'
 import { adminList } from '@/lib/adminApi'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import AdminShell from '@/components/AdminShell'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Users, Package, Calendar, FileText } from 'lucide-react'
 
@@ -49,7 +48,7 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <AdminShell>
+    <>
       <main className="max-w-5xl mx-auto px-6 py-10 md:py-14">
         <h1 className="text-2xl font-serif font-bold text-primary mb-8">Dashboard</h1>
 
@@ -104,6 +103,6 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
       </main>
-    </AdminShell>
+    </>
   )
 }

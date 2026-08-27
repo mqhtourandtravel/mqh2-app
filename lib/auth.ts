@@ -56,37 +56,23 @@ export async function getUser(request: NextRequest): Promise<AuthResult> {
     return { ok: false, status: 400, error: 'Akun tidak memiliki email.' }
   }
 
-  // 3. Upsert user di database (first login → insert, returning user → ambil role)
+  // 3. Upsert user di database (atomic — no race condition)
   try {
-    let dbUser = await prisma.user.findUnique({
+    const meta = supabaseUser.user_metadata ?? {}
+    const dbUser = await prisma.user.upsert({
       where: { authId: supabaseUser.id },
+      create: {
+        authId: supabaseUser.id,
+        email,
+        nama: meta.full_name ?? meta.name ?? null,
+        photoUrl: meta.avatar_url ?? meta.picture ?? null,
+        role: 'jamaah',
+      },
+      update: {
+        ...(meta.full_name ? { nama: meta.full_name } : {}),
+        ...(meta.avatar_url ? { photoUrl: meta.avatar_url } : {}),
+      },
     })
-
-    if (!dbUser) {
-      // First login — buat baru dengan role default 'jamaah'
-      const meta = supabaseUser.user_metadata ?? {}
-      dbUser = await prisma.user.create({
-        data: {
-          authId: supabaseUser.id,
-          email,
-          nama: meta.full_name ?? meta.name ?? null,
-          photoUrl: meta.avatar_url ?? meta.picture ?? null,
-          role: 'jamaah', // default — admin bisa ubah nanti
-        },
-      })
-    } else {
-      // Returning user — sync metadata dari OAuth (nama, foto)
-      const meta = supabaseUser.user_metadata ?? {}
-      const updates: Record<string, unknown> = {}
-      if (meta.full_name && meta.full_name !== dbUser.nama) updates.nama = meta.full_name
-      if (meta.avatar_url && meta.avatar_url !== dbUser.photoUrl) updates.photoUrl = meta.avatar_url
-      if (Object.keys(updates).length > 0) {
-        dbUser = await prisma.user.update({
-          where: { id: dbUser.id },
-          data: updates,
-        })
-      }
-    }
 
     return {
       ok: true,

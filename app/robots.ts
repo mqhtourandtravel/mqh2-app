@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
       // Admin & API tidak untuk diindeks
-      disallow: ['/admin', '/api'],
+      disallow: ['/admin', '/api', '/agent', '/jamaah'],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
   }

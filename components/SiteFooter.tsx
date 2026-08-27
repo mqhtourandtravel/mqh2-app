@@ -29,7 +29,7 @@ const services = [
 export default function SiteFooter() {
   const pathname = usePathname()
 
-  if (pathname?.startsWith('/admin')) return null
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/agent') || pathname?.startsWith('/jamaah')) return null
 
   return (
     <>

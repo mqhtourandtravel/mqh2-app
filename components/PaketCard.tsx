@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import { Keberangkatan } from '@/lib/supabase'
 import PhotoBlock from '@/components/PhotoBlock'

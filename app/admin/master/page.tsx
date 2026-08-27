@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { supabase, Maskapai, Hotel } from '@/lib/supabase'
 import { adminList, adminCreate, adminDelete } from '@/lib/adminApi'
 import { useRouter } from 'next/navigation'
-import AdminShell from '@/components/AdminShell'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -79,7 +78,7 @@ export default function KelolaMasterData() {
   if (loading) return <p className="p-8 text-muted-foreground text-sm">Memuat...</p>
 
   return (
-    <AdminShell>
+    <>
       <main className="max-w-2xl mx-auto px-6 py-10 md:py-14">
         <Card>
           <CardHeader>
@@ -160,6 +159,6 @@ export default function KelolaMasterData() {
           </CardContent>
         </Card>
       </main>
-    </AdminShell>
+    </>
   )
 }

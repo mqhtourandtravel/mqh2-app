@@ -11,6 +11,35 @@ export const metadata: Metadata = {
   description: 'Daftar kantor pusat dan cabang representatif MQH Tour & Travel untuk konsultasi langsung.',
 }
 
+function KartuCabang({ c }: { c: (typeof CABANG_LIST)[number] }) {
+  return (
+    <div className="bg-white rounded-xl border border-accent p-6 hover:shadow-[var(--shadow-md-custom)] transition-shadow">
+      <h3 className="font-serif text-lg font-medium text-primary mb-1">{c.nama}</h3>
+      <p className="text-[12.5px] text-muted-foreground mb-4">{c.kota}</p>
+      {c.alamat && (
+        <p className="text-[13.5px] text-muted-foreground flex items-start gap-2 mb-2">
+          <MapPin className="text-[16px] text-secondary mt-0.5" aria-hidden="true" />
+          {c.alamat}
+        </p>
+      )}
+      {c.jamLayanan && (
+        <p className="text-[13px] text-muted-foreground flex items-center gap-2 mb-4">
+          <Clock className="text-[16px] text-secondary" aria-hidden="true" />
+          {c.jamLayanan}
+        </p>
+      )}
+      <div className="flex flex-wrap gap-4 text-[13px] font-semibold pt-2 border-t border-accent">
+        {c.whatsapp && (
+          <a href={`https://wa.me/${c.whatsapp}`} target="_blank" rel="noopener noreferrer" className="text-secondary-hover hover:underline pt-2">Chat WhatsApp</a>
+        )}
+        {c.googleMapsUrl && (
+          <a href={c.googleMapsUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline pt-2">Lihat di Maps</a>
+        )}
+      </div>
+    </div>
+  )
+}
+
 export default async function HalamanCabang({
   searchParams,
 }: {
@@ -20,35 +49,6 @@ export default async function HalamanCabang({
   const cabangList = CABANG_LIST
   const pusat = tipe && tipe !== 'pusat' ? [] : cabangList.filter((c) => c.tipe === 'pusat')
   const representatif = tipe && tipe !== 'representatif' ? [] : cabangList.filter((c) => c.tipe === 'representatif')
-
-  function KartuCabang({ c }: { c: (typeof CABANG_LIST)[number] }) {
-    return (
-      <div className="bg-white rounded-xl border border-accent p-6 hover:shadow-[var(--shadow-md-custom)] transition-shadow">
-        <h3 className="font-serif text-lg font-medium text-primary mb-1">{c.nama}</h3>
-        <p className="text-[12.5px] text-muted-foreground mb-4">{c.kota}</p>
-        {c.alamat && (
-          <p className="text-[13.5px] text-muted-foreground flex items-start gap-2 mb-2">
-            <MapPin className="text-[16px] text-secondary mt-0.5" aria-hidden="true" />
-            {c.alamat}
-          </p>
-        )}
-        {c.jamLayanan && (
-          <p className="text-[13px] text-muted-foreground flex items-center gap-2 mb-4">
-            <Clock className="text-[16px] text-secondary" aria-hidden="true" />
-            {c.jamLayanan}
-          </p>
-        )}
-        <div className="flex flex-wrap gap-4 text-[13px] font-semibold pt-2 border-t border-accent">
-          {c.whatsapp && (
-            <a href={`https://wa.me/${c.whatsapp}`} target="_blank" rel="noopener noreferrer" className="text-secondary-hover hover:underline pt-2">Chat WhatsApp</a>
-          )}
-          {c.googleMapsUrl && (
-            <a href={c.googleMapsUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline pt-2">Lihat di Maps</a>
-          )}
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="bg-background text-foreground min-h-screen">

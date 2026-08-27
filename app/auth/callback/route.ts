@@ -1,12 +1,10 @@
-import { createClient } from '@supabase/supabase-js'
+import { createServerClient } from '@supabase/ssr'
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { cookies } from 'next/headers'
 
 // Server-side callback setelah Supabase OAuth redirect.
 // Flow: Google → Supabase → /auth/callback?code=xxx → exchange → upsert user → redirect
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
@@ -17,8 +15,28 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}/admin/login?error=no_code`)
   }
 
-  // Exchange code for session
-  const supabase = createClient(supabaseUrl, supabaseAnonKey)
+  const cookieStore = await cookies()
+  const response = NextResponse.redirect(
+    `${origin}${next.startsWith('/') ? next : '/admin/paket'}`
+  )
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll()
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            response.cookies.set(name, value, options)
+          })
+        },
+      },
+    },
+  )
+
   const { data, error } = await supabase.auth.exchangeCodeForSession(code)
 
   if (error || !data.user) {
@@ -32,40 +50,28 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}/admin/login?error=no_email`)
   }
 
-  // Upsert user di database
+  // Upsert user di database — atomic, no race condition
   try {
     const meta = supabaseUser.user_metadata ?? {}
 
-    const existing = await prisma.user.findUnique({
+    await prisma.user.upsert({
       where: { authId: supabaseUser.id },
+      create: {
+        authId: supabaseUser.id,
+        email,
+        nama: meta.full_name ?? meta.name ?? null,
+        photoUrl: meta.avatar_url ?? meta.picture ?? null,
+        role: 'jamaah',
+      },
+      update: {
+        ...(meta.full_name ? { nama: meta.full_name } : {}),
+        ...(meta.avatar_url ? { photoUrl: meta.avatar_url } : {}),
+      },
     })
-
-    if (!existing) {
-      // First login — create dengan role default
-      await prisma.user.create({
-        data: {
-          authId: supabaseUser.id,
-          email,
-          nama: meta.full_name ?? meta.name ?? null,
-          photoUrl: meta.avatar_url ?? meta.picture ?? null,
-          role: 'jamaah',
-        },
-      })
-    } else {
-      // Returning user — sync metadata
-      const updates: Record<string, unknown> = {}
-      if (meta.full_name && meta.full_name !== existing.nama) updates.nama = meta.full_name
-      if (meta.avatar_url && meta.avatar_url !== existing.photoUrl) updates.photoUrl = meta.avatar_url
-      if (Object.keys(updates).length > 0) {
-        await prisma.user.update({ where: { id: existing.id }, data: updates })
-      }
-    }
   } catch (err) {
     console.error('[auth/callback] DB upsert error:', err)
     // Tetap redirect — user sudah login di Supabase, DB error tidak blocking
   }
 
-  // Redirect ke halaman tujuan
-  const redirectTo = next.startsWith('/') ? next : '/admin/paket'
-  return NextResponse.redirect(`${origin}${redirectTo}`)
+  return response
 }

@@ -5,7 +5,6 @@ import { supabase, User } from '@/lib/supabase'
 import { adminList, adminChangeRole } from '@/lib/adminApi'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import AdminShell from '@/components/AdminShell'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -68,7 +67,7 @@ export default function AdminUsers() {
   if (loading) return <p className="p-8 text-muted-foreground text-sm">Memuat...</p>
 
   return (
-    <AdminShell>
+    <>
       <main className="max-w-5xl mx-auto px-6 py-10 md:py-14">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
@@ -162,6 +161,6 @@ export default function AdminUsers() {
           </CardContent>
         </Card>
       </main>
-    </AdminShell>
+    </>
   )
 }

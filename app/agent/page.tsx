@@ -5,7 +5,6 @@ import { supabase, User } from '@/lib/supabase'
 import { agentListJamaah } from '@/lib/adminApi'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import AdminShell from '@/components/AdminShell'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
@@ -41,7 +40,7 @@ export default function AgentDashboard() {
   }
 
   return (
-    <AdminShell>
+    <>
       <main className="max-w-5xl mx-auto px-6 py-10 md:py-14">
         <div className="mb-8">
           <h1 className="text-2xl font-serif font-bold text-primary">Dashboard Agen</h1>
@@ -115,6 +114,6 @@ export default function AgentDashboard() {
           </CardContent>
         </Card>
       </main>
-    </AdminShell>
+    </>
   )
 }

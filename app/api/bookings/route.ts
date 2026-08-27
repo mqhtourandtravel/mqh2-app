@@ -90,23 +90,33 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  // Buat booking + kurangi kuota
-  const booking = await prisma.$transaction(async (tx) => {
-    const b = await tx.booking.create({
-      data: {
-        userId: auth.user.id,
-        keberangkatanId: keberangkatan_id,
-        catatan: catatan ?? null,
-      },
+  // Buat booking + kurangi kuota (atomic — prevents overselling)
+  try {
+    const booking = await prisma.$transaction(async (tx) => {
+      // Re-check kuota inside transaction for atomicity
+      const updated = await tx.keberangkatan.updateMany({
+        where: { id: keberangkatan_id, kuotaTersisa: { gt: 0 } },
+        data: { kuotaTersisa: { decrement: 1 } },
+      })
+
+      if (updated.count === 0) {
+        throw new Error('KUOTA_HABIS')
+      }
+
+      return tx.booking.create({
+        data: {
+          userId: auth.user.id,
+          keberangkatanId: keberangkatan_id,
+          catatan: catatan ?? null,
+        },
+      })
     })
 
-    await tx.keberangkatan.update({
-      where: { id: keberangkatan_id },
-      data: { kuotaTersisa: { decrement: 1 } },
-    })
-
-    return b
-  })
-
-  return NextResponse.json(keysToSnake(booking), { status: 201 })
+    return NextResponse.json(keysToSnake(booking), { status: 201 })
+  } catch (err) {
+    if (err instanceof Error && err.message === 'KUOTA_HABIS') {
+      return NextResponse.json({ error: 'Kuota sudah penuh.' }, { status: 400 })
+    }
+    throw err
+  }
 }

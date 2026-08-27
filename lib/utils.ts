@@ -13,6 +13,7 @@ export function cn(...inputs: ClassValue[]) {
 // — sekarang semua import dari sini biar konsisten kalau formatnya berubah.
 export function formatRupiah(n?: number | null): string {
   const num = n ?? 0
+  if (!Number.isFinite(num)) return 'Rp 0'
   return new Intl.NumberFormat('id-ID', {
     style: 'currency',
     currency: 'IDR',
@@ -21,10 +22,12 @@ export function formatRupiah(n?: number | null): string {
   }).format(num)
 }
 
-export function formatTanggal(dateStr?: string | null): string {
+export function formatTanggal(dateStr?: string | Date | null): string {
   if (!dateStr) return '-'
   try {
-    return new Date(dateStr).toLocaleDateString('id-ID', {
+    const d = new Date(dateStr)
+    if (isNaN(d.getTime())) return '-'
+    return d.toLocaleDateString('id-ID', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -52,4 +55,5 @@ export function buatSlug(text: string): string {
     .trim()
     .replace(/[^a-z0-9\s-]/g, '')
     .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
 }

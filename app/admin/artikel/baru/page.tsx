@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import { adminCreate } from '@/lib/adminApi'
 import { useRouter } from 'next/navigation'
-import AdminShell from '@/components/AdminShell'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -17,10 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-
-function buatSlug(judul: string) {
-  return judul.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-')
-}
+import { buatSlug } from '@/lib/utils'
 
 export default function TulisArtikel() {
   const router = useRouter()
@@ -44,7 +40,7 @@ export default function TulisArtikel() {
   }
 
   return (
-    <AdminShell>
+    <>
       <main className="max-w-xl mx-auto px-6 py-10 md:py-14">
         <Card>
           <CardHeader>
@@ -94,6 +90,6 @@ export default function TulisArtikel() {
           </CardContent>
         </Card>
       </main>
-    </AdminShell>
+    </>
   )
 }

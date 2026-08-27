@@ -21,18 +21,26 @@ const JAMAAH_MENU = [
   { href: '/jamaah/profil', label: 'Profil' },
 ]
 
+const AGENT_MENU = [
+  { href: '/agent', label: 'Dashboard', exact: true },
+  { href: '/agent/jamaah', label: 'Jamaah Binaan' },
+]
+
 export default function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
+  const isLoginPage = pathname === '/admin/login' || pathname?.startsWith('/admin/login')
+  if (isLoginPage) {
+    return <>{children}</>
+  }
+
   const isJamaah = pathname?.startsWith('/jamaah')
   const isAgent = pathname?.startsWith('/agent')
-  const menu = isJamaah ? JAMAAH_MENU : MENU
+  const menu = isAgent ? AGENT_MENU : isJamaah ? JAMAAH_MENU : MENU
 
   async function logout() {
     await supabase.auth.signOut()
-    if (isJamaah) router.push('/jamaah')
-    else if (isAgent) router.push('/agent')
-    else router.push('/admin/login')
+    router.push('/admin/login')
   }
 
   return (
@@ -43,7 +51,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             MQH<span className="text-secondary">·</span>Tour
           </Link>
           <p className="text-[10px] uppercase tracking-wide text-sidebar-muted/60 mt-1">
-            {isJamaah ? 'Jamaah Panel' : 'Admin Panel'}
+            {isJamaah ? 'Jamaah Panel' : isAgent ? 'Agent Panel' : 'Admin Panel'}
           </p>
         </div>
         <nav className="flex-1 py-4">

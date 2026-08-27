@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
+import AdminShell from '@/components/AdminShell'
 
-// Panel jamaah — noindex, tidak boleh ke-index Google.
 export const metadata: Metadata = {
   robots: {
     index: false,
@@ -10,5 +10,5 @@ export const metadata: Metadata = {
 }
 
 export default function JamaahLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+  return <AdminShell>{children}</AdminShell>
 }

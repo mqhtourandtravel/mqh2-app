@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { supabase, User } from '@/lib/supabase'
 import { adminList, agentAssignJamaah } from '@/lib/adminApi'
 import { useRouter } from 'next/navigation'
-import AdminShell from '@/components/AdminShell'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -85,7 +84,7 @@ export default function AdminAgents() {
   }
 
   return (
-    <AdminShell>
+    <>
       <main className="max-w-5xl mx-auto px-6 py-10 md:py-14">
         <h1 className="text-2xl font-serif font-bold text-primary mb-8">Kelola Agen & Jamaah</h1>
 
@@ -179,6 +178,6 @@ export default function AdminAgents() {
           </Card>
         </div>
       </main>
-    </AdminShell>
+    </>
   )
 }
