@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react'
 import { supabase, Artikel } from '@/lib/supabase'
 import { adminList, adminDelete } from '@/lib/adminApi'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { Card, CardContent, CardHeader, CardTitle, CardAction } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
 import {
   Table,
   TableHeader,
@@ -16,11 +17,13 @@ import {
   TableHead,
   TableCell,
 } from '@/components/ui/table'
-import { Plus, Pencil, Trash2, ArrowLeft } from 'lucide-react'
+import { Plus, Pencil, Trash2, FileText, Search } from 'lucide-react'
 
 export default function AdminListArtikel() {
   const [list, setList] = useState<Artikel[]>([])
+  const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -34,63 +37,150 @@ export default function AdminListArtikel() {
     muat()
   }, [router])
 
-  async function hapus(id: string) {
-    if (!confirm('Hapus artikel ini?')) return
-    await adminDelete('artikel', id)
-    setList((prev) => prev.filter((a) => a.id !== id))
+  async function hapus(id: string, judul: string) {
+    if (!confirm(`Hapus artikel "${judul}"?`)) return
+    setDeletingId(id)
+    const { ok, error } = await adminDelete('artikel', id)
+    if (ok) {
+      setList((prev) => prev.filter((a) => a.id !== id))
+    } else {
+      alert(error ?? 'Gagal menghapus artikel')
+    }
+    setDeletingId(null)
   }
 
-  if (loading) return <p className="p-8 text-muted-foreground text-sm">Memuat...</p>
+  const filtered = list.filter((a) =>
+    (a.judul ?? '').toLowerCase().includes(search.toLowerCase()) ||
+    (a.kategori ?? '').toLowerCase().includes(search.toLowerCase())
+  )
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 rounded-full border-2 border-emerald-600 border-t-amber-500 animate-spin" />
+          <p className="text-xs text-gray-500 font-medium">Memuat daftar artikel...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <>
-      <main className="max-w-4xl mx-auto px-6 py-10 md:py-14">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-2xl">Kelola Artikel</CardTitle>
-            <CardAction className="flex gap-3">
-              <Button asChild variant="outline" size="sm">
-                <Link href="/admin"><ArrowLeft className="size-4" /> Kembali</Link>
-              </Button>
-              <Button asChild variant="secondary" size="sm">
-                <Link href="/admin/artikel/baru"><Plus className="size-4" /> Tulis Artikel</Link>
-              </Button>
-            </CardAction>
-          </CardHeader>
-          <CardContent className="pb-6">
-            <Table>
-              <TableHeader>
+    <div className="max-w-6xl mx-auto space-y-6">
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="font-serif text-2xl md:text-3xl font-bold text-gray-900 tracking-tight flex items-center gap-2.5">
+            <FileText className="size-7 text-emerald-700" /> Artikel & Panduan Ibadah
+          </h1>
+          <p className="text-xs md:text-sm text-gray-500 mt-1">
+            Kelola artikel edukasi manasik, tips umroh, dan berita seputar tanah suci
+          </p>
+        </div>
+        <Button asChild size="sm" className="h-9 gap-1.5 text-xs bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm font-semibold">
+          <Link href="/admin/artikel/baru">
+            <Plus className="size-4" /> Tulis Artikel Baru
+          </Link>
+        </Button>
+      </div>
+
+      {/* Main Table Card */}
+      <Card className="border border-gray-200/80 shadow-sm rounded-xl overflow-hidden bg-white">
+        {/* Search Bar Toolbar */}
+        <div className="p-5 border-b border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gray-50/40">
+          <p className="text-xs font-semibold text-gray-500">
+            Total {list.length} artikel terbit & draft
+          </p>
+          <div className="relative w-full md:w-72">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-gray-400" />
+            <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Cari judul artikel atau kategori..."
+              className="pl-9 h-8 text-xs bg-white border-gray-300"
+            />
+          </div>
+        </div>
+
+        {/* Table */}
+        <CardContent className="p-0">
+          <Table>
+            <TableHeader className="bg-gray-50/70 border-b border-gray-200/80">
+              <TableRow className="hover:bg-transparent">
+                <TableHead className="w-[80px] pl-6 text-xs font-bold text-gray-600">Thumbnail</TableHead>
+                <TableHead className="text-xs font-bold text-gray-600">Judul Artikel</TableHead>
+                <TableHead className="text-xs font-bold text-gray-600">Kategori</TableHead>
+                <TableHead className="text-xs font-bold text-gray-600">Status</TableHead>
+                <TableHead className="text-right pr-6 text-xs font-bold text-gray-600">Aksi</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody className="divide-y divide-gray-100">
+              {filtered.length === 0 ? (
                 <TableRow>
-                  <TableHead>Judul</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Aksi</TableHead>
+                  <TableCell colSpan={5} className="text-center py-12 text-xs text-gray-500">
+                    Tidak ada artikel yang ditemukan.
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {list.map((a) => (
-                  <TableRow key={a.id}>
-                    <TableCell className="font-medium text-primary">{a.judul}</TableCell>
-                    <TableCell><Badge variant="soft" className="normal-case tracking-normal">{a.status}</Badge></TableCell>
-                    <TableCell className="text-right space-x-1">
-                      <Button asChild variant="ghost" size="icon" className="size-8 text-secondary-hover">
-                        <Link href={`/admin/artikel/${a.id}`}><Pencil className="size-4" /></Link>
+              ) : (
+                filtered.map((a) => (
+                  <TableRow key={a.id} className="hover:bg-emerald-50/20 transition-colors">
+                    <TableCell className="pl-6 py-3">
+                      <div className="size-12 rounded-lg bg-gray-100 border border-gray-200 overflow-hidden relative shrink-0">
+                        {a.gambar_url ? (
+                          <Image src={a.gambar_url} alt="" fill className="object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-gray-300">
+                            <FileText className="size-5" />
+                          </div>
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell className="py-3">
+                      <div className="space-y-0.5">
+                        <Link href={`/admin/artikel/${a.id}`} className="text-xs font-bold text-gray-900 hover:text-emerald-700 transition-colors line-clamp-1">
+                          {a.judul}
+                        </Link>
+                        <p className="text-[11px] text-gray-400 font-mono">/artikel/{a.slug}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell className="py-3">
+                      <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200/60">
+                        {a.kategori ?? 'Umum'}
+                      </span>
+                    </TableCell>
+                    <TableCell className="py-3">
+                      <span className={`inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-0.5 rounded-full border ${
+                        a.status === 'terbit'
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                          : 'bg-amber-50 text-amber-700 border-amber-200'
+                      }`}>
+                        <span className={`size-1.5 rounded-full ${a.status === 'terbit' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                        {a.status === 'terbit' ? 'Terbit' : 'Draft'}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-right pr-6 py-3 space-x-1.5">
+                      <Button asChild variant="outline" size="sm" className="h-8 text-xs border-gray-200 text-emerald-700 hover:bg-emerald-50 gap-1 rounded-lg">
+                        <Link href={`/admin/artikel/${a.id}`}>
+                          <Pencil className="size-3.5" /> Edit
+                        </Link>
                       </Button>
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="size-8 text-destructive hover:bg-destructive/10 hover:text-destructive"
-                        onClick={() => hapus(a.id)}
+                        disabled={deletingId === a.id}
+                        onClick={() => hapus(a.id, a.judul)}
+                        className="size-8 text-red-600 hover:bg-red-50 hover:text-red-700 rounded-lg"
                       >
-                        <Trash2 className="size-4" />
+                        <Trash2 className="size-3.5" />
                       </Button>
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-      </main>
-    </>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
   )
 }
