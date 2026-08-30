@@ -2,15 +2,24 @@ import type { MetadataRoute } from 'next'
 import { prisma } from '@/lib/prisma'
 import { getArtikelTerbit } from '@/lib/queries'
 import { SITE_URL } from '@/lib/config'
+import type { Artikel } from '@/lib/supabase'
 
 // Sitemap dinamis: halaman statis + semua slug paket & artikel terbit.
 export const revalidate = 3600
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [paketRows, artikelRows] = await Promise.all([
-    prisma.paket.findMany({ where: { status: 'aktif' }, select: { slug: true } }),
-    getArtikelTerbit(),
-  ])
+  let paketRows: { slug: string }[] = []
+  let artikelRows: Artikel[] = []
+
+  try {
+    [paketRows, artikelRows] = await Promise.all([
+      prisma.paket.findMany({ where: { status: 'aktif' }, select: { slug: true } }),
+      getArtikelTerbit(),
+    ])
+  } catch (err) {
+    console.error('[sitemap] Failed to fetch data:', err)
+    // Fallback: empty arrays, build continues with static pages only
+  }
 
   const staticPages: MetadataRoute.Sitemap = [
     '', '/paket', '/artikel', '/cabang', '/kontak', '/tentang',

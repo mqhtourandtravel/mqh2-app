@@ -117,6 +117,14 @@ export async function POST(request: NextRequest) {
     if (err instanceof Error && err.message === 'KUOTA_HABIS') {
       return NextResponse.json({ error: 'Kuota sudah penuh.' }, { status: 400 })
     }
+    // Unique index uniq_booking_aktif: dua request paralel untuk user+jadwal
+    // yang sama → yang kedua kena P2002, bukan 500.
+    if (typeof err === 'object' && err !== null && 'code' in err && err.code === 'P2002') {
+      return NextResponse.json(
+        { error: 'Anda sudah memiliki booking untuk jadwal ini.' },
+        { status: 409 },
+      )
+    }
     throw err
   }
 }

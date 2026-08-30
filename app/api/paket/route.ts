@@ -1,4 +1,5 @@
 import { getKeberangkatanAktif } from '@/lib/queries'
+import { clampPagination } from '@/lib/pagination'
 import { NextRequest, NextResponse } from 'next/server'
 
 // Endpoint ini mengikuti kontrak yang diharapkan theme WordPress mqh-tour-travel
@@ -14,8 +15,7 @@ export async function GET(request: NextRequest) {
   const tipe = params.get('tipe')       // tier, misal "Reguler"
   const kota = params.get('kota')       // lokasi_keberangkatan
   const durasi = params.get('durasi')   // durasi_hari
-  const page = Number(params.get('page') ?? '1')
-  const perPage = Number(params.get('per_page') ?? '12')
+  const { page, perPage } = clampPagination(params.get('page'), params.get('per_page'))
 
   let items = await getKeberangkatanAktif({
     lokasi: kota ?? undefined,

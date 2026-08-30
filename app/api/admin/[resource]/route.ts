@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getResource } from '@/lib/adminResources'
+import { getResource, isReadOnly } from '@/lib/adminResources'
 import { verifyAdmin } from '@/lib/adminAuth'
 import { keysToCamel, keysToSnake, snakeToCamel } from '@/lib/case'
 
@@ -50,6 +50,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const { resource } = await params
   const config = getResource(resource)
   if (!config) return NextResponse.json({ error: 'Resource tidak dikenal.' }, { status: 404 })
+  if (isReadOnly(config)) return NextResponse.json({ error: 'Resource ini read-only.' }, { status: 405 })
 
   const body = await request.json()
   const data = keysToCamel(body)

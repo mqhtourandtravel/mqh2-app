@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getResource } from '@/lib/adminResources'
+import { getResource, isReadOnly } from '@/lib/adminResources'
 import { verifyAdmin } from '@/lib/adminAuth'
 import { keysToCamel, keysToSnake } from '@/lib/case'
 
@@ -34,6 +34,7 @@ export async function PATCH(request: NextRequest, { params }: Ctx) {
   const { resource, id } = await params
   const config = getResource(resource)
   if (!config) return NextResponse.json({ error: 'Resource tidak dikenal.' }, { status: 404 })
+  if (isReadOnly(config)) return NextResponse.json({ error: 'Resource ini read-only.' }, { status: 405 })
 
   const body = await request.json()
   const data = keysToCamel(body) as Record<string, unknown>
@@ -57,6 +58,7 @@ export async function DELETE(request: NextRequest, { params }: Ctx) {
   const { resource, id } = await params
   const config = getResource(resource)
   if (!config) return NextResponse.json({ error: 'Resource tidak dikenal.' }, { status: 404 })
+  if (isReadOnly(config)) return NextResponse.json({ error: 'Resource ini read-only.' }, { status: 405 })
 
   try {
     await (config.model as unknown as AdminModel).delete({ where: { id } })

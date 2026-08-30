@@ -130,6 +130,9 @@ model Booking {
   @@index([userId], map: "idx_booking_user")
   @@index([keberangkatanId], map: "idx_booking_keberangkatan")
   @@index([status], map: "idx_booking_status")
+  // CATATAN: partial unique index uniq_booking_aktif (satu booking aktif per
+  // user+keberangkatan) TIDAK bisa dinyatakan di Prisma — dibuat manual via
+  // supabase/migrations/20260830_bookings_unique_active.sql. Jangan hapus dari DB.
   @@map("bookings")
 }
 

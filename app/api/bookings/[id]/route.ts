@@ -17,7 +17,7 @@ export async function GET(request: NextRequest, { params }: Ctx) {
   const booking = await prisma.booking.findUnique({
     where: { id },
     include: {
-      user: { select: { id: true, nama: true, email: true, noWhatsApp: true, alamat: true } },
+      user: { select: { id: true, nama: true, email: true, noWhatsApp: true, alamat: true, agenId: true } },
       keberangkatan: {
         include: {
           paket: { select: { namaPaket: true, slug: true, kategori: true, deskripsi: true } },
@@ -35,6 +35,11 @@ export async function GET(request: NextRequest, { params }: Ctx) {
 
   // Jamaah hanya bisa lihat booking sendiri
   if (auth.user.role === 'jamaah' && booking.userId !== auth.user.id) {
+    return NextResponse.json({ error: 'Akses ditolak.' }, { status: 403 })
+  }
+
+  // Agen hanya bisa lihat booking jamaah binaannya
+  if (auth.user.role === 'agen' && booking.user.agenId !== auth.user.id) {
     return NextResponse.json({ error: 'Akses ditolak.' }, { status: 403 })
   }
 

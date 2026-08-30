@@ -27,54 +27,91 @@ export async function getKeberangkatanAktif(opts: {
   lokasi?: string
   durasiHari?: number
 } = {}): Promise<Keberangkatan[]> {
-  const rows = await prisma.keberangkatan.findMany({
-    where: {
-      status: { not: 'ditutup' },
-      ...(opts.lokasi ? { lokasiKeberangkatan: opts.lokasi } : {}),
-      ...(opts.durasiHari ? { durasiHari: opts.durasiHari } : {}),
-    },
-    include: includeKeberangkatan,
-    orderBy: { tanggalBerangkat: 'asc' },
-    ...(opts.limit ? { take: opts.limit } : {}),
-  })
-  return rows.map(toKeberangkatan)
+  try {
+    const rows = await prisma.keberangkatan.findMany({
+      where: {
+        status: { not: 'ditutup' },
+        // Hanya keberangkatan milik paket aktif — konsisten dengan
+        // getPaketBySlug (detail paket nonaktif = 404) dan sitemap.
+        paket: { is: { status: 'aktif' } },
+        ...(opts.lokasi ? { lokasiKeberangkatan: opts.lokasi } : {}),
+        ...(opts.durasiHari ? { durasiHari: opts.durasiHari } : {}),
+      },
+      include: includeKeberangkatan,
+      orderBy: { tanggalBerangkat: 'asc' },
+      ...(opts.limit ? { take: opts.limit } : {}),
+    })
+    return rows.map(toKeberangkatan)
+  } catch (err) {
+    console.error('[queries] getKeberangkatanAktif error:', err)
+    return []
+  }
 }
 
 export async function getKeberangkatanByPaketId(paketId: string): Promise<Keberangkatan[]> {
-  const rows = await prisma.keberangkatan.findMany({
-    where: { paketId, status: { not: 'ditutup' } },
-    include: includeKeberangkatan,
-    orderBy: { tanggalBerangkat: 'asc' },
-  })
-  return rows.map(toKeberangkatan)
+  try {
+    const rows = await prisma.keberangkatan.findMany({
+      where: { paketId, status: { not: 'ditutup' } },
+      include: includeKeberangkatan,
+      orderBy: { tanggalBerangkat: 'asc' },
+    })
+    return rows.map(toKeberangkatan)
+  } catch (err) {
+    console.error('[queries] getKeberangkatanByPaketId error:', err)
+    return []
+  }
 }
 
 export async function getMaskapaiList(): Promise<Maskapai[]> {
-  const rows = await prisma.maskapai.findMany()
-  return rows.map((r) => keysToSnake(r) as Maskapai)
+  try {
+    const rows = await prisma.maskapai.findMany()
+    return rows.map((r) => keysToSnake(r) as Maskapai)
+  } catch (err) {
+    console.error('[queries] getMaskapaiList error:', err)
+    return []
+  }
 }
 
 export async function getHotelList(): Promise<Hotel[]> {
-  const rows = await prisma.hotel.findMany()
-  return rows.map((r) => keysToSnake(r) as Hotel)
+  try {
+    const rows = await prisma.hotel.findMany()
+    return rows.map((r) => keysToSnake(r) as Hotel)
+  } catch (err) {
+    console.error('[queries] getHotelList error:', err)
+    return []
+  }
 }
 
 export async function getArtikelTerbit(opts: { limit?: number } = {}): Promise<Artikel[]> {
-  const rows = await prisma.artikel.findMany({
-    where: { status: 'terbit' },
-    orderBy: { diterbitkanPada: 'desc' },
-    ...(opts.limit ? { take: opts.limit } : {}),
-  })
-  return rows.map((r) => keysToSnake(r) as Artikel)
+  try {
+    const rows = await prisma.artikel.findMany({
+      where: { status: 'terbit' },
+      orderBy: { diterbitkanPada: 'desc' },
+      ...(opts.limit ? { take: opts.limit } : {}),
+    })
+    return rows.map((r) => keysToSnake(r) as Artikel)
+  } catch (err) {
+    console.error('[queries] getArtikelTerbit error:', err)
+    return []
+  }
 }
 
 export async function getArtikelBySlug(slug: string): Promise<Artikel | null> {
-  const row = await prisma.artikel.findFirst({ where: { slug, status: 'terbit' } })
-  return row ? (keysToSnake(row) as Artikel) : null
+  try {
+    const row = await prisma.artikel.findFirst({ where: { slug, status: 'terbit' } })
+    return row ? (keysToSnake(row) as Artikel) : null
+  } catch (err) {
+    console.error('[queries] getArtikelBySlug error:', err)
+    return null
+  }
 }
 
 export async function getPaketBySlug(slug: string): Promise<Paket | null> {
-  const row = await prisma.paket.findUnique({ where: { slug } })
-  return row ? (keysToSnake(row) as Paket) : null
+  try {
+    const row = await prisma.paket.findFirst({ where: { slug, status: 'aktif' } })
+    return row ? (keysToSnake(row) as Paket) : null
+  } catch (err) {
+    console.error('[queries] getPaketBySlug error:', err)
+    return null
+  }
 }
-
