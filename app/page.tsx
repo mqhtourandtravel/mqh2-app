@@ -9,11 +9,34 @@ import PaketTable from '@/components/PaketTable'
 import PhotoBlock from '@/components/PhotoBlock'
 import { waLink, formatTanggal } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { Camera, MessageCircle, ArrowRight } from 'lucide-react'
+import { Camera, MessageCircle, ArrowRight, ShieldCheck, UserCheck, Hotel, CalendarCheck } from 'lucide-react'
 
 import ScrollExpandMedia from '@/components/blocks/scroll-expansion-hero'
 
 export const revalidate = 60
+
+const KEUNGGULAN = [
+  {
+    icon: ShieldCheck,
+    title: 'Resmi & Berizin',
+    desc: 'Terdaftar resmi di Kementerian Agama dengan jaminan legalitas penuh.',
+  },
+  {
+    icon: UserCheck,
+    title: 'Pembimbing Berpengalaman',
+    desc: 'Muthawwif bersertifikat dan asatidz yang membimbing sesuai sunnah.',
+  },
+  {
+    icon: Hotel,
+    title: 'Hotel Dekat Pelataran',
+    desc: 'Akomodasi bintang 4-5 di ring 1 Masjidil Haram dan Masjid Nabawi.',
+  },
+  {
+    icon: CalendarCheck,
+    title: 'Pasti Berangkat',
+    desc: 'Jadwal, visa, tiket pesawat, dan hotel telah terkonfirmasi sejak awal.',
+  },
+]
 
 export default async function Home() {
   const [keberangkatanList, maskapaiList, hotelList, artikelList, instagramPosts] = await Promise.all([
@@ -39,11 +62,37 @@ export default async function Home() {
         title="Perjalanan Spiritual yang Elegan & Nyaman"
         date="MQH Tour & Travel"
         textBlend
-      />
+      >
+        <div className="flex justify-center pb-2">
+          <Button asChild variant="outline" size="sm" className="backdrop-blur-sm bg-white/80 border-primary/20 text-primary hover:bg-white">
+            <a href="#paket">
+              Lihat Paket Umroh
+              <ArrowRight className="size-4 rotate-90" />
+            </a>
+          </Button>
+        </div>
+      </ScrollExpandMedia>
 
       <main>
+        {/* KEUNGGULAN — Value Proposition */}
+        <section className="max-w-[1200px] mx-auto px-4 md:px-6 pt-[48px] md:pt-[72px] pb-0">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {KEUNGGULAN.map((k) => (
+              <div key={k.title} className="flex flex-col items-center text-center gap-3">
+                <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center shrink-0">
+                  <k.icon className="size-6 text-secondary-hover" aria-hidden="true" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-[1.05rem] font-semibold text-foreground mb-1.5">{k.title}</h3>
+                  <p className="text-[0.85rem] text-muted-foreground leading-[1.6]">{k.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* PAKET */}
-        <section className="max-w-[1200px] mx-auto px-4 md:px-6 py-[60px] md:py-[100px]">
+        <section id="paket" className="max-w-[1200px] mx-auto px-4 md:px-6 py-[60px] md:py-[100px]">
           <div className="text-center mb-12">
             <p className="text-[0.85rem] font-semibold text-secondary uppercase tracking-[3px] mb-3">Paket Kami</p>
             <h2 className="font-serif text-[2.125rem] md:text-[3rem] font-bold text-foreground mb-4 leading-[1.167]">
@@ -68,7 +117,7 @@ export default async function Home() {
         <section className="bg-background-cream">
           <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-[40px] md:py-[60px]">
             <div className="relative rounded-[16px] overflow-hidden">
-              <PhotoBlock imageUrl={HERO_IMG} className="h-[300px] md:h-[380px] w-full" sizes="100vw" />
+              <PhotoBlock imageUrl="/images/savings-growth.jpg" className="h-[300px] md:h-[380px] w-full" sizes="100vw" />
               <div className="absolute inset-0 bg-gradient-to-r from-primary-darker/90 via-primary-dark/70 to-transparent flex items-center">
                 <div className="px-8 md:px-14 max-w-lg">
                   <p className="text-[0.85rem] font-semibold text-secondary uppercase tracking-[3px] mb-3">Tabungan Umroh</p>
