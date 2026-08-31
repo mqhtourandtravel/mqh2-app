@@ -66,7 +66,7 @@ export default async function Home() {
 
         {/* PROMO BANNER — Tabungan Umroh */}
         <section className="bg-background-cream">
-          <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-[60px] md:py-[100px]">
+          <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-[40px] md:py-[60px]">
             <div className="relative rounded-[16px] overflow-hidden">
               <PhotoBlock imageUrl={HERO_IMG} className="h-[300px] md:h-[380px] w-full" sizes="100vw" />
               <div className="absolute inset-0 bg-gradient-to-r from-primary-darker/90 via-primary-dark/70 to-transparent flex items-center">
@@ -91,8 +91,8 @@ export default async function Home() {
         </section>
 
         {/* PROMO CARD — Rencana Menuju Baitullah */}
-        <section className="max-w-[1200px] mx-auto px-4 md:px-6 py-[60px] md:py-[100px]">
-          <div className="bg-primary-dark rounded-[16px] p-10 md:p-14 text-center">
+        <section className="max-w-[1200px] mx-auto px-4 md:px-6 py-[40px] md:py-[60px]">
+          <div className="bg-primary-dark rounded-[16px] p-8 md:p-12 text-center">
             <h3 className="font-serif text-[1.875rem] md:text-[2.125rem] font-bold text-white mb-4 leading-[1.2]">
               Rencana Menuju Baitullah
             </h3>
@@ -235,19 +235,20 @@ export default async function Home() {
         {/* PARTNER */}
         {((maskapaiList?.length ?? 0) > 0 || (hotelList?.length ?? 0) > 0) && (
           <section className="bg-background-cream">
-            <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-[60px] md:py-[100px] text-center">
+            <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-[40px] md:py-[60px] text-center">
               <p className="text-[0.85rem] font-semibold text-secondary uppercase tracking-[3px] mb-3">Mitra Kami</p>
               <h2 className="font-serif text-[2.125rem] md:text-[3rem] font-bold text-foreground mb-4 leading-[1.167]">
                 Didukung Maskapai &amp; Hotel Terbaik
               </h2>
               <div className="gold-divider mx-auto mb-5" />
               <p className="text-[1.1rem] text-muted-foreground mb-12 leading-[1.7]">Kerjasama resmi dengan maskapai ternama dan hotel berstandar internasional</p>
-              <div className="flex flex-wrap justify-center gap-x-12 gap-y-6">
+              <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-6">
                 {maskapaiList.map((m) => (
-                  <span key={m.id} className="text-[1rem] font-semibold text-muted-foreground/70 hover:text-primary transition-colors duration-300">{m.nama}</span>
+                  <span key={m.id} className="text-[1rem] font-serif font-semibold tracking-wide text-primary/50 hover:text-primary transition-colors duration-300">{m.nama}</span>
                 ))}
+                <span className="hidden md:inline w-px h-6 bg-border" aria-hidden="true" />
                 {hotelList.map((h) => (
-                  <span key={h.id} className="text-[1rem] font-medium text-muted-foreground/70 hover:text-primary transition-colors duration-300">{h.nama}</span>
+                  <span key={h.id} className="text-[1rem] font-serif font-medium tracking-wide text-primary/40 hover:text-primary transition-colors duration-300">{h.nama}</span>
                 ))}
               </div>
             </div>

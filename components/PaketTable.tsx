@@ -29,6 +29,12 @@ export default function PaketTable({ data }: { data: Keberangkatan[] }) {
 
   return (
     <div className="glass-panel rounded-xl overflow-hidden shadow-none border border-white/40">
+      {/* Mobile Scroll Hint */}
+      <div className="md:hidden flex items-center justify-end gap-1.5 px-4 pt-3 pb-1 text-[11px] text-muted-foreground">
+        <span>Geser tabel untuk melihat detail</span>
+        <span aria-hidden="true">→</span>
+      </div>
+
       {/* Scrollable Container on Mobile */}
       <div className="overflow-x-auto w-full scrollbar-thin">
         <Table className="min-w-[720px] w-full">
