@@ -1,4 +1,4 @@
-import { getKeberangkatanAktif, getArtikelTerbit } from '@/lib/queries'
+import { getKeberangkatanAktif, getMaskapaiList, getHotelList, getArtikelTerbit } from '@/lib/queries'
 import { TESTIMONI_LIST } from '@/lib/config'
 import { getInstagramFeed } from '@/lib/instagram'
 import { INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_BIO, HERO_IMG, HERO_VIDEO } from '@/lib/config'
@@ -49,8 +49,10 @@ const MITRA_LOGOS = [
 ]
 
 export default async function Home() {
-  const [keberangkatanList, artikelList, instagramPosts] = await Promise.all([
+  const [keberangkatanList, maskapaiList, hotelList, artikelList, instagramPosts] = await Promise.all([
     getKeberangkatanAktif({ limit: 5 }),
+    getMaskapaiList(),
+    getHotelList(),
     getArtikelTerbit({ limit: 3 }),
     getInstagramFeed(5),
   ])
@@ -290,8 +292,9 @@ export default async function Home() {
         </section>
 
         {/* PARTNER */}
-        <section className="bg-background-cream">
-          <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-[40px] md:py-[60px] text-center">
+        {((maskapaiList?.length ?? 0) > 0 || (hotelList?.length ?? 0) > 0) && (
+          <section className="bg-background-cream">
+            <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-[40px] md:py-[60px] text-center">
               <p className="text-[0.85rem] font-semibold text-secondary uppercase tracking-[3px] mb-3">Mitra Kami</p>
               <h2 className="font-serif text-[2.125rem] md:text-[3rem] font-bold text-foreground mb-4 leading-[1.167]">
                 Didukung Maskapai &amp; Hotel Terbaik
@@ -312,6 +315,7 @@ export default async function Home() {
               </div>
             </div>
           </section>
+        )}
 
         {/* APP PROMO */}
         <section className="max-w-[1200px] mx-auto px-4 md:px-6 py-[60px] md:py-[100px]">
