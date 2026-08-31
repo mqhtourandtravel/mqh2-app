@@ -158,7 +158,9 @@ const ScrollExpandMedia = ({
   }, []);
 
   const mediaWidth = 300 + scrollProgress * (isMobileState ? 650 : 1250);
-  const mediaHeight = 400 + scrollProgress * (isMobileState ? 200 : 400);
+  // Tinggi expand sama di semua device — biarkan maxHeight (calc(100dvh - 5vw))
+  // yang meng-clamp, sehingga whitespace atas-bawah otomatis = kiri-kanan (2.5vw).
+  const mediaHeight = 400 + scrollProgress * 400;
   const textTranslateX = scrollProgress * (isMobileState ? 180 : 150);
 
   const firstWord = title ? title.split(' ')[0] : '';
@@ -200,7 +202,7 @@ const ScrollExpandMedia = ({
                   width: `${mediaWidth}px`,
                   height: `${mediaHeight}px`,
                   maxWidth: '95vw',
-                  maxHeight: '85vh',
+                  maxHeight: 'calc(100dvh - 5vw)',
                   boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
                 }}
               >
