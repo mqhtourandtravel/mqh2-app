@@ -74,7 +74,9 @@ export async function GET(request: NextRequest) {
     dbRole = dbUser.role
   } catch (err) {
     console.error('[auth/callback] DB upsert error:', err)
-    // Tetap redirect — user sudah login di Supabase, DB error tidak blocking
+    // Fallback: jika DB error, anggap user baru (pending) agar diarahkan
+    // ke halaman pilih role, bukan ke /admin yang bisa memicu redirect loop.
+    dbRole = 'pending'
   }
 
   // User baru (role pending) → arahkan ke halaman pilih role, bukan /admin.
