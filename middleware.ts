@@ -2,7 +2,8 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 // Middleware: session gate untuk /admin/*, /agent/*, /jamaah/*.
-// Role check tepat di API layer (lib/auth.ts) dan page components.
+// Gate role (staff_admin/agen/jamaah/pending) di layout Server Component —
+// Edge runtime tidak bisa menjalankan Prisma.
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request: { headers: request.headers } })
@@ -63,5 +64,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/agent/:path*', '/jamaah/:path*'],
+  matcher: ['/admin/:path*', '/agent/:path*', '/jamaah/:path*', '/auth/choose-role'],
 }

@@ -50,27 +50,39 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}/admin/login?error=no_email`)
   }
 
-  // Upsert user di database — atomic, no race condition
+  // Upsert user di database — atomic, no race condition.
+  // User baru: role 'pending' → nanti diarahkan ke halaman pilih role
+  // (agen/jamaah). staff_admin tidak pernah di-set di sini.
+  let dbRole: string | null = null
   try {
     const meta = supabaseUser.user_metadata ?? {}
 
-    await prisma.user.upsert({
+    const dbUser = await prisma.user.upsert({
       where: { authId: supabaseUser.id },
       create: {
         authId: supabaseUser.id,
         email,
         nama: meta.full_name ?? meta.name ?? null,
         photoUrl: meta.avatar_url ?? meta.picture ?? null,
-        role: 'jamaah',
+        role: 'pending',
       },
       update: {
         ...(meta.full_name ? { nama: meta.full_name } : {}),
         ...(meta.avatar_url ? { photoUrl: meta.avatar_url } : {}),
       },
     })
+    dbRole = dbUser.role
   } catch (err) {
     console.error('[auth/callback] DB upsert error:', err)
     // Tetap redirect — user sudah login di Supabase, DB error tidak blocking
+  }
+
+  // User baru (role pending) → arahkan ke halaman pilih role, bukan /admin.
+  // User yang sudah punya role → lanjut ke `next` seperti biasa.
+  if (dbRole === 'pending') {
+    return NextResponse.redirect(
+      `${origin}/auth/choose-role?${next.startsWith('/') && next !== '/' ? `next=${encodeURIComponent(next)}` : ''}`
+    )
   }
 
   return response

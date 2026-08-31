@@ -7,7 +7,10 @@ import { keysToSnake } from '@/lib/case'
 // Terpisah dari generic PATCH /api/admin/user/[id] supaya ada
 // guard role yang ketat — admin tidak bisa downgrade diri sendiri.
 
-const VALID_ROLES = ['staff_admin', 'jamaah', 'agen'] as const
+// Hanya jamaah/agen/pending yang bisa diubah lewat aplikasi.
+// staff_admin DIKUNCI — hanya 1 user yang di-setup manual di DB,
+// tidak bisa dibuat/diubah lewat endpoint ini.
+const VALID_ROLES = ['jamaah', 'agen', 'pending'] as const
 
 type Ctx = { params: Promise<{ id: string }> }
 

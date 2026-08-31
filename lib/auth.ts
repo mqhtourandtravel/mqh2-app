@@ -1,5 +1,7 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { createServerClient } from '@supabase/ssr'
 import { NextRequest } from 'next/server'
+import { cookies } from 'next/headers'
 import { prisma } from '@/lib/prisma'
 
 // Supabase client khusus server-side auth validation
@@ -12,9 +14,15 @@ export const ROLES = {
   STAFF_ADMIN: 'staff_admin',
   JAMAAH: 'jamaah',
   AGEN: 'agen',
+  PENDING: 'pending',
 } as const
 
 export type Role = (typeof ROLES)[keyof typeof ROLES]
+
+// Role yang boleh dipilih user sendiri saat pertama kali login.
+// staff_admin TIDAK pernah bisa dibuat lewat aplikasi — hanya 1 user
+// yang sudah di-setup manual di DB.
+export const SELF_SELECTABLE_ROLES = [ROLES.JAMAAH, ROLES.AGEN] as const
 
 export type AuthUser = {
   id: string
@@ -66,7 +74,7 @@ export async function getUser(request: NextRequest): Promise<AuthResult> {
         email,
         nama: meta.full_name ?? meta.name ?? null,
         photoUrl: meta.avatar_url ?? meta.picture ?? null,
-        role: 'jamaah',
+        role: 'pending',
       },
       update: {
         ...(meta.full_name ? { nama: meta.full_name } : {}),
@@ -119,4 +127,43 @@ export async function verifyRole(
  */
 export async function verifyAdmin(request: NextRequest): Promise<AuthResult> {
   return verifyRole(request, [ROLES.STAFF_ADMIN])
+}
+
+/**
+ * Baca sesi + role dari cookie — untuk Server Component (layout).
+ * Middleware jalan di Edge runtime dan tidak bisa memakai Prisma,
+ * jadi gate role dilakukan di sini (Node runtime).
+ * Return null kalau tidak login / user belum ter-provision / DB error.
+ */
+export async function getSessionUser(): Promise<AuthUser | null> {
+  const cookieStore = await cookies()
+  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      getAll: () => cookieStore.getAll(),
+      // Layout hanya membaca sesi; refresh cookie ditangani middleware.
+      setAll: () => {},
+    },
+  })
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) return null
+
+  try {
+    const dbUser = await prisma.user.findUnique({ where: { authId: user.id } })
+    if (!dbUser) return null
+    return {
+      id: dbUser.id,
+      authId: dbUser.authId,
+      email: dbUser.email,
+      nama: dbUser.nama,
+      role: dbUser.role as Role,
+      photoUrl: dbUser.photoUrl,
+      agenId: dbUser.agenId,
+    }
+  } catch (err) {
+    console.error('[auth] getSessionUser DB error:', err)
+    return null
+  }
 }

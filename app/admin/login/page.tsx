@@ -10,19 +10,20 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 export default function LoginAdmin() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [authError, setAuthError] = useState('')
   const [loading, setLoading] = useState(false)
   const searchParams = useSearchParams()
   const next = searchParams.get('next') ?? '/admin/paket'
+  const urlError = searchParams.get('error')
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
-    setError('')
+    setAuthError('')
     setLoading(true)
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     setLoading(false)
     if (error) {
-      setError('Email atau password salah.')
+      setAuthError('Email atau password salah.')
       return
     }
     const target = next.startsWith('/') && !next.startsWith('//') ? next : '/admin/paket'
@@ -30,7 +31,7 @@ export default function LoginAdmin() {
   }
 
   async function handleGoogleLogin() {
-    setError('')
+    setAuthError('')
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -38,7 +39,7 @@ export default function LoginAdmin() {
       },
     })
     if (error) {
-      setError('Gagal login dengan Google.')
+      setAuthError('Gagal login dengan Google.')
     }
   }
 
@@ -91,9 +92,19 @@ export default function LoginAdmin() {
             className="bg-transparent border-white/15 text-primary-foreground placeholder:text-sidebar-muted/50 focus-visible:border-secondary focus-visible:ring-secondary"
             required
           />
-          {error && (
+          {authError && (
             <Alert variant="destructive" className="bg-destructive/10 border-destructive/20">
-              <AlertDescription className="text-destructive">{error}</AlertDescription>
+              <AlertDescription className="text-destructive">{authError}</AlertDescription>
+            </Alert>
+          )}
+          {urlError === 'role' && (
+            <Alert variant="destructive" className="bg-destructive/10 border-destructive/20">
+              <AlertDescription className="text-destructive">Akses ditolak. Akun Anda tidak memiliki izin admin.</AlertDescription>
+            </Alert>
+          )}
+          {urlError && urlError !== 'role' && (
+            <Alert variant="destructive" className="bg-destructive/10 border-destructive/20">
+              <AlertDescription className="text-destructive">{urlError}</AlertDescription>
             </Alert>
           )}
           <Button type="submit" variant="secondary" disabled={loading} className="w-full">
