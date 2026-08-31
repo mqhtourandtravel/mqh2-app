@@ -1,4 +1,4 @@
-import { getKeberangkatanAktif, getMaskapaiList, getHotelList, getArtikelTerbit } from '@/lib/queries'
+import { getKeberangkatanAktif, getArtikelTerbit } from '@/lib/queries'
 import { TESTIMONI_LIST } from '@/lib/config'
 import { getInstagramFeed } from '@/lib/instagram'
 import { INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_BIO, HERO_IMG, HERO_VIDEO } from '@/lib/config'
@@ -38,11 +38,19 @@ const KEUNGGULAN = [
   },
 ]
 
+const MITRA_LOGOS = [
+  { nama: 'Saudi Airlines', src: '/images/logos/saudia.svg', w: 100, h: 36 },
+  { nama: 'Garuda Indonesia', src: '/images/logos/garuda-indonesia.svg', w: 140, h: 32 },
+  { nama: 'Etihad Airways', src: '/images/logos/etihad.svg', w: 110, h: 32 },
+  { nama: 'Swissôtel Makkah', src: '/images/logos/swissotel.svg', w: 120, h: 32 },
+  { nama: 'Pullman Zamzam', src: '/images/logos/pullman.svg', w: 110, h: 32 },
+  { nama: 'Mövenpick Hotels', src: '/images/logos/movenpick.svg', w: 130, h: 36 },
+  { nama: 'Hilton Hotels', src: '/images/logos/hilton.png', w: 100, h: 36 },
+]
+
 export default async function Home() {
-  const [keberangkatanList, maskapaiList, hotelList, artikelList, instagramPosts] = await Promise.all([
+  const [keberangkatanList, artikelList, instagramPosts] = await Promise.all([
     getKeberangkatanAktif({ limit: 5 }),
-    getMaskapaiList(),
-    getHotelList(),
     getArtikelTerbit({ limit: 3 }),
     getInstagramFeed(5),
   ])
@@ -282,27 +290,28 @@ export default async function Home() {
         </section>
 
         {/* PARTNER */}
-        {((maskapaiList?.length ?? 0) > 0 || (hotelList?.length ?? 0) > 0) && (
-          <section className="bg-background-cream">
-            <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-[40px] md:py-[60px] text-center">
+        <section className="bg-background-cream">
+          <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-[40px] md:py-[60px] text-center">
               <p className="text-[0.85rem] font-semibold text-secondary uppercase tracking-[3px] mb-3">Mitra Kami</p>
               <h2 className="font-serif text-[2.125rem] md:text-[3rem] font-bold text-foreground mb-4 leading-[1.167]">
                 Didukung Maskapai &amp; Hotel Terbaik
               </h2>
               <div className="gold-divider mx-auto mb-5" />
               <p className="text-[1.1rem] text-muted-foreground mb-12 leading-[1.7]">Kerjasama resmi dengan maskapai ternama dan hotel berstandar internasional</p>
-              <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-6">
-                {maskapaiList.map((m) => (
-                  <span key={m.id} className="text-[1rem] font-serif font-semibold tracking-wide text-primary/50 hover:text-primary transition-colors duration-300">{m.nama}</span>
-                ))}
-                <span className="hidden md:inline w-px h-6 bg-border" aria-hidden="true" />
-                {hotelList.map((h) => (
-                  <span key={h.id} className="text-[1rem] font-serif font-medium tracking-wide text-primary/40 hover:text-primary transition-colors duration-300">{h.nama}</span>
+              <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
+                {MITRA_LOGOS.map((m) => (
+                  <Image
+                    key={m.nama}
+                    src={m.src}
+                    alt={m.nama}
+                    width={m.w}
+                    height={m.h}
+                    className="h-8 md:h-9 w-auto object-contain opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+                  />
                 ))}
               </div>
             </div>
           </section>
-        )}
 
         {/* APP PROMO */}
         <section className="max-w-[1200px] mx-auto px-4 md:px-6 py-[60px] md:py-[100px]">
