@@ -51,10 +51,12 @@ export default function ChooseRolePage() {
       return
     }
 
-    // Redirect ke halaman tujuan
-    const target = next.startsWith('/') ? next : '/'
-    router.push(target)
-    router.refresh()
+  // Redirect ke dashboard sesuai role yang dipilih — JANGAN pakai `next`
+  // karena next bisa '/admin/*' yang diproteksi layout staff_admin dan
+  // memicu loop choose-role kalau role di DB belum kebaca.
+  const dashboard = role === 'agen' ? '/agent' : '/jamaah'
+  router.push(dashboard)
+  router.refresh()
   }
 
   return (
