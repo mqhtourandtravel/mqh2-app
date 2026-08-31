@@ -73,7 +73,8 @@ export default async function Home() {
         date="MQH Tour & Travel"
         textBlend
       >
-        <div className="flex justify-center pb-2">
+        <div className="flex flex-col items-center gap-3 pb-2">
+          <Image src="/logo.png" alt="MQH Tour & Travel" width={148} height={66} className="h-14 w-auto object-contain" priority />
           <Button asChild size="sm" className="bg-black/20 text-white border-0 hover:bg-black/30 transition-colors">
             <a href="#paket">
               Lihat Paket Umroh

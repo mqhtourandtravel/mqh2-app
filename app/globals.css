@@ -1,7 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Hide scrollbar */
+/* Hide scrollbar + smooth anchor scroll */
+html {
+  scroll-behavior: smooth;
+}
 html, body {
   scrollbar-width: none;
   -ms-overflow-style: none;
