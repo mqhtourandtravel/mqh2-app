@@ -74,7 +74,7 @@ export default async function Home() {
         textBlend
       >
         <div className="flex justify-center pb-2">
-          <Button asChild variant="outline" size="sm" className="backdrop-blur-sm bg-white/80 border-primary/20 text-primary hover:bg-white">
+          <Button asChild size="sm" className="bg-black/20 text-white border-0 hover:bg-black/30 transition-colors">
             <a href="#paket">
               Lihat Paket Umroh
               <ArrowRight className="size-4 rotate-90" />

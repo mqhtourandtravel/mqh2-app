@@ -339,18 +339,19 @@ const ScrollExpandMedia = ({
                   {restOfTitle}
                 </motion.h2>
               </div>
-            </div>
 
-            {children && (
-              <motion.section
-                className='flex flex-col w-full px-8 py-10 md:px-16 lg:py-20'
-                initial={{ opacity: 0 }}
-                animate={{ opacity: showContent ? 1 : 0 }}
-                transition={{ duration: 0.7 }}
-              >
-                {children}
-              </motion.section>
-            )}
+              {/* Children (CTA) — tepat di bawah judul, masih dalam viewport hero */}
+              {children && (
+                <motion.div
+                  className='relative z-10 flex justify-center mt-6 transition-none'
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: showContent ? 1 : 0 }}
+                  transition={{ duration: 0.7 }}
+                >
+                  {children}
+                </motion.div>
+              )}
+            </div>
           </div>
         </div>
       </section>
