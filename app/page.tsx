@@ -72,13 +72,10 @@ export default async function Home() {
         title="Perjalanan Spiritual yang Elegan & Nyaman"
         date="MQH Tour & Travel"
         textBlend
+        logo={{ src: '/logo.png', alt: 'MQH Tour & Travel', width: 148, height: 66 }}
+        brandName="MQH Tour & Travel"
       >
         <div className="flex flex-col items-center gap-4 pb-2">
-          <div className="flex flex-col items-center gap-1">
-            <Image src="/logo.png" alt="MQH Tour & Travel" width={148} height={66} className="h-10 md:h-12 w-auto object-contain" priority />
-            <div className="text-white font-bold text-base md:text-xl">MQH Tour & Travel</div>
-            <div className="text-white/80 text-[0.5rem] md:text-[0.65rem] uppercase tracking-wider">TERPERCAYA, TERBUKTI, RECOMMENDED</div>
-          </div>
           <Button asChild size="sm" className="bg-black/20 text-white border-0 hover:bg-black/30 transition-colors rounded-full px-4 md:px-6 py-2 md:py-3">
             <a href="#paket">
               Lihat Paket Umroh

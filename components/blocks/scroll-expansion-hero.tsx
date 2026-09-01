@@ -21,6 +21,9 @@ interface ScrollExpandMediaProps {
   scrollToExpand?: string;
   textBlend?: boolean;
   children?: ReactNode;
+  // Logo overlay — selalu tampil (before & after scroll), center-top
+  logo?: { src: string; alt: string; width?: number; height?: number };
+  brandName?: string;
 }
 
 const ScrollExpandMedia = ({
@@ -33,6 +36,8 @@ const ScrollExpandMedia = ({
   scrollToExpand,
   textBlend,
   children,
+  logo,
+  brandName,
 }: ScrollExpandMediaProps) => {
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [showContent, setShowContent] = useState<boolean>(false);
@@ -195,6 +200,26 @@ const ScrollExpandMedia = ({
           </motion.div>
 
           <div className='container mx-auto flex flex-col items-center justify-start relative z-10'>
+            {/* Logo + Brand — selalu tampil, center-top dengan jarak dari tepi atas */}
+            {(logo || brandName) && (
+              <div className='absolute top-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5'>
+                {logo && (
+                  <Image
+                    src={logo.src}
+                    alt={logo.alt}
+                    width={logo.width || 148}
+                    height={logo.height || 66}
+                    className='h-14 md:h-16 w-auto object-contain'
+                    priority
+                  />
+                )}
+                {brandName && (
+                  <div className='text-white font-bold text-lg md:text-xl text-center leading-tight'>
+                    {brandName}
+                  </div>
+                )}
+              </div>
+            )}
             <div className='flex flex-col items-center justify-center w-full h-[100dvh] relative'>
               <div
                 className='absolute z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none rounded-2xl'
