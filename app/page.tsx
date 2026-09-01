@@ -19,22 +19,22 @@ const KEUNGGULAN = [
   {
     icon: ShieldCheck,
     title: 'Resmi & Berizin',
-    desc: 'Terdaftar resmi di Kementerian Agama dengan jaminan legalitas penuh.',
+    desc: 'Legalitas resmi Kemenag.',
   },
   {
     icon: UserCheck,
     title: 'Pembimbing Berpengalaman',
-    desc: 'Muthawwif bersertifikat dan asatidz yang membimbing sesuai sunnah.',
+    desc: 'Muthawwif bersertifikat.',
   },
   {
     icon: Hotel,
     title: 'Hotel Dekat Pelataran',
-    desc: 'Akomodasi bintang 4-5 di ring 1 Masjidil Haram dan Masjid Nabawi.',
+    desc: 'Bintang 4-5 ring 1 Haramain.',
   },
   {
     icon: CalendarCheck,
     title: 'Pasti Berangkat',
-    desc: 'Jadwal, visa, tiket pesawat, dan hotel telah terkonfirmasi sejak awal.',
+    desc: 'Jadwal & visa terkonfirmasi.',
   },
 ]
 
@@ -73,34 +73,53 @@ export default async function Home() {
         date="MQH Tour & Travel"
         textBlend
       >
-        <div className="flex flex-col items-center gap-3 pb-2">
-          <Image src="/logo.png" alt="MQH Tour & Travel" width={148} height={66} className="h-14 w-auto object-contain" priority />
-          <Button asChild size="sm" className="bg-black/20 text-white border-0 hover:bg-black/30 transition-colors">
+        <div className="flex flex-col items-center gap-4 pb-2">
+          <div className="flex flex-col items-center gap-1">
+            <Image src="/logo.png" alt="MQH Tour & Travel" width={148} height={66} className="h-10 md:h-12 w-auto object-contain" priority />
+            <div className="text-white font-bold text-base md:text-xl">MQH Tour & Travel</div>
+            <div className="text-white/80 text-[0.5rem] md:text-[0.65rem] uppercase tracking-wider">TERPERCAYA, TERBUKTI, RECOMMENDED</div>
+          </div>
+          <Button asChild size="sm" className="bg-black/20 text-white border-0 hover:bg-black/30 transition-colors rounded-full px-4 md:px-6 py-2 md:py-3">
             <a href="#paket">
               Lihat Paket Umroh
               <ArrowRight className="size-4 rotate-90" />
             </a>
           </Button>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 w-full max-w-3xl mt-1">
+            <div className="flex items-start gap-2 bg-black/20 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-white">
+              <ShieldCheck className="size-4 md:size-5 shrink-0 mt-0.5" />
+              <div>
+                <div className="font-semibold text-xs md:text-sm leading-tight">Resmi & Berizin</div>
+                <div className="text-[0.6rem] md:text-xs text-white/70 leading-tight">Legalitas resmi Kemenag</div>
+              </div>
+            </div>
+            <div className="flex items-start gap-2 bg-black/20 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-white">
+              <UserCheck className="size-4 md:size-5 shrink-0 mt-0.5" />
+              <div>
+                <div className="font-semibold text-xs md:text-sm leading-tight">Pembimbing Berpengalaman</div>
+                <div className="text-[0.6rem] md:text-xs text-white/70 leading-tight">Muthawwif bersertifikat</div>
+              </div>
+            </div>
+            <div className="flex items-start gap-2 bg-black/20 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-white">
+              <Hotel className="size-4 md:size-5 shrink-0 mt-0.5" />
+              <div>
+                <div className="font-semibold text-xs md:text-sm leading-tight">Hotel Dekat Pelataran</div>
+                <div className="text-[0.6rem] md:text-xs text-white/70 leading-tight">Bintang 4-5 ring 1 Haramain</div>
+              </div>
+            </div>
+            <div className="flex items-start gap-2 bg-black/20 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-white">
+              <CalendarCheck className="size-4 md:size-5 shrink-0 mt-0.5" />
+              <div>
+                <div className="font-semibold text-xs md:text-sm leading-tight">Pasti Berangkat</div>
+                <div className="text-[0.6rem] md:text-xs text-white/70 leading-tight">Jadwal & visa terkonfirmasi</div>
+              </div>
+            </div>
+          </div>
         </div>
       </ScrollExpandMedia>
 
       <main>
-        {/* KEUNGGULAN — Value Proposition */}
-        <section className="max-w-[1200px] mx-auto px-4 md:px-6 pt-[48px] md:pt-[72px] pb-0">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {KEUNGGULAN.map((k) => (
-              <div key={k.title} className="flex flex-col items-center text-center gap-3">
-                <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center shrink-0">
-                  <k.icon className="size-6 text-secondary-hover" aria-hidden="true" />
-                </div>
-                <div>
-                  <h3 className="font-serif text-[1.05rem] font-semibold text-foreground mb-1.5">{k.title}</h3>
-                  <p className="text-[0.85rem] text-muted-foreground leading-[1.6]">{k.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+
 
         {/* PAKET */}
         <section id="paket" className="max-w-[1200px] mx-auto px-4 md:px-6 py-[60px] md:py-[100px]">
