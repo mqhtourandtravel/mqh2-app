@@ -202,7 +202,7 @@ const ScrollExpandMedia = ({
           <div className='container mx-auto flex flex-col items-center justify-start relative z-10'>
             {/* Logo + Brand — selalu tampil, center-top dengan jarak dari tepi atas */}
             {(logo || brandName) && (
-              <div className='absolute top-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5'>
+              <div className='absolute top-9 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5'>
                 {logo && (
                   <Image
                     src={logo.src}
