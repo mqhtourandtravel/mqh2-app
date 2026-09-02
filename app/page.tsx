@@ -60,7 +60,7 @@ export default async function Home() {
             </a>
           </Button>
           <div className="bg-black/40 rounded-lg px-3 py-3 md:px-6 md:py-5 w-full max-w-3xl mt-1 mx-[1rem] border border-white/10 shadow-md">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
+            <div className="grid grid-cols-2 gap-3 md:gap-6">
               <div className="flex items-start gap-2 text-white">
                 <ShieldCheck className="size-4 md:size-6 shrink-0 mt-0.5" />
                 <div>
