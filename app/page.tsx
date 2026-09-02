@@ -100,7 +100,6 @@ export default async function Home() {
         {/* PAKET */}
         <section id="paket" className="max-w-[1200px] mx-auto px-4 md:px-6 py-[60px] md:py-[100px]">
           <div className="text-center mb-12">
-            <p className="text-[0.85rem] font-semibold text-secondary uppercase tracking-[3px] mb-3">Paket Kami</p>
             <h2 className="font-serif text-[2.125rem] md:text-[3rem] font-bold text-foreground mb-4 leading-[1.167]">
               Pilihan Paket Umroh Terbaik
             </h2>
