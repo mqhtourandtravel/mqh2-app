@@ -198,11 +198,11 @@ export default async function Home() {
 
         {/* TESTIMONI — Kolom animasi vertikal (marquee) */}
         {TESTIMONI_LIST.length > 0 && (
-          <section className="bg-primary-dark overflow-hidden">
+          <section className="bg-background-cream overflow-hidden">
             <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-[60px] md:py-[100px]">
               <div className="text-center mb-12">
                 <p className="text-[0.85rem] font-semibold text-secondary uppercase tracking-[3px] mb-3">Testimoni</p>
-                <h2 className="font-serif text-[2.125rem] md:text-[3rem] font-bold text-white mb-4 leading-[1.167]">
+                <h2 className="font-serif text-[2.125rem] md:text-[3rem] font-bold text-foreground mb-4 leading-[1.167]">
                   Apa Kata Jamaah
                 </h2>
                 <div className="gold-divider mx-auto" />
