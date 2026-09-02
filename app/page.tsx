@@ -59,34 +59,34 @@ export default async function Home() {
               <ArrowRight className="size-4 rotate-90" />
             </a>
           </Button>
-          <div className="bg-black/20 rounded-lg px-3 py-3 md:px-4 md:py-4 w-full max-w-3xl mt-1 mx-[2.5vw]">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          <div className="bg-black/40 rounded-lg px-3 py-3 md:px-6 md:py-5 w-full max-w-3xl mt-1 mx-[16px] border border-white/10 shadow-md">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
               <div className="flex items-start gap-2 text-white">
-                <ShieldCheck className="size-4 md:size-5 shrink-0 mt-0.5" />
+                <ShieldCheck className="size-4 md:size-6 shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-semibold text-xs md:text-sm leading-tight">Resmi & Berizin</div>
-                  <div className="text-[0.6rem] md:text-xs text-white/70 leading-tight">Legalitas resmi Kemenag</div>
+                  <div className="font-semibold text-xs md:text-base leading-tight">Resmi & Berizin</div>
+                  <div className="text-[0.6rem] md:text-sm text-white/70 leading-tight">Legalitas resmi Kemenag</div>
                 </div>
               </div>
               <div className="flex items-start gap-2 text-white">
-                <UserCheck className="size-4 md:size-5 shrink-0 mt-0.5" />
+                <UserCheck className="size-4 md:size-6 shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-semibold text-xs md:text-sm leading-tight">Pembimbing Berpengalaman</div>
-                  <div className="text-[0.6rem] md:text-xs text-white/70 leading-tight">Muthawwif bersertifikat</div>
+                  <div className="font-semibold text-xs md:text-base leading-tight">Pembimbing Berpengalaman</div>
+                  <div className="text-[0.6rem] md:text-sm text-white/70 leading-tight">Muthawwif bersertifikat</div>
                 </div>
               </div>
               <div className="flex items-start gap-2 text-white">
-                <Hotel className="size-4 md:size-5 shrink-0 mt-0.5" />
+                <Hotel className="size-4 md:size-6 shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-semibold text-xs md:text-sm leading-tight">Hotel Dekat Pelataran</div>
-                  <div className="text-[0.6rem] md:text-xs text-white/70 leading-tight">Bintang 4-5 ring 1 Haramain</div>
+                  <div className="font-semibold text-xs md:text-base leading-tight">Hotel Dekat Pelataran</div>
+                  <div className="text-[0.6rem] md:text-sm text-white/70 leading-tight">Bintang 4-5 ring 1 Haramain</div>
                 </div>
               </div>
               <div className="flex items-start gap-2 text-white">
-                <CalendarCheck className="size-4 md:size-5 shrink-0 mt-0.5" />
+                <CalendarCheck className="size-4 md:size-6 shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-semibold text-xs md:text-sm leading-tight">Pasti Berangkat</div>
-                  <div className="text-[0.6rem] md:text-xs text-white/70 leading-tight">Jadwal & visa terkonfirmasi</div>
+                  <div className="font-semibold text-xs md:text-base leading-tight">Pasti Berangkat</div>
+                  <div className="text-[0.6rem] md:text-sm text-white/70 leading-tight">Jadwal & visa terkonfirmasi</div>
                 </div>
               </div>
             </div>
