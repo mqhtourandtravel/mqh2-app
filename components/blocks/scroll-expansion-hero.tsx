@@ -390,7 +390,7 @@ const ScrollExpandMedia = ({
 
                 {pillarsNode && (
                   <motion.div
-                    className='absolute z-20 bottom-[clamp(1rem,4vh,2.5rem)] left-1/2 -translate-x-1/2 w-[min(90%,600px)] grid grid-cols-2 gap-[clamp(0.5rem,2vh,1.5rem)] pointer-events-auto'
+                    className='absolute z-20 bottom-[clamp(1rem,4vh,2.5rem)] left-1/2 -translate-x-1/2 w-[min(95%,1100px)] flex flex-wrap justify-center gap-[clamp(0.75rem,2vw,2rem)] px-[clamp(0.75rem,2vh,1.25rem)] py-[clamp(1rem,3vw,2rem)] pointer-events-auto'
                     initial={{ opacity: 0 }}
                     animate={{ opacity: showContent ? 1 : 0 }}
                     transition={{ duration: 0.7 }}
