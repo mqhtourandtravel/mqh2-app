@@ -1,6 +1,5 @@
 import { getKeberangkatanAktif, getMaskapaiList, getHotelList, getArtikelTerbit } from '@/lib/queries'
 import { TESTIMONI_LIST } from '@/lib/config'
-import { getInstagramFeed } from '@/lib/instagram'
 import { INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_BIO, HERO_IMG, HERO_VIDEO } from '@/lib/config'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -13,6 +12,7 @@ import { Camera, MessageCircle, ArrowRight, ShieldCheck, UserCheck, Hotel, Calen
 
 import ScrollExpandMedia from '@/components/blocks/scroll-expansion-hero'
 import { TestimonialsColumn } from '@/components/ui/testimonials-columns-1'
+import InstagramEmbed from '@/components/InstagramEmbed'
 
 export const revalidate = 60
 
@@ -27,12 +27,11 @@ const MITRA_LOGOS = [
 ]
 
 export default async function Home() {
-  const [keberangkatanList, maskapaiList, hotelList, artikelList, instagramPosts] = await Promise.all([
+  const [keberangkatanList, maskapaiList, hotelList, artikelList] = await Promise.all([
     getKeberangkatanAktif({ limit: 5 }),
     getMaskapaiList(),
     getHotelList(),
     getArtikelTerbit({ limit: 3 }),
-    getInstagramFeed(5),
   ])
 
   const highlight = keberangkatanList
@@ -252,49 +251,18 @@ export default async function Home() {
             </p>
           </div>
 
-          {instagramPosts.length > 0 ? (
-            <>
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                {instagramPosts.map((post, i) => (
-                  <a
-                    key={post.id}
-                    href={post.permalink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`aspect-square relative rounded-[16px] overflow-hidden group block ${i === 4 ? 'hidden md:block' : ''}`}
-                  >
-                    <Image
-                      src={post.mediaUrl}
-                      alt={post.caption?.slice(0, 80) || 'Post Instagram MQH'}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 20vw"
-                      className="object-cover group-hover:scale-[1.08] transition-transform duration-[600ms]"
-                    />
-                  </a>
-                ))}
-              </div>
-              <div className="mt-10 flex justify-center">
-                <Button asChild>
-                  <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
-                    <Camera className="size-4" />
-                    Follow di Instagram
-                  </a>
-                </Button>
-              </div>
-            </>
-          ) : (
-            <div className="glass-panel rounded-[16px] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
-              <p className="text-[1.1rem] text-muted-foreground max-w-md leading-[1.7]">
-                Lihat aktivitas keberangkatan, dokumentasi jamaah, dan info terbaru langsung dari akun Instagram resmi kami.
-              </p>
-              <Button asChild className="shrink-0">
-                <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
-                  <Camera className="size-4" />
-                  Kunjungi @{INSTAGRAM_HANDLE}
-                </a>
-              </Button>
-            </div>
-          )}
+          {/* Embed Behold.so — feed IG resmi tanpa API key di server */}
+          <div className="mx-auto max-w-3xl rounded-[16px] overflow-hidden">
+            <InstagramEmbed feedId="783O3bePOilREjhAMorv" />
+          </div>
+          <div className="mt-10 flex justify-center">
+            <Button asChild>
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
+                <Camera className="size-4" />
+                Follow di Instagram
+              </a>
+            </Button>
+          </div>
         </section>
 
         {/* PARTNER */}
