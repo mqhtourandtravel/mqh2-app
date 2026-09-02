@@ -82,7 +82,7 @@ export default async function Home() {
               <ArrowRight className="size-4 rotate-90" />
             </a>
           </Button>
-          <div className="bg-black/20 rounded-lg px-3 py-3 md:px-4 md:py-4 w-full max-w-3xl mt-1 mx-4">
+          <div className="bg-black/20 rounded-lg px-3 py-3 md:px-4 md:py-4 w-full max-w-3xl mt-1 mx-[2.5vw]">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
               <div className="flex items-start gap-2 text-white">
                 <ShieldCheck className="size-4 md:size-5 shrink-0 mt-0.5" />
