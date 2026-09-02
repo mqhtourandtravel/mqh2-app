@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button'
 import { Camera, MessageCircle, ArrowRight, ShieldCheck, UserCheck, Hotel, CalendarCheck } from 'lucide-react'
 
 import ScrollExpandMedia from '@/components/blocks/scroll-expansion-hero'
+import { TestimonialsColumn } from '@/components/ui/testimonials-columns-1'
 
 export const revalidate = 60
 
@@ -195,9 +196,9 @@ export default async function Home() {
           </section>
         )}
 
-        {/* TESTIMONI */}
+        {/* TESTIMONI — Kolom animasi vertikal (marquee) */}
         {TESTIMONI_LIST.length > 0 && (
-          <section className="bg-primary-dark">
+          <section className="bg-primary-dark overflow-hidden">
             <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-[60px] md:py-[100px]">
               <div className="text-center mb-12">
                 <p className="text-[0.85rem] font-semibold text-secondary uppercase tracking-[3px] mb-3">Testimoni</p>
@@ -206,23 +207,33 @@ export default async function Home() {
                 </h2>
                 <div className="gold-divider mx-auto" />
               </div>
-              <div className="grid md:grid-cols-3 gap-8">
-                {TESTIMONI_LIST.map((testimoni) => (
-                  <div key={testimoni.namaSumber} className="bg-white/5 backdrop-blur-sm rounded-[16px] border border-white/10 p-8">
-                    <div className="text-secondary text-[2rem] font-serif mb-4">&ldquo;</div>
-                    <blockquote className="text-[1rem] leading-[1.8] text-white/80 italic mb-6">
-                      {testimoni.isi}
-                    </blockquote>
-                    <div className="flex items-center gap-3 pt-4 border-t border-white/10">
-                      <div className="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center">
-                        <span className="text-secondary font-semibold text-[0.85rem]">{testimoni.namaSumber.charAt(0)}</span>
-                      </div>
-                      <div>
-                        <p className="text-[0.95rem] font-semibold text-white">{testimoni.namaSumber}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              <div className="flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[640px] overflow-hidden">
+                <TestimonialsColumn
+                  testimonials={TESTIMONI_LIST.map((t) => ({
+                    text: t.isi,
+                    name: t.namaSumber,
+                    role: 'Jamaah MQH Tour & Travel',
+                  }))}
+                  duration={24}
+                />
+                <TestimonialsColumn
+                  className="hidden md:block"
+                  testimonials={[...TESTIMONI_LIST].reverse().map((t) => ({
+                    text: t.isi,
+                    name: t.namaSumber,
+                    role: 'Jamaah MQH Tour & Travel',
+                  }))}
+                  duration={28}
+                />
+                <TestimonialsColumn
+                  className="hidden lg:block"
+                  testimonials={TESTIMONI_LIST.map((t, i) => ({
+                    text: t.isi,
+                    name: t.namaSumber,
+                    role: i % 2 === 0 ? 'Jamaah Terdaftar' : 'Jamaah MQH Tour & Travel',
+                  }))}
+                  duration={22}
+                />
               </div>
             </div>
           </section>
