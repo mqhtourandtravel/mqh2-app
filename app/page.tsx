@@ -79,14 +79,14 @@ export default async function Home() {
               <Hotel className="w-[clamp(1.25rem,2vw,1.75rem)] h-[clamp(1.25rem,2vw,1.75rem)] shrink-0" />
               <div>
                 <div className="font-semibold text-[clamp(0.75rem,1.5vw,1rem)] leading-[1.2]">Hotel Dekat</div>
-                <div className="text-[clamp(0.625rem,1.2vw,0.8125rem)] text-white/70 leading-[1.2]">Bintang 4-5 ring 1 Haramain</div>
+                <div className="text-[clamp(0.625rem,1.2vw,0.8125rem)] text-white/70 leading-[1.2]">Ring 1-2 Haramain</div>
               </div>
             </div>
             <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[150px] max-w-[260px] text-white">
               <CalendarCheck className="w-[clamp(1.25rem,2vw,1.75rem)] h-[clamp(1.25rem,2vw,1.75rem)] shrink-0" />
               <div>
                 <div className="font-semibold text-[clamp(0.75rem,1.5vw,1rem)] leading-[1.2]">Pasti Berangkat</div>
-                <div className="text-[clamp(0.625rem,1.2vw,0.8125rem)] text-white/70 leading-[1.2]">Jadwal & visa terkonfirmasi</div>
+                <div className="text-[clamp(0.625rem,1.2vw,0.8125rem)] text-white/70 leading-[1.2]">Jadwal Terkonfirmasi</div>
               </div>
             </div>
           </div>
