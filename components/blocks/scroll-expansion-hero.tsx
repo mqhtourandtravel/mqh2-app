@@ -174,20 +174,34 @@ const ScrollExpandMedia = ({
   }, []);
 
   useEffect(() => {
+    // Debounce 150ms — safety terhadap resize beruntun (address bar collapse/
+    // expand di mobile). setState dengan nilai identik sudah bail-out di React,
+    // debounce ini mencegah pemanggilan handler berulang kali.
+    let resizeTimeout: ReturnType<typeof setTimeout> | undefined;
     const checkIfMobile = (): void => {
-      setIsMobileState(window.innerWidth < 768);
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        setIsMobileState((prev) => {
+          const next = window.innerWidth < 768;
+          return prev === next ? prev : next;
+        });
+      }, 150);
     };
 
     checkIfMobile();
     window.addEventListener('resize', checkIfMobile);
 
-    return () => window.removeEventListener('resize', checkIfMobile);
+    return () => {
+      clearTimeout(resizeTimeout);
+      window.removeEventListener('resize', checkIfMobile);
+    };
   }, []);
 
   const mediaWidth = 300 + scrollProgress * (isMobileState ? 650 : 1250);
-  // Tinggi media dinamis berbasis viewport (bukan px statis) — start 50dvh,
-  // expand ke 95dvh. Jurang atas-bawah otomatis proporsional di semua device
-  // (padding dinamis); maxHeight calc(100dvh - 5vw) tetap kompatibel sebagai clamp.
+  // Tinggi media dinamis berbasis viewport (bukan px statis) — start 50svh,
+  // expand ke 95svh. Unit svh dihitung sekali dari viewport TERKECIL (address
+  // bar expanded) dan STABIL saat scroll — mencegah flicker akibat dvh yang
+  // dihitung ulang setiap address bar collapse/expand di mobile.
   const mediaHeightDvh = 50 + scrollProgress * 45;
   const textTranslateX = scrollProgress * (isMobileState ? 180 : 150);
 
@@ -199,8 +213,8 @@ const ScrollExpandMedia = ({
       ref={sectionRef}
       className='overflow-x-hidden'
     >
-      <section className='relative flex flex-col items-center justify-start min-h-[100dvh]'>
-        <div className='relative w-full flex flex-col items-center min-h-[100dvh]'>
+      <section className='relative flex flex-col items-center justify-start min-h-[100svh]'>
+        <div className='relative w-full flex flex-col items-center min-h-[100svh]'>
           <motion.div
             className='absolute inset-0 z-0 h-full'
             initial={{ opacity: 0 }}
@@ -223,14 +237,14 @@ const ScrollExpandMedia = ({
           </motion.div>
 
           <div className='container mx-auto flex flex-col items-center justify-start relative z-10'>
-            <div className='flex flex-col items-center justify-center w-full h-[100dvh] relative'>
+            <div className='flex flex-col items-center justify-center w-full h-[100svh] relative'>
               <div
                 className='absolute z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none rounded-2xl'
                 style={{
                   width: `${mediaWidth}px`,
-                  height: `${mediaHeightDvh}dvh`,
+                  height: `${mediaHeightDvh}svh`,
                   maxWidth: '95vw',
-                  maxHeight: 'calc(100dvh - 5vw)',
+                  maxHeight: 'calc(100svh - 5vw)',
                   boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
                   willChange: 'width, height',
                 }}
