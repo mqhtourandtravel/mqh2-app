@@ -15,29 +15,6 @@ import ScrollExpandMedia from '@/components/blocks/scroll-expansion-hero'
 
 export const revalidate = 60
 
-const KEUNGGULAN = [
-  {
-    icon: ShieldCheck,
-    title: 'Resmi & Berizin',
-    desc: 'Legalitas resmi Kemenag.',
-  },
-  {
-    icon: UserCheck,
-    title: 'Pembimbing Berpengalaman',
-    desc: 'Muthawwif bersertifikat.',
-  },
-  {
-    icon: Hotel,
-    title: 'Hotel Dekat Pelataran',
-    desc: 'Bintang 4-5 ring 1 Haramain.',
-  },
-  {
-    icon: CalendarCheck,
-    title: 'Pasti Berangkat',
-    desc: 'Jadwal & visa terkonfirmasi.',
-  },
-]
-
 const MITRA_LOGOS = [
   { nama: 'Saudi Airlines', src: '/images/logos/saudia.svg', w: 100, h: 36 },
   { nama: 'Garuda Indonesia', src: '/images/logos/garuda-indonesia.svg', w: 140, h: 32 },

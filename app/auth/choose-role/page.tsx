@@ -1,15 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
 import { User, Users, Loader2 } from 'lucide-react'
 
 export default function ChooseRolePage() {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const next = searchParams.get('next') ?? '/'
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [userEmail, setUserEmail] = useState('')
