@@ -197,11 +197,8 @@ const ScrollExpandMedia = ({
     };
   }, []);
 
-  const mediaWidth = 300 + scrollProgress * (isMobileState ? 650 : 1250);
-  // Tinggi media dinamis berbasis viewport (bukan px statis) — start 50svh,
-  // expand ke 95svh. Unit svh dihitung sekali dari viewport TERKECIL (address
-  // bar expanded) dan STABIL saat scroll — mencegah flicker akibat dvh yang
-  // dihitung ulang setiap address bar collapse/expand di mobile.
+  // Lebar kini viewport-based (47.5→95vw) di inline style — variabel px lama dihapus
+  // agar tinggi & lebar penuh bersamaan tepat di progress=1 (tanpa dead zone).
   const mediaHeightDvh = 50 + scrollProgress * 45;
   const textTranslateX = scrollProgress * (isMobileState ? 180 : 150);
 
@@ -241,9 +238,12 @@ const ScrollExpandMedia = ({
               <div
                 className='absolute z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none rounded-2xl'
                 style={{
-                  width: `${mediaWidth}px`,
-                  height: `${mediaHeightDvh}svh`,
+                  // Lebar linear dalam vw: p=0 → 47.5vw, p=1 → 95vw (tepat mentok
+                  // maxWidth). Lebar & tinggi mencapai ukuran penuh BERSAMAAN di
+                  // p=1 — menghapus dead zone scroll setelah visual terlihat penuh.
+                  width: `${47.5 + scrollProgress * 47.5}vw`,
                   maxWidth: '95vw',
+                  height: `${mediaHeightDvh}svh`,
                   maxHeight: 'calc(100svh - 5vw)',
                   boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
                   willChange: 'width, height',
