@@ -163,9 +163,10 @@ const ScrollExpandMedia = ({
   }, []);
 
   const mediaWidth = 300 + scrollProgress * (isMobileState ? 650 : 1250);
-  // Tinggi expand sama di semua device — biarkan maxHeight (calc(100dvh - 5vw))
-  // yang meng-clamp, sehingga whitespace atas-bawah otomatis = kiri-kanan (2.5vw).
-  const mediaHeight = 400 + scrollProgress * 400;
+  // Tinggi media dinamis berbasis viewport (bukan px statis) — start 50dvh,
+  // expand ke 95dvh. Jurang atas-bawah otomatis proporsional di semua device
+  // (padding dinamis); maxHeight calc(100dvh - 5vw) tetap kompatibel sebagai clamp.
+  const mediaHeightDvh = 50 + scrollProgress * 45;
   const textTranslateX = scrollProgress * (isMobileState ? 180 : 150);
 
   const firstWord = title ? title.split(' ')[0] : '';
@@ -225,7 +226,7 @@ const ScrollExpandMedia = ({
                 className='absolute z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none rounded-2xl'
                 style={{
                   width: `${mediaWidth}px`,
-                  height: `${mediaHeight}px`,
+                  height: `${mediaHeightDvh}dvh`,
                   maxWidth: '95vw',
                   maxHeight: 'calc(100dvh - 5vw)',
                   boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
