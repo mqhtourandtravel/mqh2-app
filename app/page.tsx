@@ -60,29 +60,29 @@ export default async function Home() {
           </Button>
         }
         pillarsNode={
-          <div className="bg-black/40 rounded-xl border border-white/10 shadow-md flex flex-wrap justify-center gap-[clamp(0.75rem,2vw,2rem)] px-[clamp(1rem,3vw,2rem)] py-[clamp(1rem,3vh,1.75rem)]">
-            <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[150px] max-w-[260px] text-white">
+          <div className="bg-black/40 rounded-xl border border-white/10 shadow-md flex flex-wrap justify-center gap-[clamp(0.75rem,2vw,2rem)] px-[clamp(0.75rem,2vw,1.5rem)] py-[clamp(0.75rem,2.5vh,1.5rem)]">
+            <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[130px] max-w-[260px] text-white">
               <ShieldCheck className="w-[clamp(1.25rem,2vw,1.75rem)] h-[clamp(1.25rem,2vw,1.75rem)] shrink-0" />
               <div>
                 <div className="font-semibold text-[clamp(0.75rem,1.5vw,1rem)] leading-[1.2]">Resmi & Berizin</div>
                 <div className="text-[clamp(0.625rem,1.2vw,0.8125rem)] text-white/70 leading-[1.2]">Legalitas resmi Kemenag</div>
               </div>
             </div>
-            <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[150px] max-w-[260px] text-white">
+            <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[130px] max-w-[260px] text-white">
               <UserCheck className="w-[clamp(1.25rem,2vw,1.75rem)] h-[clamp(1.25rem,2vw,1.75rem)] shrink-0" />
               <div>
                 <div className="font-semibold text-[clamp(0.75rem,1.5vw,1rem)] leading-[1.2]">Tim Professional</div>
                 <div className="text-[clamp(0.625rem,1.2vw,0.8125rem)] text-white/70 leading-[1.2]">Muthawwif bersertifikat</div>
               </div>
             </div>
-            <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[150px] max-w-[260px] text-white">
+            <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[130px] max-w-[260px] text-white">
               <Hotel className="w-[clamp(1.25rem,2vw,1.75rem)] h-[clamp(1.25rem,2vw,1.75rem)] shrink-0" />
               <div>
                 <div className="font-semibold text-[clamp(0.75rem,1.5vw,1rem)] leading-[1.2]">Hotel Dekat</div>
                 <div className="text-[clamp(0.625rem,1.2vw,0.8125rem)] text-white/70 leading-[1.2]">Ring 1-2 Haramain</div>
               </div>
             </div>
-            <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[150px] max-w-[260px] text-white">
+            <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[130px] max-w-[260px] text-white">
               <CalendarCheck className="w-[clamp(1.25rem,2vw,1.75rem)] h-[clamp(1.25rem,2vw,1.75rem)] shrink-0" />
               <div>
                 <div className="font-semibold text-[clamp(0.75rem,1.5vw,1rem)] leading-[1.2]">Pasti Berangkat</div>
