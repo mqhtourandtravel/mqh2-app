@@ -42,76 +42,88 @@ const ScrollExpandMedia = ({
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [showContent, setShowContent] = useState<boolean>(false);
   const [mediaFullyExpanded, setMediaFullyExpanded] = useState<boolean>(false);
-  const [touchStartY, setTouchStartY] = useState<number>(0);
   const [isMobileState, setIsMobileState] = useState<boolean>(false);
 
   const sectionRef = useRef<HTMLDivElement | null>(null);
+
+  // Refs untuk nilai mutable — handler event membaca/menulis via ref sehingga
+  // listener cukup terdaftar SEKALI (re-register tiap state change + gap
+  // remove/add listener saat scroll cepat adalah sumber glitch/flicker).
+  const progressRef = useRef<number>(0);
+  const expandedRef = useRef<boolean>(false);
+  const touchStartYRef = useRef<number>(0);
+  // rAF throttle — maksimal 1 update state per frame (anti-flicker).
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     setScrollProgress(0);
     setShowContent(false);
     setMediaFullyExpanded(false);
+    progressRef.current = 0;
+    expandedRef.current = false;
   }, [mediaType]);
+
+  // Terapkan progress yang sudah di-clamp — via rAF agar hanya 1 update
+  // render per frame, dan skip bila nilainya identik (tidak ada re-render
+  // redundan di ujung animasi = tanpa flicker after-scroll).
+  const applyProgress = (next: number) => {
+    const clamped = Math.min(Math.max(next, 0), 1);
+    progressRef.current = clamped;
+
+    if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
+      setScrollProgress((prev) => (prev === clamped ? prev : clamped));
+
+      if (clamped >= 1) {
+        if (!expandedRef.current) {
+          expandedRef.current = true;
+          setMediaFullyExpanded(true);
+          setShowContent(true);
+        }
+      } else if (clamped < 0.75) {
+        setShowContent(false);
+      }
+    });
+  };
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      if (mediaFullyExpanded && e.deltaY < 0 && window.scrollY <= 5) {
+      if (expandedRef.current && e.deltaY < 0 && window.scrollY <= 5) {
+        expandedRef.current = false;
         setMediaFullyExpanded(false);
         e.preventDefault();
-      } else if (!mediaFullyExpanded) {
+      } else if (!expandedRef.current) {
         e.preventDefault();
-        const scrollDelta = e.deltaY * 0.0025;
-        const newProgress = Math.min(
-          Math.max(scrollProgress + scrollDelta, 0),
-          1
-        );
-        setScrollProgress(newProgress);
-
-        if (newProgress >= 1) {
-          setMediaFullyExpanded(true);
-          setShowContent(true);
-        } else if (newProgress < 0.75) {
-          setShowContent(false);
-        }
+        applyProgress(progressRef.current + e.deltaY * 0.0025);
       }
     };
 
     const handleTouchStart = (e: TouchEvent) => {
-      setTouchStartY(e.touches[0].clientY);
+      touchStartYRef.current = e.touches[0].clientY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (!touchStartY) return;
+      if (!touchStartYRef.current) return;
 
       const touchY = e.touches[0].clientY;
-      const deltaY = touchStartY - touchY;
+      const deltaY = touchStartYRef.current - touchY;
 
-      if (mediaFullyExpanded && deltaY < -20 && window.scrollY <= 5) {
+      if (expandedRef.current && deltaY < -20 && window.scrollY <= 5) {
+        expandedRef.current = false;
         setMediaFullyExpanded(false);
         e.preventDefault();
-      } else if (!mediaFullyExpanded) {
+      } else if (!expandedRef.current) {
         e.preventDefault();
         const scrollFactor = deltaY < 0 ? 0.02 : 0.012;
-        const scrollDelta = deltaY * scrollFactor;
-        const newProgress = Math.min(
-          Math.max(scrollProgress + scrollDelta, 0),
-          1
-        );
-        setScrollProgress(newProgress);
-
-        if (newProgress >= 1) {
-          setMediaFullyExpanded(true);
-          setShowContent(true);
-        } else if (newProgress < 0.75) {
-          setShowContent(false);
-        }
-
-        setTouchStartY(touchY);
+        applyProgress(progressRef.current + deltaY * scrollFactor);
       }
+
+      touchStartYRef.current = touchY;
     };
 
     const handleTouchEnd = (): void => {
-      setTouchStartY(0);
+      touchStartYRef.current = 0;
     };
 
     const handleScroll = (): void => {
@@ -135,8 +147,10 @@ const ScrollExpandMedia = ({
     window.addEventListener('touchend', handleTouchEnd as EventListener);
 
     return () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
       window.removeEventListener(
-        'wheel', handleWheel as unknown as EventListener
+        'wheel',
+        handleWheel as unknown as EventListener
       );
       window.removeEventListener('scroll', handleScroll as EventListener);
       window.removeEventListener(
@@ -149,7 +163,9 @@ const ScrollExpandMedia = ({
       );
       window.removeEventListener('touchend', handleTouchEnd as EventListener);
     };
-  }, [scrollProgress, mediaFullyExpanded, touchStartY]);
+    // Listener terdaftar SEKALI — nilai mutable diakses via ref, bukan closure state.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const checkIfMobile = (): void => {
@@ -175,7 +191,7 @@ const ScrollExpandMedia = ({
   return (
     <div
       ref={sectionRef}
-      className='transition-colors duration-700 ease-in-out overflow-x-hidden'
+      className='overflow-x-hidden'
     >
       <section className='relative flex flex-col items-center justify-start min-h-[100dvh]'>
         <div className='relative w-full flex flex-col items-center min-h-[100dvh]'>
@@ -230,6 +246,7 @@ const ScrollExpandMedia = ({
                   maxWidth: '95vw',
                   maxHeight: 'calc(100dvh - 5vw)',
                   boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
+                  willChange: 'width, height',
                 }}
               >
                 {mediaType === 'video' ? (
