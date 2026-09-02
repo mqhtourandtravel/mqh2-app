@@ -71,14 +71,14 @@ export default async function Home() {
             <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-[clamp(140px,22vw,240px)] min-w-[140px] text-white">
               <UserCheck className="w-[clamp(1.25rem,2vw,1.75rem)] h-[clamp(1.25rem,2vw,1.75rem)] shrink-0" />
               <div>
-                <div className="font-semibold text-[clamp(0.75rem,1.5vw,1rem)] leading-[1.2]">Pembimbing Berpengalaman</div>
+                <div className="font-semibold text-[clamp(0.75rem,1.5vw,1rem)] leading-[1.2]">Tim Professional</div>
                 <div className="text-[clamp(0.625rem,1.2vw,0.8125rem)] text-white/70 leading-[1.2]">Muthawwif bersertifikat</div>
               </div>
             </div>
             <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-[clamp(140px,22vw,240px)] min-w-[140px] text-white">
               <Hotel className="w-[clamp(1.25rem,2vw,1.75rem)] h-[clamp(1.25rem,2vw,1.75rem)] shrink-0" />
               <div>
-                <div className="font-semibold text-[clamp(0.75rem,1.5vw,1rem)] leading-[1.2]">Hotel Dekat Pelataran</div>
+                <div className="font-semibold text-[clamp(0.75rem,1.5vw,1rem)] leading-[1.2]">Hotel Dekat</div>
                 <div className="text-[clamp(0.625rem,1.2vw,0.8125rem)] text-white/70 leading-[1.2]">Bintang 4-5 ring 1 Haramain</div>
               </div>
             </div>
