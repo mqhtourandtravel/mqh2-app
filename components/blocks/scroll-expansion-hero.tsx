@@ -24,6 +24,10 @@ interface ScrollExpandMediaProps {
   // Logo overlay — selalu tampil (before & after scroll), center-top
   logo?: { src: string; alt: string; width?: number; height?: number };
   brandName?: string;
+  // Overlay after-scroll — menempel kotak video (CTA center, pilar bottom).
+  // Node React dari caller (page.tsx), hanya tampil saat showContent.
+  ctaNode?: ReactNode;
+  pillarsNode?: ReactNode;
 }
 
 const ScrollExpandMedia = ({
@@ -38,6 +42,8 @@ const ScrollExpandMedia = ({
   children,
   logo,
   brandName,
+  ctaNode,
+  pillarsNode,
 }: ScrollExpandMediaProps) => {
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [showContent, setShowContent] = useState<boolean>(false);
@@ -217,26 +223,6 @@ const ScrollExpandMedia = ({
           </motion.div>
 
           <div className='container mx-auto flex flex-col items-center justify-start relative z-10'>
-            {/* Logo + Brand — selalu tampil, center-top dengan jarak dari tepi atas */}
-            {(logo || brandName) && (
-              <div className='absolute top-9 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5'>
-                {logo && (
-                  <Image
-                    src={logo.src}
-                    alt={logo.alt}
-                    width={logo.width || 148}
-                    height={logo.height || 66}
-                    className='h-14 md:h-16 w-auto object-contain'
-                    priority
-                  />
-                )}
-                {brandName && (
-                  <div className='text-white font-bold text-lg md:text-xl text-center leading-tight'>
-                    {brandName}
-                  </div>
-                )}
-              </div>
-            )}
             <div className='flex flex-col items-center justify-center w-full h-[100dvh] relative'>
               <div
                 className='absolute z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none rounded-2xl'
@@ -362,6 +348,56 @@ const ScrollExpandMedia = ({
                     </p>
                   )}
                 </div>
+
+                {/* === OVERLAY AFTER SCROLL — menempel kotak video ===
+                    Logo TOP, CTA CENTER, 4 pilar BOTTOM.
+                    Hidden before scroll (video masih kecil) — fade in via showContent. */}
+                {(logo || brandName) && (
+                  <motion.div
+                    className='absolute z-20 top-[clamp(1rem,5vh,3rem)] left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 pointer-events-none'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: showContent ? 1 : 0 }}
+                    transition={{ duration: 0.7 }}
+                  >
+                    {logo && (
+                      <Image
+                        src={logo.src}
+                        alt={logo.alt}
+                        width={logo.width || 148}
+                        height={logo.height || 66}
+                        className='h-14 md:h-16 w-auto object-contain'
+                        priority
+                      />
+                    )}
+                    {brandName && (
+                      <div className='text-white font-bold text-lg md:text-xl text-center leading-tight'>
+                        {brandName}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+
+                {ctaNode && (
+                  <motion.div
+                    className='absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center pointer-events-auto'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: showContent ? 1 : 0 }}
+                    transition={{ duration: 0.7 }}
+                  >
+                    {ctaNode}
+                  </motion.div>
+                )}
+
+                {pillarsNode && (
+                  <motion.div
+                    className='absolute z-20 bottom-[clamp(1rem,4vh,2.5rem)] left-1/2 -translate-x-1/2 w-[min(90%,600px)] grid grid-cols-2 gap-[clamp(0.5rem,2vh,1.5rem)] pointer-events-auto'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: showContent ? 1 : 0 }}
+                    transition={{ duration: 0.7 }}
+                  >
+                    {pillarsNode}
+                  </motion.div>
+                )}
               </div>
 
               <div

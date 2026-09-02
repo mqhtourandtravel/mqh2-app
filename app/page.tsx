@@ -51,15 +51,16 @@ export default async function Home() {
         textBlend
         logo={{ src: '/logo.png', alt: 'MQH Tour & Travel', width: 148, height: 66 }}
         brandName="MQH Tour & Travel"
-      >
-        <div className="flex flex-col items-center gap-4 pb-2">
+        ctaNode={
           <Button asChild size="sm" className="bg-black/20 text-white border-0 hover:bg-black/30 transition-colors rounded-full px-4 md:px-6 py-2 md:py-3">
             <a href="#paket">
               Lihat Paket Umroh
               <ArrowRight className="size-4 rotate-90" />
             </a>
           </Button>
-          <div className="bg-black/40 rounded-lg px-3 py-3 md:px-6 md:py-5 w-full max-w-3xl mt-1 mx-[1rem] border border-white/10 shadow-md">
+        }
+        pillarsNode={
+          <div className="bg-black/40 rounded-lg px-3 py-3 md:px-6 md:py-5 w-full border border-white/10 shadow-md">
             <div className="grid grid-cols-2 gap-3 md:gap-6">
               <div className="flex items-start gap-2 text-white">
                 <ShieldCheck className="size-4 md:size-6 shrink-0 mt-0.5" />
@@ -91,8 +92,8 @@ export default async function Home() {
               </div>
             </div>
           </div>
-        </div>
-      </ScrollExpandMedia>
+        }
+      />
 
       <main>
 
