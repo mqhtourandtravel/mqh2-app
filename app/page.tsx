@@ -51,14 +51,6 @@ export default async function Home() {
         textBlend
         logo={{ src: '/logo.png', alt: 'MQH Tour & Travel', width: 148, height: 66 }}
         brandName="MQH Tour & Travel"
-        ctaNode={
-          <Button asChild size="sm" className="bg-black/20 text-white border-0 hover:bg-black/30 transition-colors rounded-full px-4 md:px-6 py-2 md:py-3">
-            <a href="#paket">
-              Lihat Paket Umroh
-              <ArrowRight className="size-4 rotate-90" />
-            </a>
-          </Button>
-        }
         pillarsNode={
           <div className="bg-black/40 rounded-xl border border-white/10 shadow-md w-full flex flex-wrap justify-center gap-[clamp(0.75rem,2vw,2rem)] px-[clamp(0.75rem,2vw,1.5rem)] py-[clamp(1.125rem,3.75vh,2.25rem)]">
             <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[130px] max-w-[340px] text-white">

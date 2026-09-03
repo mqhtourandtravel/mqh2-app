@@ -394,16 +394,7 @@ const ScrollExpandMedia = ({
                   </motion.div>
                 )}
 
-                {ctaNode && (
-                  <motion.div
-                    className='absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center pointer-events-auto'
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: showContent ? 1 : 0 }}
-                    transition={{ duration: 0.7 }}
-                  >
-                    {ctaNode}
-                  </motion.div>
-                )}
+                {/* CTA node dihapus — hero tanpa tombol "Lihat Paket Umroh" */}
 
                 {pillarsNode && (
                   <motion.div

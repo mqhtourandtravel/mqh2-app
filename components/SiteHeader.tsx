@@ -93,7 +93,7 @@ export default function SiteHeader() {
 
   useEffect(() => {
     function onScroll() {
-      const atHero = pathname === '/' && window.scrollY < window.innerHeight
+      const atHero = pathname === '/' && window.scrollY < window.innerHeight * 0.5
       setHeroActive(atHero)
       setScrolled(window.scrollY > 20)
     }
