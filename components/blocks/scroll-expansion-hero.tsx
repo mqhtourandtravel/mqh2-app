@@ -76,20 +76,23 @@ const ScrollExpandMedia = ({
     const clamped = Math.min(Math.max(next, 0), 1);
     progressRef.current = clamped;
 
+    // Lock-release check SINKRON — pakai sumber nilai yang sama persis
+    // dengan progressRef render, tanpa menunggu frame rAF berikutnya.
+    // Menghapus gap teoretis ~16ms antara visual penuh dan pelepasan lock.
+    if (clamped >= 1) {
+      if (!expandedRef.current) {
+        expandedRef.current = true;
+        setMediaFullyExpanded(true);
+        setShowContent(true);
+      }
+    } else if (clamped < 0.75 && expandedRef.current === false) {
+      setShowContent(false);
+    }
+
     if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     rafRef.current = requestAnimationFrame(() => {
       rafRef.current = null;
       setScrollProgress((prev) => (prev === clamped ? prev : clamped));
-
-      if (clamped >= 1) {
-        if (!expandedRef.current) {
-          expandedRef.current = true;
-          setMediaFullyExpanded(true);
-          setShowContent(true);
-        }
-      } else if (clamped < 0.75) {
-        setShowContent(false);
-      }
     });
   };
 
@@ -210,8 +213,8 @@ const ScrollExpandMedia = ({
       ref={sectionRef}
       className='overflow-x-hidden'
     >
-      <section className='relative flex flex-col items-center justify-start min-h-[100svh]'>
-        <div className='relative w-full flex flex-col items-center min-h-[100svh]'>
+      <section className='relative flex flex-col items-center justify-start min-h-[100dvh]'>
+        <div className='relative w-full flex flex-col items-center min-h-[100dvh]'>
           <motion.div
             className='absolute inset-0 z-0 h-full'
             initial={{ opacity: 0 }}
