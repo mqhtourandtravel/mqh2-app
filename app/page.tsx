@@ -60,7 +60,7 @@ export default async function Home() {
           </Button>
         }
         pillarsNode={
-          <div className="bg-black/40 rounded-xl border border-white/10 shadow-md flex flex-wrap justify-center gap-[clamp(0.75rem,2vw,2rem)] px-[clamp(0.75rem,2vw,1.5rem)] py-[clamp(0.75rem,2.5vh,1.5rem)]">
+          <div className="bg-black/40 rounded-xl border border-white/10 shadow-md w-full flex flex-wrap justify-center gap-[clamp(0.75rem,2vw,2rem)] px-[clamp(0.75rem,2vw,1.5rem)] py-[clamp(0.75rem,2.5vh,1.5rem)]">
             <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[130px] max-w-[260px] text-white">
               <ShieldCheck className="w-[clamp(1.5rem,1.8vw,2.25rem)] h-[clamp(1.5rem,1.8vw,2.25rem)] shrink-0" />
               <div>
