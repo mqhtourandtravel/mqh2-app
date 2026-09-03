@@ -236,7 +236,7 @@ const ScrollExpandMedia = ({
             <div className='absolute inset-0 bg-black/10' />
           </motion.div>
 
-          <div className='container mx-auto flex flex-col items-center justify-start relative z-10'>
+          <div className='relative z-10 flex w-full flex-col items-center justify-start'>
             <div className='flex flex-col items-center justify-center w-full h-[100svh] relative'>
               <div
                 className='absolute z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none rounded-2xl'
