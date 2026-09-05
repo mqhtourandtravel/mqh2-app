@@ -1,35 +1,31 @@
-import * as React from 'react'
+"use client"
 
-import { cn } from '@/lib/utils'
+import * as React from "react"
+import * as SeparatorPrimitive from "@radix-ui/react-separator"
 
-// Catatan: shadcn/ui versi resmi pakai @radix-ui/react-separator, tapi paket
-// itu belum terpasang di project ini dan environment build saat ini tidak
-// punya akses npm registry untuk menambahkannya. Versi ini functionally
-// setara (styling identik, role="separator" untuk aksesibilitas) tanpa
-// dependency tambahan. Kalau nanti mau versi Radix penuh, tinggal
-// `npx shadcn add separator` lalu ganti implementasi di bawah.
-function Separator({
-  className,
-  orientation = 'horizontal',
-  decorative = true,
-  ...props
-}: React.ComponentProps<'div'> & {
-  orientation?: 'horizontal' | 'vertical'
-  decorative?: boolean
-}) {
-  return (
-    <div
-      data-slot="separator"
-      role={decorative ? 'none' : 'separator'}
-      aria-orientation={orientation === 'vertical' ? 'vertical' : undefined}
+import { cn } from "@/lib/utils"
+
+const Separator = React.forwardRef<
+  React.ElementRef<typeof SeparatorPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>
+>(
+  (
+    { className, orientation = "horizontal", decorative = true, ...props },
+    ref
+  ) => (
+    <SeparatorPrimitive.Root
+      ref={ref}
+      decorative={decorative}
+      orientation={orientation}
       className={cn(
-        'bg-border shrink-0',
-        orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px',
+        "shrink-0 bg-border",
+        orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
         className
       )}
       {...props}
     />
   )
-}
+)
+Separator.displayName = SeparatorPrimitive.Root.displayName
 
 export { Separator }

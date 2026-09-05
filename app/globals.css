@@ -38,20 +38,20 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   animation-play-state: paused;
 }
 
-/* Gold section divider — 60px × 3px */
+/* Gold / Amber section divider */
 .gold-divider {
   width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, var(--secondary), var(--secondary-light));
+  background: linear-gradient(90deg, #E6B472, #D9A25C);
   border-radius: 2px;
 }
 
 /* ===== Glass panel ===== */
 .glass-panel {
-  background: rgba(255,255,255,.72);
+  background: rgba(255,255,255,.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0,0,0,.05);
+  border: 1px solid rgba(0,68,63,.15);
   box-shadow: var(--shadow-md);
 }
 
@@ -60,8 +60,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   background:
     linear-gradient(
       to bottom,
-      rgba(10,46,26,.65) 0%,
-      rgba(10,46,26,.4) 100%
+      rgba(0, 42, 39, .7) 0%,
+      rgba(0, 42, 39, .45) 100%
     );
 }
 
@@ -70,25 +70,25 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #c8956c;
-  color: #ffffff;
+  background: #E6B472;
+  color: #111827;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.5;
   border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(26, 92, 58, .2);
+  box-shadow: 0 2px 12px rgba(230, 180, 114, .35);
   transition: all .3s ease;
 }
 
 .nav-consultation:hover {
-  background: #b37f5a;
-  color: #ffffff;
+  background: #D9A25C;
+  color: #111827;
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(200, 149, 108, .5);
+  box-shadow: 0 4px 16px rgba(217, 162, 92, .55);
 }
 
 .nav-consultation-desktop {
-  padding: 1px 9px;
+  padding: 2px 17px;
 }
 
 .nav-consultation-mobile {
@@ -96,83 +96,80 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   padding: 12px 16px;
 }
 
-/* ===== Design Tokens — Forest Green & Gold ===== */
+/* ===== Design Tokens — Kafiyah.id Palette ===== */
 :root {
   --radius: 8px;
 
-  /* Primary - Forest Green */
-  --primary: #1a5c3a;
-  --primary-light: #2d8f5e;
-  --primary-dark: #0e3d26;
-  --primary-darker: #0a2e1a;
+  /* Primary: Deep Emerald Teal */
+  --primary: #00443F;
+  --primary-light: #4A8E87;
+  --primary-dark: #002A27;
+  --primary-darker: #001f1c;
   --primary-foreground: #FFFFFF;
-  --primary-hover: #0e3d26;
+  --primary-hover: #002A27;
 
-  /* Secondary - Warm Gold */
-  --secondary: #c8956c;
-  --secondary-light: #d4b896;
-  --secondary-foreground: #FFFFFF;
-  --secondary-hover: #b37f5a;
+  /* Secondary: Warm Sand Gold */
+  --secondary: #E6B472;
+  --secondary-light: #FBF2E5;
+  --secondary-foreground: #111827;
+  --secondary-hover: #D9A25C;
 
-  /* Accent Gold */
-  --accent-gold: #b8860b;
+  /* Accent Amber / Gold */
+  --accent-gold: #E6B472;
+  --accent-amber: #D9A25C;
 
   /* Background */
-  --background: #f8f9fa;
-  --background-cream: #faf8f5;
-  --foreground: #1a1a2e;
+  --background: #FFFFFF;
+  --background-cream: #F4FBFA;
+  --foreground: #111827;
 
   /* Card */
   --card: #FFFFFF;
-  --card-foreground: #1a1a2e;
+  --card-foreground: #111827;
 
   /* Popover */
   --popover: #FFFFFF;
-  --popover-foreground: #1a1a2e;
+  --popover-foreground: #111827;
 
   /* Muted */
-  --muted: #f0f0f0;
-  --muted-foreground: #6b7280;
+  --muted: #F4FBFA;
+  --muted-foreground: #4B5563;
 
-  /* Accent - Gold subtle */
-  --accent: rgba(200,149,108,.08);
-  --accent-foreground: #1a5c3a;
+  /* Accent */
+  --accent: #FBF2E5;
+  --accent-foreground: #00443F;
 
   /* Destructive */
-  --destructive: #C64B4B;
+  --destructive: #E05252;
   --destructive-foreground: #FFFFFF;
 
   /* Border & Form */
-  --border: rgba(0,0,0,.08);
-  --input: #e5e7eb;
-  --ring: #c8956c;
+  --border: #E5E7EB;
+  --input: #E5E7EB;
+  --ring: #E6B472;
 
   /* Info */
-  --info: #DCEDEF;
-  --info-foreground: #365860;
+  --info: #F4FBFA;
+  --info-foreground: #00443F;
 
   /* Success / Warning */
-  --success: #2d8f5e;
+  --success: #2F9E6F;
   --success-foreground: #FFFFFF;
-  --warning: #b8860b;
-  --warning-foreground: #FFFFFF;
-
-  /* Nav link hover */
-  --secondary-hover: #b37f5a;
+  --warning: #D9A25C;
+  --warning-foreground: #111827;
 
   /* Sidebar */
-  --sidebar-muted: #071f14;
+  --sidebar-muted: #002A27;
 
   /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0,0,0,.06);
-  --shadow-md: 0 4px 20px rgba(0,0,0,.08);
-  --shadow-lg: 0 12px 40px rgba(0,0,0,.12);
-  --shadow-xl: 0 20px 60px rgba(0,0,0,.15);
-  --shadow-gold: 0 2px 12px rgba(200,149,108,.4);
-  --shadow-gold-hover: 0 4px 16px rgba(200,149,108,.5);
-  --shadow-green: 0 2px 8px rgba(26,92,58,.2);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+  --shadow-md: 0 4px 16px rgba(0,42,39,.08);
+  --shadow-lg: 0 10px 30px rgba(0,42,39,.12);
+  --shadow-xl: 0 20px 40px rgba(0,42,39,.15);
+  --shadow-gold: 0 4px 14px rgba(230,180,114,.35);
+  --shadow-gold-hover: 0 6px 20px rgba(217,162,92,.5);
 
-  /* Legacy shadows (for backwards compat) */
+  /* Legacy shadows */
   --shadow-sm-custom: var(--shadow-sm);
   --shadow-md-custom: var(--shadow-md);
   --shadow-lg-custom: var(--shadow-lg);
@@ -206,6 +203,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent-gold: var(--accent-gold);
+  --color-accent-amber: var(--accent-amber);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -219,6 +217,16 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   --color-success-foreground: var(--success-foreground);
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
+
+  /* Palet Khusus Kafiyah */
+  --color-kafiyah-teal: #00443F;
+  --color-kafiyah-dark: #002A27;
+  --color-kafiyah-bright: #4A8E87;
+  --color-kafiyah-mint: #F4FBFA;
+  --color-kafiyah-gold: #E6B472;
+  --color-kafiyah-amber: #D9A25C;
+  --color-kafiyah-soft: #FBF2E5;
+  --color-kafiyah-subtle: #FEFAF4;
 
   --radius-sm: calc(var(--radius) - 2px);
   --radius-md: var(--radius);
@@ -239,34 +247,34 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 
 /* Dark Mode */
 .dark {
-  --background: #0a1a12;
-  --foreground: #ecf3f1;
-  --card: #0e261a;
-  --card-foreground: #ecf3f1;
-  --popover: #0e261a;
-  --popover-foreground: #ecf3f1;
-  --primary: #2d8f5e;
-  --primary-foreground: #0a2e1a;
-  --primary-hover: #3aab72;
-  --secondary: #c8956c;
-  --secondary-foreground: #0a2e1a;
-  --secondary-hover: #d4b896;
-  --muted: #152e22;
-  --muted-foreground: #9BAEAE;
-  --accent: #DCC98F;
-  --accent-foreground: #0a2e1a;
-  --destructive: #D96B6B;
+  --background: #001f1c;
+  --foreground: #F4FBFA;
+  --card: #002A27;
+  --card-foreground: #F4FBFA;
+  --popover: #002A27;
+  --popover-foreground: #F4FBFA;
+  --primary: #4A8E87;
+  --primary-foreground: #001f1c;
+  --primary-hover: #00443F;
+  --secondary: #E6B472;
+  --secondary-foreground: #111827;
+  --secondary-hover: #D9A25C;
+  --muted: #002A27;
+  --muted-foreground: #9CA3AF;
+  --accent: rgba(230, 180, 114, 0.2);
+  --accent-foreground: #E6B472;
+  --destructive: #E05252;
   --destructive-foreground: #FFFFFF;
-  --border: rgba(255,255,255,.1);
-  --input: rgba(255,255,255,.1);
-  --ring: #c8956c;
-  --sidebar-muted: #9BAEAE;
-  --info: #1a3a2a;
-  --info-foreground: #DCEDEF;
-  --success: #2d8f5e;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #E6B472;
+  --sidebar-muted: #001f1c;
+  --info: #002A27;
+  --info-foreground: #F4FBFA;
+  --success: #2F9E6F;
   --success-foreground: #FFFFFF;
-  --warning: #d4b56a;
-  --warning-foreground: #0a2e1a;
+  --warning: #D9A25C;
+  --warning-foreground: #111827;
 }
 
 body {

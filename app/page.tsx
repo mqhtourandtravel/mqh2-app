@@ -52,30 +52,36 @@ export default async function Home() {
         logo={{ src: '/logo.png', alt: 'MQH Tour & Travel', width: 148, height: 66 }}
         brandName="MQH Tour & Travel"
         pillarsNode={
-          <div className="bg-black/40 rounded-xl border border-white/10 shadow-md w-full flex flex-wrap justify-center gap-[clamp(0.75rem,2vw,2rem)] px-[clamp(0.75rem,2vw,1.5rem)] py-[clamp(1.125rem,3.75vh,2.25rem)]">
-            <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[130px] max-w-[340px] text-white">
-              <ShieldCheck className="w-[clamp(1.5rem,3.33vw,3rem)] h-[clamp(1.5rem,3.33vw,3rem)] shrink-0" />
+          <div className="relative overflow-hidden rounded-2xl md:rounded-3xl border border-white/15 bg-neutral-900/35 backdrop-blur-2xl backdrop-saturate-[1.8] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25),inset_0_-1px_0_0_rgba(255,255,255,0.04),0_12px_40px_-8px_rgba(0,0,0,0.5)] w-full flex flex-wrap justify-center gap-[clamp(0.75rem,2vw,2rem)] px-[clamp(0.75rem,2vw,1.5rem)] py-[clamp(1.125rem,3.75vh,2.25rem)]">
+            {/* Ambient specular highlight like kafiyah navbar */}
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+              <div className="absolute -inset-x-1/4 -top-3/4 h-36 rotate-1 bg-gradient-to-b from-white/10 via-white/0 to-transparent" />
+            </div>
+
+            <div className="relative z-10 flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[130px] max-w-[340px] text-white">
+              <ShieldCheck className="w-[clamp(1.5rem,3.33vw,3rem)] h-[clamp(1.5rem,3.33vw,3rem)] shrink-0 text-[#E6B472]" />
               <div>
                 <div className="font-semibold text-[clamp(0.875rem,1.94vw,1.85rem)] leading-[1.2]">Resmi & Berizin</div>
                 <div className="text-[clamp(0.75rem,1.3vw,1.3rem)] text-white/70 leading-[1.2]">Legalitas resmi Kemenag</div>
               </div>
             </div>
-            <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[130px] max-w-[340px] text-white">
-              <UserCheck className="w-[clamp(1.5rem,3.33vw,3rem)] h-[clamp(1.5rem,3.33vw,3rem)] shrink-0" />
+            <div className="relative z-10 flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[130px] max-w-[340px] text-white">
+              <UserCheck className="w-[clamp(1.5rem,3.33vw,3rem)] h-[clamp(1.5rem,3.33vw,3rem)] shrink-0 text-[#E6B472]" />
               <div>
                 <div className="font-semibold text-[clamp(0.875rem,1.94vw,1.85rem)] leading-[1.2]">Tim Professional</div>
                 <div className="text-[clamp(0.75rem,1.3vw,1.3rem)] text-white/70 leading-[1.2]">Muthawwif bersertifikat</div>
               </div>
             </div>
-            <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[130px] max-w-[340px] text-white">
-              <Hotel className="w-[clamp(1.5rem,3.33vw,3rem)] h-[clamp(1.5rem,3.33vw,3rem)] shrink-0" />
+            <div className="relative z-10 flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[130px] max-w-[340px] text-white">
+              <Hotel className="w-[clamp(1.5rem,3.33vw,3rem)] h-[clamp(1.5rem,3.33vw,3rem)] shrink-0 text-[#E6B472]" />
               <div>
                 <div className="font-semibold text-[clamp(0.875rem,1.94vw,1.85rem)] leading-[1.2]">Hotel Dekat</div>
                 <div className="text-[clamp(0.75rem,1.3vw,1.3rem)] text-white/70 leading-[1.2]">Ring 1-2 Haramain</div>
               </div>
             </div>
-            <div className="flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[130px] max-w-[340px] text-white">
-              <CalendarCheck className="w-[clamp(1.5rem,3.33vw,3rem)] h-[clamp(1.5rem,3.33vw,3rem)] shrink-0" />
+            <div className="relative z-10 flex items-center gap-[clamp(0.4rem,1vw,0.75rem)] flex-1 basis-0 min-w-[130px] max-w-[340px] text-white">
+              <CalendarCheck className="w-[clamp(1.5rem,3.33vw,3rem)] h-[clamp(1.5rem,3.33vw,3rem)] shrink-0 text-[#E6B472]" />
               <div>
                 <div className="font-semibold text-[clamp(0.875rem,1.94vw,1.85rem)] leading-[1.2]">Pasti Berangkat</div>
                 <div className="text-[clamp(0.75rem,1.3vw,1.3rem)] text-white/70 leading-[1.2]">Jadwal Terkonfirmasi</div>
