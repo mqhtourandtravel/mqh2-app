@@ -45,7 +45,7 @@ export default function LoginAdmin() {
       : urlError || '')
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#001f1c] via-[#002A27] to-[#00443F] flex items-center justify-center font-sans">
+    <main className="min-h-screen bg-background text-foreground flex items-center justify-center font-sans">
       <SignIn2
         onSignIn={handlePasswordLogin}
         onOAuth={handleOAuthLogin}
