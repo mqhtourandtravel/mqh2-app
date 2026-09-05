@@ -18,13 +18,34 @@ import { cn } from '@/lib/utils'
 
 type DropdownItem = { href: string; label: string }
 
+type NavCategory = {
+  label: string
+  items: DropdownItem[]
+}
+
 const paketItems: DropdownItem[] = [
   { href: '/paket?kategori=umroh', label: 'Paket Umroh' },
   { href: '/paket?kategori=haji', label: 'Paket Haji' },
-  { href: '/paket?kategori=tour', label: 'Halal Tour' },
   { href: '/paket?tier=Privat', label: 'Privat Umroh' },
+  { href: '/paket?kategori=tour', label: 'Halal Tour' },
   { href: '/paket?kategori=badal', label: 'Badal Umroh' },
+]
+
+const programItems: DropdownItem[] = [
   { href: '/tabungan-umroh', label: 'Tabungan Umroh' },
+  { href: '/partnership', label: 'Partnership' },
+]
+
+const informasiItems: DropdownItem[] = [
+  { href: '/artikel', label: 'Artikel' },
+  { href: '/tentang', label: 'Tentang MQH' },
+  { href: '/kontak', label: 'Kontak' },
+]
+
+const mobileCategories: NavCategory[] = [
+  { label: 'Paket', items: paketItems },
+  { label: 'Program', items: programItems },
+  { label: 'Informasi', items: informasiItems },
 ]
 
 function NavDropdown({ label, items }: { label: string; items: DropdownItem[] }) {
@@ -75,7 +96,15 @@ export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [heroActive, setHeroActive] = useState(false)
+  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({})
   const pathname = usePathname()
+
+  const toggleCategory = (label: string) => {
+    setExpandedCategories((prev) => ({
+      ...prev,
+      [label]: !prev[label],
+    }))
+  }
 
   useEffect(() => {
     function onScroll() {
@@ -224,64 +253,121 @@ export default function SiteHeader() {
           </div>
         </div>
 
-        {/* Mobile Dropdown Panel (Glass Floating Sheet) */}
+        {/* Mobile Nav Drawer & Backdrop */}
         {menuOpen && (
-          <div
-            id="menu-mobile"
-            className="min-[900px]:hidden fixed inset-x-0 top-14 sm:top-16 bg-neutral-900/40 backdrop-blur-2xl backdrop-saturate-[1.8] border-b border-white/10 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.5)] px-4 pt-2 pb-6 animate-in fade-in-0 slide-in-from-top-2 duration-200 max-h-[80vh] overflow-y-auto"
-          >
-            <div className="max-w-md mx-auto space-y-5 text-white pt-2">
-              <ul className="space-y-4 text-base font-semibold">
-                <li>
-                  <Link href="/" onClick={() => setMenuOpen(false)} className={navLinkClass('/')}>
-                    Beranda
-                  </Link>
-                </li>
-                <li className="space-y-2">
-                  <span className="text-[11px] uppercase tracking-[2px] text-[#E6B472] font-bold block">
-                    Paket
-                  </span>
-                  <div className="grid grid-cols-2 gap-2 pl-2 border-l border-[#E6B472]/40">
-                    {paketItems.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={() => setMenuOpen(false)}
-                        className="text-xs text-white/80 hover:text-[#E6B472] py-1.5 block"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                </li>
-                <li>
-                  <Link href="/artikel" onClick={() => setMenuOpen(false)} className={navLinkClass('/artikel')}>
-                    Artikel
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/tentang" onClick={() => setMenuOpen(false)} className={navLinkClass('/tentang')}>
-                    Tentang
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/kontak" onClick={() => setMenuOpen(false)} className={navLinkClass('/kontak')}>
-                    Kontak
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/partnership" onClick={() => setMenuOpen(false)} className={navLinkClass('/partnership')}>
-                    Partnership
-                  </Link>
-                </li>
-              </ul>
+          <div className="min-[900px]:hidden fixed inset-0 z-[1200]">
+            {/* Backdrop overlay */}
+            <div
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in-0 duration-300"
+              onClick={() => setMenuOpen(false)}
+              aria-hidden="true"
+            />
 
-              <Separator className="bg-white/15" />
+            {/* Mobile Panel: Slide from RIGHT to LEFT, width 85% */}
+            <div
+              id="menu-mobile"
+              className="fixed top-0 right-0 h-full w-[85%] max-w-[360px] bg-neutral-900/90 backdrop-blur-2xl backdrop-saturate-[1.8] border-l border-white/10 shadow-[-12px_0_40px_rgba(0,0,0,0.6)] px-5 pt-6 pb-8 animate-in slide-in-from-right duration-300 flex flex-col justify-between overflow-y-auto"
+            >
+              <div className="space-y-6 text-white">
+                {/* Header inside drawer: Logo + Close Button */}
+                <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                  <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center">
+                    <Image
+                      src="/logo.png"
+                      alt="MQH Logo"
+                      width={493}
+                      height={220}
+                      className="h-8 w-auto max-w-[120px] object-contain"
+                    />
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => setMenuOpen(false)}
+                    aria-label="Tutup Menu"
+                    className="p-1.5 text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+                  >
+                    <X className="size-6" />
+                  </button>
+                </div>
 
-              <div className="flex flex-col gap-2.5">
+                {/* Nav Items List */}
+                <ul className="space-y-2">
+                  {/* 1. Beranda (Link tunggal, tanpa submenu, tanpa chevron) */}
+                  <li>
+                    <Link
+                      href="/"
+                      onClick={() => setMenuOpen(false)}
+                      className={cn(
+                        "block font-bold text-[clamp(1.125rem,4vw,1.375rem)] py-2.5 transition-colors",
+                        pathname === '/' ? "text-[#E6B472]" : "text-white/90 hover:text-[#E6B472]"
+                      )}
+                    >
+                      Beranda
+                    </Link>
+                  </li>
+
+                  {/* 2. Accordion Categories: Paket, Program, Informasi */}
+                  {mobileCategories.map((cat) => {
+                    const isExpanded = !!expandedCategories[cat.label]
+                    const hasActiveChild = cat.items.some((it) => pathname === it.href.split('?')[0])
+
+                    return (
+                      <li key={cat.label} className="border-b border-white/5 pb-1">
+                        <button
+                          type="button"
+                          onClick={() => toggleCategory(cat.label)}
+                          className="w-full flex items-center justify-between py-2.5 text-left font-bold text-[clamp(1.125rem,4vw,1.375rem)] transition-colors cursor-pointer"
+                        >
+                          <span className={cn(hasActiveChild ? "text-[#E6B472]" : "text-white/90 hover:text-[#E6B472]")}>
+                            {cat.label}
+                          </span>
+                          <ChevronDown
+                            className={cn(
+                              "size-5 text-white/70 shrink-0 transition-transform duration-200",
+                              isExpanded && "rotate-180 text-[#E6B472]"
+                            )}
+                          />
+                        </button>
+
+                        {/* Submenu Accordion Content */}
+                        <div
+                          className={cn(
+                            "grid transition-all duration-200 ease-in-out",
+                            isExpanded ? "grid-rows-[1fr] opacity-100 mt-1 mb-2" : "grid-rows-[0fr] opacity-0"
+                          )}
+                        >
+                          <div className="overflow-hidden">
+                            <div className="flex flex-col space-y-2 pl-3 border-l-2 border-[#E6B472]/40 ml-1">
+                              {cat.items.map((item) => {
+                                const isActive = pathname === item.href.split('?')[0]
+                                return (
+                                  <Link
+                                    key={item.href}
+                                    href={item.href}
+                                    onClick={() => setMenuOpen(false)}
+                                    className={cn(
+                                      "text-sm font-medium py-1.5 transition-colors block",
+                                      isActive ? "text-[#E6B472] font-semibold" : "text-white/75 hover:text-[#E6B472]"
+                                    )}
+                                  >
+                                    {item.label}
+                                  </Link>
+                                )
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+
+              {/* Bottom CTA Area */}
+              <div className="space-y-3 pt-6 border-t border-white/10 mt-6">
                 <Button
                   asChild
-                  className="w-full bg-[#E6B472] text-neutral-900 hover:bg-[#D9A25C] text-sm font-semibold py-3 h-auto rounded-full shadow-[0_4px_14px_rgba(230,180,114,0.35)]"
+                  className="w-full bg-[#E6B472] text-neutral-900 hover:bg-[#D9A25C] text-sm font-semibold py-3 h-auto rounded-full shadow-[0_4px_14px_rgba(230,180,114,0.35)] transition-all"
                 >
                   <a
                     href={`https://wa.me/${NOMOR_WA}?text=${encodeURIComponent('Assalamualaikum, saya ingin konsultasi paket Umroh/Haji MQH Tour')}`}
@@ -289,12 +375,12 @@ export default function SiteHeader() {
                     rel="noopener noreferrer"
                     onClick={() => setMenuOpen(false)}
                   >
-                    Konsultasi WhatsApp
+                    Konsultasi
                   </a>
                 </Button>
                 <Button
                   asChild
-                  className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 text-sm font-semibold py-3 h-auto rounded-full backdrop-blur-md"
+                  className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 text-sm font-semibold py-3 h-auto rounded-full backdrop-blur-md transition-all"
                 >
                   <Link href="/admin/login" onClick={() => setMenuOpen(false)}>
                     Login
