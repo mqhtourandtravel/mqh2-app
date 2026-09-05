@@ -123,14 +123,14 @@ export default function SiteHeader() {
   }, [pathname])
 
   useEffect(() => {
-    if (heroActive) setMenuOpen(false)
+    if (heroActive && !menuOpen) setMenuOpen(false)
   }, [heroActive])
 
   useEffect(() => {
     setMenuOpen(false)
   }, [pathname])
 
-  const isGlassActive = scrolled || menuOpen
+  const isGlassActive = scrolled || menuOpen || pathname !== '/'
 
   const navLinkClass = (href: string) =>
     cn(
@@ -179,9 +179,9 @@ export default function SiteHeader() {
                 />
               </Link>
 
-              <Separator className="hidden lg:block h-6 bg-white/20" orientation="vertical" />
+              <Separator className="hidden min-[900px]:block h-6 bg-white/20" orientation="vertical" />
 
-              <div className="hidden lg:block">
+              <div className="hidden min-[900px]:block">
                 <ul className="flex items-center gap-6 lg:gap-8 xl:gap-10 text-sm lg:text-[15px] font-semibold text-white">
                   <li>
                     <Link href="/" className={navLinkClass('/')}>
@@ -252,145 +252,145 @@ export default function SiteHeader() {
             </button>
           </div>
         </div>
+      </nav>
 
-        {/* Mobile Nav Drawer & Backdrop */}
-        {menuOpen && (
-          <div className="min-[900px]:hidden fixed inset-0 z-[1200]">
-            {/* Backdrop overlay */}
-            <div
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in-0 duration-300"
-              onClick={() => setMenuOpen(false)}
-              aria-hidden="true"
-            />
+      {/* Mobile Nav Drawer & Backdrop - Portaled outside <nav> to avoid heroActive visibility lock */}
+      {menuOpen && (
+        <div className="min-[900px]:hidden fixed inset-0 z-[1200]">
+          {/* Backdrop overlay */}
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in-0 duration-300"
+            onClick={() => setMenuOpen(false)}
+            aria-hidden="true"
+          />
 
-            {/* Mobile Panel: Slide from RIGHT to LEFT, width 85% */}
-            <div
-              id="menu-mobile"
-              className="fixed top-0 right-0 h-full w-[85%] max-w-[360px] bg-neutral-900/90 backdrop-blur-2xl backdrop-saturate-[1.8] border-l border-white/10 shadow-[-12px_0_40px_rgba(0,0,0,0.6)] px-5 pt-6 pb-8 animate-in slide-in-from-right duration-300 flex flex-col justify-between overflow-y-auto"
-            >
-              <div className="space-y-6 text-white">
-                {/* Header inside drawer: Logo + Close Button */}
-                <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                  <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center">
-                    <Image
-                      src="/logo.png"
-                      alt="MQH Logo"
-                      width={493}
-                      height={220}
-                      className="h-8 w-auto max-w-[120px] object-contain"
-                    />
-                  </Link>
-                  <button
-                    type="button"
+          {/* Mobile Panel: Slide from RIGHT to LEFT, width 85% */}
+          <div
+            id="menu-mobile"
+            className="fixed top-0 right-0 h-full w-[85%] max-w-[360px] bg-neutral-900/90 backdrop-blur-2xl backdrop-saturate-[1.8] border-l border-white/10 shadow-[-12px_0_40px_rgba(0,0,0,0.6)] px-5 pt-6 pb-8 animate-in slide-in-from-right duration-300 flex flex-col justify-between overflow-y-auto"
+          >
+            <div className="space-y-6 text-white">
+              {/* Header inside drawer: Logo + Close Button */}
+              <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center">
+                  <Image
+                    src="/logo.png"
+                    alt="MQH Logo"
+                    width={493}
+                    height={220}
+                    className="h-8 w-auto max-w-[120px] object-contain"
+                  />
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setMenuOpen(false)}
+                  aria-label="Tutup Menu"
+                  className="p-1.5 text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+                >
+                  <X className="size-6" />
+                </button>
+              </div>
+
+              {/* Nav Items List */}
+              <ul className="space-y-2">
+                {/* 1. Beranda (Link tunggal, tanpa submenu, tanpa chevron) */}
+                <li>
+                  <Link
+                    href="/"
                     onClick={() => setMenuOpen(false)}
-                    aria-label="Tutup Menu"
-                    className="p-1.5 text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+                    className={cn(
+                      "block font-bold text-[clamp(1.125rem,4vw,1.375rem)] py-2.5 transition-colors",
+                      pathname === '/' ? "text-[#E6B472]" : "text-white/90 hover:text-[#E6B472]"
+                    )}
                   >
-                    <X className="size-6" />
-                  </button>
-                </div>
+                    Beranda
+                  </Link>
+                </li>
 
-                {/* Nav Items List */}
-                <ul className="space-y-2">
-                  {/* 1. Beranda (Link tunggal, tanpa submenu, tanpa chevron) */}
-                  <li>
-                    <Link
-                      href="/"
-                      onClick={() => setMenuOpen(false)}
-                      className={cn(
-                        "block font-bold text-[clamp(1.125rem,4vw,1.375rem)] py-2.5 transition-colors",
-                        pathname === '/' ? "text-[#E6B472]" : "text-white/90 hover:text-[#E6B472]"
-                      )}
-                    >
-                      Beranda
-                    </Link>
-                  </li>
+                {/* 2. Accordion Categories: Paket, Program, Informasi */}
+                {mobileCategories.map((cat) => {
+                  const isExpanded = !!expandedCategories[cat.label]
+                  const hasActiveChild = cat.items.some((it) => pathname === it.href.split('?')[0])
 
-                  {/* 2. Accordion Categories: Paket, Program, Informasi */}
-                  {mobileCategories.map((cat) => {
-                    const isExpanded = !!expandedCategories[cat.label]
-                    const hasActiveChild = cat.items.some((it) => pathname === it.href.split('?')[0])
-
-                    return (
-                      <li key={cat.label} className="border-b border-white/5 pb-1">
-                        <button
-                          type="button"
-                          onClick={() => toggleCategory(cat.label)}
-                          className="w-full flex items-center justify-between py-2.5 text-left font-bold text-[clamp(1.125rem,4vw,1.375rem)] transition-colors cursor-pointer"
-                        >
-                          <span className={cn(hasActiveChild ? "text-[#E6B472]" : "text-white/90 hover:text-[#E6B472]")}>
-                            {cat.label}
-                          </span>
-                          <ChevronDown
-                            className={cn(
-                              "size-5 text-white/70 shrink-0 transition-transform duration-200",
-                              isExpanded && "rotate-180 text-[#E6B472]"
-                            )}
-                          />
-                        </button>
-
-                        {/* Submenu Accordion Content */}
-                        <div
+                  return (
+                    <li key={cat.label} className="border-b border-white/5 pb-1">
+                      <button
+                        type="button"
+                        onClick={() => toggleCategory(cat.label)}
+                        className="w-full flex items-center justify-between py-2.5 text-left font-bold text-[clamp(1.125rem,4vw,1.375rem)] transition-colors cursor-pointer"
+                      >
+                        <span className={cn(hasActiveChild ? "text-[#E6B472]" : "text-white/90 hover:text-[#E6B472]")}>
+                          {cat.label}
+                        </span>
+                        <ChevronDown
                           className={cn(
-                            "grid transition-all duration-200 ease-in-out",
-                            isExpanded ? "grid-rows-[1fr] opacity-100 mt-1 mb-2" : "grid-rows-[0fr] opacity-0"
+                            "size-5 text-white/70 shrink-0 transition-transform duration-200",
+                            isExpanded && "rotate-180 text-[#E6B472]"
                           )}
-                        >
-                          <div className="overflow-hidden">
-                            <div className="flex flex-col space-y-2 pl-3 border-l-2 border-[#E6B472]/40 ml-1">
-                              {cat.items.map((item) => {
-                                const isActive = pathname === item.href.split('?')[0]
-                                return (
-                                  <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    onClick={() => setMenuOpen(false)}
-                                    className={cn(
-                                      "text-sm font-medium py-1.5 transition-colors block",
-                                      isActive ? "text-[#E6B472] font-semibold" : "text-white/75 hover:text-[#E6B472]"
-                                    )}
-                                  >
-                                    {item.label}
-                                  </Link>
-                                )
-                              })}
-                            </div>
+                        />
+                      </button>
+
+                      {/* Submenu Accordion Content */}
+                      <div
+                        className={cn(
+                          "grid transition-all duration-200 ease-in-out",
+                          isExpanded ? "grid-rows-[1fr] opacity-100 mt-1 mb-2" : "grid-rows-[0fr] opacity-0"
+                        )}
+                      >
+                        <div className="overflow-hidden">
+                          <div className="flex flex-col space-y-2 pl-3 border-l-2 border-[#E6B472]/40 ml-1">
+                            {cat.items.map((item) => {
+                              const isActive = pathname === item.href.split('?')[0]
+                              return (
+                                <Link
+                                  key={item.href}
+                                  href={item.href}
+                                  onClick={() => setMenuOpen(false)}
+                                  className={cn(
+                                    "text-sm font-medium py-1.5 transition-colors block",
+                                    isActive ? "text-[#E6B472] font-semibold" : "text-white/75 hover:text-[#E6B472]"
+                                  )}
+                                >
+                                  {item.label}
+                                </Link>
+                              )
+                            })}
                           </div>
                         </div>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
+                      </div>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
 
-              {/* Bottom CTA Area */}
-              <div className="space-y-3 pt-6 border-t border-white/10 mt-6">
-                <Button
-                  asChild
-                  className="w-full bg-[#E6B472] text-neutral-900 hover:bg-[#D9A25C] text-sm font-semibold py-3 h-auto rounded-full shadow-[0_4px_14px_rgba(230,180,114,0.35)] transition-all"
+            {/* Bottom CTA Area */}
+            <div className="space-y-3 pt-6 border-t border-white/10 mt-6">
+              <Button
+                asChild
+                className="w-full bg-[#E6B472] text-neutral-900 hover:bg-[#D9A25C] text-sm font-semibold py-3 h-auto rounded-full shadow-[0_4px_14px_rgba(230,180,114,0.35)] transition-all"
+              >
+                <a
+                  href={`https://wa.me/${NOMOR_WA}?text=${encodeURIComponent('Assalamualaikum, saya ingin konsultasi paket Umroh/Haji MQH Tour')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMenuOpen(false)}
                 >
-                  <a
-                    href={`https://wa.me/${NOMOR_WA}?text=${encodeURIComponent('Assalamualaikum, saya ingin konsultasi paket Umroh/Haji MQH Tour')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Konsultasi
-                  </a>
-                </Button>
-                <Button
-                  asChild
-                  className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 text-sm font-semibold py-3 h-auto rounded-full backdrop-blur-md transition-all"
-                >
-                  <Link href="/admin/login" onClick={() => setMenuOpen(false)}>
-                    Login
-                  </Link>
-                </Button>
-              </div>
+                  Konsultasi
+                </a>
+              </Button>
+              <Button
+                asChild
+                className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 text-sm font-semibold py-3 h-auto rounded-full backdrop-blur-md transition-all"
+              >
+                <Link href="/admin/login" onClick={() => setMenuOpen(false)}>
+                  Login
+                </Link>
+              </Button>
             </div>
           </div>
-        )}
-      </nav>
+        </div>
+      )}
     </header>
   )
 }
