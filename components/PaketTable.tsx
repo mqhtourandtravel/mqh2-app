@@ -30,10 +30,15 @@ function getMaskapaiLogo(m?: { nama: string; logo_url: string | null } | null): 
 }
 
 // ─── Hotel Google Maps URL ──────────────────────────────────────────────────
-// Prioritas: DB google_maps_url → auto-generate search URL sebagai fallback
-function getHotelMapsUrl(h?: { nama: string; google_maps_url: string | null } | null): string | null {
+// Prioritas: DB google_maps_url → auto-generate search URL dengan nama kota sebagai fallback
+function getHotelMapsUrl(
+  h?: { nama: string; google_maps_url: string | null } | null,
+  kotaDefault?: string
+): string | null {
   if (!h) return null
-  return h.google_maps_url ?? `https://maps.google.com/?q=${encodeURIComponent(h.nama)}`
+  if (h.google_maps_url) return h.google_maps_url
+  const query = kotaDefault ? `${h.nama} ${kotaDefault}` : h.nama
+  return `https://maps.google.com/?q=${encodeURIComponent(query)}`
 }
 
 // ─── Grouping per bulan ─────────────────────────────────────────────────────
@@ -75,8 +80,8 @@ function KuotaBadge({ k }: { k: Keberangkatan }) {
 // ─── Mobile Card ────────────────────────────────────────────────────────────
 function PaketCard({ k }: { k: Keberangkatan }) {
   const logoSrc = getMaskapaiLogo(k.maskapai)
-  const mekkahUrl = getHotelMapsUrl(k.hotel_mekkah)
-  const madinahUrl = getHotelMapsUrl(k.hotel_madinah)
+  const mekkahUrl = getHotelMapsUrl(k.hotel_mekkah, 'Mekkah')
+  const madinahUrl = getHotelMapsUrl(k.hotel_madinah, 'Madinah')
 
   return (
     <div className="p-4 space-y-3">
@@ -269,8 +274,8 @@ export default function PaketTable({
                 {/* Data rows */}
                 {items.map(k => {
                   const logoSrc = getMaskapaiLogo(k.maskapai)
-                  const mekkahUrl = getHotelMapsUrl(k.hotel_mekkah)
-                  const madinahUrl = getHotelMapsUrl(k.hotel_madinah)
+                  const mekkahUrl = getHotelMapsUrl(k.hotel_mekkah, 'Mekkah')
+                  const madinahUrl = getHotelMapsUrl(k.hotel_madinah, 'Madinah')
 
                   return (
                     <TableRow key={k.id} className="border-white/40 hover:bg-white/40">
