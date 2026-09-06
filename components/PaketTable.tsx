@@ -79,12 +79,12 @@ export default function PaketTable({
             <TableHeader>
               <TableRow className="border-white/60 hover:bg-transparent">
                 {/* 1. Nama Paket — 44% di mobile, auto di desktop */}
-                <TableHead className="w-[44%] md:w-auto pl-3 md:pl-6 whitespace-nowrap">
+                <TableHead className="w-[44%] md:w-auto pl-3 md:pl-6 whitespace-normal overflow-hidden">
                   Nama Paket
                 </TableHead>
 
                 {/* 2. Keberangkatan — 22% di mobile, auto di desktop */}
-                <TableHead className="w-[22%] md:w-auto whitespace-nowrap">
+                <TableHead className="w-[22%] md:w-auto whitespace-nowrap overflow-hidden">
                   Keberangkatan
                 </TableHead>
 
@@ -99,7 +99,7 @@ export default function PaketTable({
                 </TableHead>
 
                 {/* 5. Harga — 22% di mobile, auto di desktop */}
-                <TableHead className="w-[22%] md:w-auto text-right whitespace-nowrap">
+                <TableHead className="w-[22%] md:w-auto text-right whitespace-nowrap overflow-hidden">
                   Harga
                 </TableHead>
 
