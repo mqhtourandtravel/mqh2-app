@@ -73,7 +73,7 @@ export default function PaketTableRow({ k }: { k: Keberangkatan }) {
       {/* Nama Paket — 44% di mobile (table-fixed), auto di desktop */}
       <TableCell className="w-[44%] md:w-auto pl-3 md:pl-6 whitespace-normal overflow-hidden">
         <div className="flex items-start gap-2 md:gap-4 min-w-0">
-          <div className="w-10 h-10 md:w-16 md:h-16 rounded overflow-hidden shrink-0 border border-white/60">
+          <div className="hidden md:block w-16 h-16 rounded overflow-hidden shrink-0 border border-white/60">
             <PhotoBlock
               imageUrl={k.paket?.gambar_url}
               alt={k.paket?.nama_paket ?? ''}
@@ -191,16 +191,16 @@ export default function PaketTableRow({ k }: { k: Keberangkatan }) {
               <Menu className="size-4 text-muted-foreground" aria-hidden />
             </button>
           </PopoverTrigger>
-          <PopoverContent align="end" side="left" sideOffset={8} className="w-72 p-0 overflow-hidden">
-            <div className="px-4 py-3 border-b border-accent/30 bg-primary/5">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-1">
+          <PopoverContent align="end" side="left" sideOffset={8} className="w-full max-w-[240px] p-0 overflow-hidden">
+            <div className="px-3 py-2.5 border-b border-accent/30 bg-primary/5">
+              <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground mb-0.5">
                 Detail Cepat
               </p>
-              <p className="text-[13px] font-semibold text-primary line-clamp-2 leading-snug">
+              <p className="text-[12px] font-semibold text-primary line-clamp-2 leading-snug">
                 {k.paket?.nama_paket}
               </p>
             </div>
-            <div className="px-4 py-3 space-y-3">
+            <div className="px-3 py-2.5 space-y-2.5">
               {/* Maskapai */}
               {k.maskapai && (
                 <div className="space-y-1">
