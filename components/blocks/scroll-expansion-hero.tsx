@@ -245,81 +245,32 @@ const ScrollExpandMedia = ({
                 }}
               >
                 {mediaType === 'video' ? (
-                  mediaSrc.includes('youtube.com') || mediaSrc.includes('youtu.be') ? (
-                    <div className='relative w-full h-full pointer-events-none overflow-hidden rounded-2xl bg-black'>
-                      {posterSrc && (
-                        <Image
-                          src={posterSrc}
-                          alt=""
-                          fill
-                          className="object-cover -z-10"
-                        />
-                      )}
-                      {(() => {
-                        let videoId = ''
-                        if (mediaSrc.includes('youtu.be/')) {
-                          videoId = mediaSrc.split('youtu.be/')[1]?.split('?')[0]?.split('&')[0] || ''
-                        } else if (mediaSrc.includes('watch?v=')) {
-                          videoId = mediaSrc.split('watch?v=')[1]?.split('&')[0] || ''
-                        } else if (mediaSrc.includes('embed/')) {
-                          videoId = mediaSrc.split('embed/')[1]?.split('?')[0]?.split('&')[0] || ''
-                        }
-                        const embedUrl = videoId
-                          ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&disablekb=1&modestbranding=1&playsinline=1&enablejsapi=1&playlist=${videoId}`
-                          : mediaSrc
+                  <div className='relative w-full h-full pointer-events-none overflow-hidden rounded-2xl'>
+                    <video
+                      src={mediaSrc}
+                      poster={posterSrc}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload='metadata'
+                      className='w-full h-full object-cover rounded-2xl'
+                      controls={false}
+                      disablePictureInPicture
+                      disableRemotePlayback
+                    />
+                    <div
+                      className='absolute inset-0 z-10'
+                      style={{ pointerEvents: 'none' }}
+                    ></div>
 
-                        return (
-                          <iframe
-                            width='100%'
-                            height='100%'
-                            src={embedUrl}
-                            className='w-full h-full rounded-2xl scale-125'
-                            frameBorder='0'
-                            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-                            allowFullScreen
-                          />
-                        )
-                      })()}
-                      <div
-                        className='absolute inset-0 z-10'
-                        style={{ pointerEvents: 'none' }}
-                      ></div>
-
-                      <motion.div
-                        className='absolute inset-0 bg-black/20 rounded-2xl'
-                        initial={{ opacity: 0.6 }}
-                        animate={{ opacity: 0.3 - scrollProgress * 0.2 }}
-                        transition={{ duration: 0.2 }}
-                      />
-                    </div>
-                  ) : (
-                    <div className='relative w-full h-full pointer-events-none overflow-hidden rounded-2xl'>
-                      <video
-                        src={mediaSrc}
-                        poster={posterSrc}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        preload='metadata'
-                        className='w-full h-full object-cover rounded-2xl'
-                        controls={false}
-                        disablePictureInPicture
-                        disableRemotePlayback
-                      />
-                      <div
-                        className='absolute inset-0 z-10'
-                        style={{ pointerEvents: 'none' }}
-                      ></div>
-
-                      <motion.div
-                        className='absolute inset-0 bg-black/20 rounded-2xl'
-                        initial={{ opacity: 0.6 }}
-                        animate={{ opacity: 0.3 - scrollProgress * 0.2 }}
-                        transition={{ duration: 0.2 }}
-                      />
-                    </div>
-                  )
+                    <motion.div
+                      className='absolute inset-0 bg-black/20 rounded-2xl'
+                      initial={{ opacity: 0.6 }}
+                      animate={{ opacity: 0.3 - scrollProgress * 0.2 }}
+                      transition={{ duration: 0.2 }}
+                    />
+                  </div>
                 ) : (
                   <div className='relative w-full h-full'>
                     <Image
