@@ -46,6 +46,9 @@ const ScrollExpandMedia = ({
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [showContent, setShowContent] = useState<boolean>(false);
   const [isMobileState, setIsMobileState] = useState<boolean>(false);
+  // Single source of truth tinggi viewport (px, dari JS). 0 = belum terukur
+  // (SSR/first paint) — semua tinggi hero fallback ke 100vh CSS di kondisi ini.
+  const [viewportHeight, setViewportHeight] = useState<number>(0);
 
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
@@ -173,9 +176,12 @@ const ScrollExpandMedia = ({
     // expand di mobile). setState dengan nilai identik sudah bail-out di React,
     // debounce ini mencegah pemanggilan handler berulang kali.
     let resizeTimeout: ReturnType<typeof setTimeout> | undefined;
-    const checkIfMobile = (): void => {
+    const checkViewport = (): void => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
+        // Satu sumber kebenaran tinggi viewport — px dari JS, bukan CSS
+        // viewport unit (dvh/svh campuran adalah sumber mismatch/flicker).
+        setViewportHeight(window.innerHeight);
         setIsMobileState((prev) => {
           const next = window.innerWidth < 768;
           return prev === next ? prev : next;
@@ -183,18 +189,21 @@ const ScrollExpandMedia = ({
       }, 150);
     };
 
-    checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
 
     return () => {
       clearTimeout(resizeTimeout);
-      window.removeEventListener('resize', checkIfMobile);
+      window.removeEventListener('resize', checkViewport);
     };
   }, []);
 
-  // Lebar kini viewport-based (47.5→95vw) di inline style — variabel px lama dihapus
-  // agar tinggi & lebar penuh bersamaan tepat di progress=1 (tanpa dead zone).
-  const mediaHeightDvh = 50 + scrollProgress * 45;
+  // Tinggi media dalam persen (50%→95% dari viewport), dikonversi ke px
+  // dari viewportHeight (single source of truth) — bukan unit svh/dvh CSS.
+  const mediaHeightPercent = 50 + scrollProgress * 45;
+  const mediaHeightPx = viewportHeight
+    ? (mediaHeightPercent / 100) * viewportHeight
+    : null;
   const textTranslateX = scrollProgress * (isMobileState ? 180 : 150);
 
   const firstWord = title ? title.split(' ')[0] : '';
@@ -205,8 +214,14 @@ const ScrollExpandMedia = ({
       ref={sectionRef}
       className='overflow-x-hidden'
     >
-      <section className='relative flex flex-col items-center justify-start min-h-[100dvh]'>
-        <div className='relative w-full flex flex-col items-center min-h-[100dvh]'>
+      <section
+        className='relative flex flex-col items-center justify-start'
+        style={{ minHeight: viewportHeight ? `${viewportHeight}px` : '100vh' }}
+      >
+        <div
+          className='relative w-full flex flex-col items-center'
+          style={{ minHeight: viewportHeight ? `${viewportHeight}px` : '100vh' }}
+        >
           <motion.div
             className='absolute inset-0 z-0 h-full'
             initial={{ opacity: 0 }}
@@ -229,17 +244,20 @@ const ScrollExpandMedia = ({
           </motion.div>
 
           <div className='relative z-10 flex w-full flex-col items-center justify-start'>
-            <div className='flex flex-col items-center justify-center w-full h-[100svh] relative'>
+            <div
+              className='flex flex-col items-center justify-center w-full relative'
+              style={{ height: viewportHeight ? `${viewportHeight}px` : '100vh' }}
+            >
               <div
                 className='absolute z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none rounded-2xl'
                 style={{
-                  // Lebar linear dalam vw: p=0 → 47.5vw, p=1 → 95vw (tepat mentok
-                  // maxWidth). Lebar & tinggi mencapai ukuran penuh BERSAMAAN di
-                  // p=1 — menghapus dead zone scroll setelah visual terlihat penuh.
+                  // Tinggi: px dari viewportHeight (JS) — 50%→95% viewport.
+                  // Fallback svh hanya sebelum JS mengukur (first paint).
+                  // Lebar tetap vw (stabil, tidak terpengaruh address bar).
                   width: `${47.5 + scrollProgress * 47.5}vw`,
                   maxWidth: '95vw',
-                  height: `${mediaHeightDvh}svh`,
-                  maxHeight: 'calc(100svh - 5vw)',
+                  height: mediaHeightPx ? `${mediaHeightPx}px` : `${mediaHeightPercent}svh`,
+                  maxHeight: viewportHeight ? `${viewportHeight * 0.95}px` : 'calc(100svh - 5vw)',
                   boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
                   willChange: 'width, height',
                 }}
