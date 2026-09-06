@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import SiteHeader from '@/components/SiteHeader'
 import PaketTable from '@/components/PaketTable'
-import PaketHomeFilter from '@/components/PaketHomeFilter'
+
 import PhotoBlock from '@/components/PhotoBlock'
 import { waLink, formatTanggal } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -119,9 +119,12 @@ export default async function Home(props: {
             </p>
           </div>
 
-          <PaketHomeFilter semuaLokasi={semuaLokasi} semuaDurasi={semuaDurasi} />
+          <PaketTable
+            data={filtered}
+            hasFilter={hasFilter}
+            filterOptions={{ semuaLokasi, semuaDurasi }}
+          />
 
-          <PaketTable data={filtered} hasFilter={hasFilter} />
 
           <div className="text-center mt-10">
             <Button asChild variant="outline" size="lg">
