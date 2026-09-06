@@ -32,7 +32,7 @@ function groupByBulan(data: Keberangkatan[]): { label: string; items: Keberangka
 // Mobile:  [Nama Paket] [Keberangkatan] [Harga] [Toggle ≡]           = 4 visible
 // Desktop: [Nama Paket] [Keberangkatan] [Maskapai] [Hotel] [Harga] [Aksi] = 6 visible
 // Header row has 7 <th> total (Aksi col is hidden md:table-cell, Toggle col is md:hidden)
-const TOTAL_COLS = 7
+const TOTAL_COLS = 6
 
 // ─── Main Component (Server) ────────────────────────────────────────────────
 export default function PaketTable({
@@ -78,13 +78,13 @@ export default function PaketTable({
           <Table className="w-full table-fixed md:table-auto">
             <TableHeader>
               <TableRow className="border-white/60 hover:bg-transparent">
-                {/* 1. Nama Paket — 44% di mobile, auto di desktop */}
-                <TableHead className="w-[44%] md:w-auto pl-3 md:pl-6 whitespace-normal overflow-hidden">
+                {/* 1. Nama Paket — 30% di mobile, auto di desktop */}
+                <TableHead className="w-[30%] md:w-auto pl-3 md:pl-6 whitespace-normal overflow-hidden">
                   Nama Paket
                 </TableHead>
 
-                {/* 2. Keberangkatan — 22% di mobile, auto di desktop */}
-                <TableHead className="w-[22%] md:w-auto whitespace-nowrap overflow-hidden">
+                {/* 2. Keberangkatan — 30% di mobile, auto di desktop */}
+                <TableHead className="w-[30%] md:w-auto whitespace-nowrap overflow-hidden">
                   Keberangkatan
                 </TableHead>
 
@@ -98,8 +98,8 @@ export default function PaketTable({
                   Hotel
                 </TableHead>
 
-                {/* 5. Harga — 22% di mobile, auto di desktop */}
-                <TableHead className="w-[22%] md:w-auto text-right whitespace-nowrap overflow-hidden">
+                {/* 5. Harga — 30% di mobile, auto di desktop */}
+                <TableHead className="w-[30%] md:w-auto text-right whitespace-nowrap overflow-hidden">
                   Harga
                 </TableHead>
 
@@ -107,9 +107,6 @@ export default function PaketTable({
                 <TableHead className="hidden md:table-cell text-center pr-6 whitespace-nowrap">
                   Aksi
                 </TableHead>
-
-                {/* 7. Toggle ≡ — w-10 (40px) di mobile, hidden di desktop */}
-                <TableHead className="md:hidden w-10 px-1 text-center" aria-label="Detail" />
               </TableRow>
             </TableHeader>
             <TableBody>
