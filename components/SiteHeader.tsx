@@ -188,29 +188,11 @@ export default function SiteHeader() {
                       Beranda
                     </Link>
                   </li>
-                  <li>
-                    <NavDropdown label="Paket" items={paketItems} />
-                  </li>
-                  <li>
-                    <Link href="/artikel" className={navLinkClass('/artikel')}>
-                      Artikel
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/tentang" className={navLinkClass('/tentang')}>
-                      Tentang
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/kontak" className={navLinkClass('/kontak')}>
-                      Kontak
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/partnership" className={navLinkClass('/partnership')}>
-                      Partnership
-                    </Link>
-                  </li>
+                  {mobileCategories.map((cat) => (
+                    <li key={cat.label}>
+                      <NavDropdown label={cat.label} items={cat.items} />
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -267,7 +249,7 @@ export default function SiteHeader() {
           {/* Mobile Panel: Slide from RIGHT to LEFT, width 85% */}
           <div
             id="menu-mobile"
-            className="fixed top-0 right-0 h-full w-[85%] max-w-[360px] bg-neutral-900/90 backdrop-blur-2xl backdrop-saturate-[1.8] border-l border-white/10 shadow-[-12px_0_40px_rgba(0,0,0,0.6)] px-5 pt-6 pb-8 animate-in slide-in-from-right duration-300 flex flex-col justify-between overflow-y-auto"
+            className="fixed top-0 right-0 h-full w-[85%] max-w-[360px] bg-neutral-900/35 backdrop-blur-2xl backdrop-saturate-[1.8] border-l border-white/10 shadow-[-12px_0_40px_rgba(0,0,0,0.6)] px-5 pt-6 pb-8 animate-in slide-in-from-right duration-300 flex flex-col justify-between overflow-y-auto"
           >
             <div className="space-y-6 text-white">
               {/* Header inside drawer: Logo + Close Button */}
