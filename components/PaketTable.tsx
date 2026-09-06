@@ -78,8 +78,8 @@ export default function PaketTable({
           <Table className="w-full table-fixed md:table-auto">
             <TableHeader>
               <TableRow className="border-white/60 hover:bg-transparent">
-                {/* 1. Nama Paket — 30% di mobile, auto di desktop */}
-                <TableHead className="w-[30%] md:w-auto pl-3 md:pl-6 whitespace-normal overflow-hidden">
+                {/* 1. Nama Paket — 45% di mobile, auto di desktop */}
+                <TableHead className="w-[45%] md:w-auto pl-3 md:pl-6 whitespace-normal overflow-hidden">
                   Nama Paket
                 </TableHead>
 
@@ -98,8 +98,8 @@ export default function PaketTable({
                   Hotel
                 </TableHead>
 
-                {/* 5. Harga — 30% di mobile, auto di desktop */}
-                <TableHead className="w-[30%] md:w-auto text-right whitespace-nowrap overflow-hidden">
+                {/* 5. Harga — 20% di mobile, auto di desktop */}
+                <TableHead className="w-[20%] md:w-auto text-right whitespace-nowrap overflow-hidden">
                   Harga
                 </TableHead>
 

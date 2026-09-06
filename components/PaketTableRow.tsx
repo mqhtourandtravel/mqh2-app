@@ -85,8 +85,8 @@ export default function PaketTableRow({ k }: { k: Keberangkatan }) {
       onClick={handleRowClick}
       className="border-white/40 hover:bg-white/40 md:cursor-default cursor-pointer select-none"
     >
-      {/* Nama Paket — 30% di mobile (table-fixed), auto di desktop */}
-      <TableCell className="w-[30%] md:w-auto pl-3 md:pl-6 whitespace-normal overflow-hidden">
+      {/* Nama Paket — 45% di mobile (table-fixed), auto di desktop */}
+      <TableCell className="w-[45%] md:w-auto pl-3 md:pl-6 whitespace-normal overflow-hidden">
         <div className="flex items-start gap-2 md:gap-4 min-w-0">
           <div className="hidden md:block w-16 h-16 rounded overflow-hidden shrink-0 border border-white/60">
             <PhotoBlock
@@ -175,8 +175,8 @@ export default function PaketTableRow({ k }: { k: Keberangkatan }) {
         </div>
       </TableCell>
 
-      {/* Harga — 30% di mobile (table-fixed), auto di desktop */}
-      <TableCell className="w-[30%] md:w-auto text-right whitespace-nowrap overflow-hidden">
+      {/* Harga — 20% di mobile (table-fixed), auto di desktop */}
+      <TableCell className="w-[20%] md:w-auto text-right whitespace-nowrap overflow-hidden">
         {k.harga_promo && (
           <div className="text-[10px] md:text-[11.5px] text-muted-foreground line-through">
             <span className="md:hidden">
