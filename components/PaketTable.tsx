@@ -32,7 +32,7 @@ function groupByBulan(data: Keberangkatan[]): { label: string; items: Keberangka
 // Mobile:  [Nama Paket] [Keberangkatan] [Harga] [Toggle ≡]           = 4 visible
 // Desktop: [Nama Paket] [Keberangkatan] [Maskapai] [Hotel] [Harga] [Aksi] = 6 visible
 // Header row has 7 <th> total (Aksi col is hidden md:table-cell, Toggle col is md:hidden)
-const TOTAL_COLS = 6
+const TOTAL_COLS = 7
 
 // ─── Main Component (Server) ────────────────────────────────────────────────
 export default function PaketTable({
@@ -107,6 +107,8 @@ export default function PaketTable({
                 <TableHead className="hidden md:table-cell text-center pr-6 whitespace-nowrap">
                   Aksi
                 </TableHead>
+                {/* 7. Toggle icon — mobile only */}
+                <TableHead className="md:hidden w-10 px-1 text-center" aria-label="Detail" />
               </TableRow>
             </TableHeader>
             <TableBody>

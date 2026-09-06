@@ -18,6 +18,7 @@ import {
   Hotel as HotelIcon,
   Plane,
   ExternalLink,
+  Menu,
 } from 'lucide-react'
 
 // ─── Maskapai logo mapping ──────────────────────────────────────────────────
@@ -190,6 +191,10 @@ export default function PaketTableRow({ k }: { k: Keberangkatan }) {
             <Button asChild size="sm" className="rounded">
               <Link href={`/paket/${k.paket?.slug}?jadwal=${k.id}`}>Detail</Link>
             </Button>
+          </TableCell>
+          {/* Toggle Icon (mobile only) */}
+          <TableCell className="md:hidden w-10 min-w-[40px] px-1 text-center align-middle">
+            <Menu className="size-4 text-muted-foreground" aria-hidden />
           </TableCell>
         </TableRow>
       </PopoverTrigger>
