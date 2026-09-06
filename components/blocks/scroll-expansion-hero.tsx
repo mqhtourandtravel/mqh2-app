@@ -24,9 +24,8 @@ interface ScrollExpandMediaProps {
   // Logo overlay — selalu tampil (before & after scroll), center-top
   logo?: { src: string; alt: string; width?: number; height?: number };
   brandName?: string;
-  // Overlay after-scroll — menempel kotak video (CTA center, pilar bottom).
+  // Overlay after-scroll — menempel kotak video (pilar bottom).
   // Node React dari caller (page.tsx), hanya tampil saat showContent.
-  ctaNode?: ReactNode;
   pillarsNode?: ReactNode;
 }
 
@@ -42,12 +41,10 @@ const ScrollExpandMedia = ({
   children,
   logo,
   brandName,
-  ctaNode,
   pillarsNode,
 }: ScrollExpandMediaProps) => {
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [showContent, setShowContent] = useState<boolean>(false);
-  const [mediaFullyExpanded, setMediaFullyExpanded] = useState<boolean>(false);
   const [isMobileState, setIsMobileState] = useState<boolean>(false);
 
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -64,7 +61,6 @@ const ScrollExpandMedia = ({
   useEffect(() => {
     setScrollProgress(0);
     setShowContent(false);
-    setMediaFullyExpanded(false);
     progressRef.current = 0;
     expandedRef.current = false;
   }, [mediaType]);
@@ -82,7 +78,6 @@ const ScrollExpandMedia = ({
     if (clamped >= 1) {
       if (!expandedRef.current) {
         expandedRef.current = true;
-        setMediaFullyExpanded(true);
         setShowContent(true);
       }
     } else if (clamped < 0.75 && expandedRef.current === false) {
@@ -100,7 +95,6 @@ const ScrollExpandMedia = ({
     const handleWheel = (e: WheelEvent) => {
       if (expandedRef.current && e.deltaY < 0 && window.scrollY <= 5) {
         expandedRef.current = false;
-        setMediaFullyExpanded(false);
         e.preventDefault();
       } else if (!expandedRef.current) {
         e.preventDefault();
@@ -120,7 +114,6 @@ const ScrollExpandMedia = ({
 
       if (expandedRef.current && deltaY < -20 && window.scrollY <= 5) {
         expandedRef.current = false;
-        setMediaFullyExpanded(false);
         e.preventDefault();
       } else if (!expandedRef.current) {
         e.preventDefault();

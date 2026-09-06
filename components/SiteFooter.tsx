@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { FaInstagram, FaFacebook, FaTiktok, FaYoutube } from 'react-icons/fa'
-import { ShieldCheck, MapPin, Phone, Mail, Clock } from 'lucide-react'
+import { ShieldCheck } from 'lucide-react'
 import { NOMOR_PPIU, NOMOR_PIHK, NOMOR_WA, INSTAGRAM_URL } from '@/lib/config'
 
 const mqhSections = [
@@ -44,9 +44,9 @@ const mqhSections = [
 
 const socialLinks = [
   { icon: <FaInstagram className="size-5" />, href: INSTAGRAM_URL, label: 'Instagram' },
-  { icon: <FaFacebook className="size-5" />, href: 'https://facebook.com', label: 'Facebook' },
-  { icon: <FaTiktok className="size-5" />, href: 'https://tiktok.com', label: 'TikTok' },
-  { icon: <FaYoutube className="size-5" />, href: 'https://youtube.com', label: 'YouTube' },
+  { icon: <FaFacebook className="size-5" />, href: 'https://www.facebook.com/p/MQH-Tour-Travel-61551546576358/', label: 'Facebook' },
+  { icon: <FaTiktok className="size-5" />, href: 'https://www.tiktok.com/@mqhtourandtravel', label: 'TikTok' },
+  { icon: <FaYoutube className="size-5" />, href: 'https://www.youtube.com/@MQHtourandtravel', label: 'YouTube' },
 ]
 
 const legalLinks = [
@@ -96,7 +96,7 @@ export default function SiteFooter() {
               <ShieldCheck className="text-[#E6B472] shrink-0 size-6" />
               <div>
                 <p className="text-xs font-semibold text-white">Izin Resmi Kemenag RI</p>
-                <p className="text-[11px] text-[#D8EFEB]/70">PPIU: {NOMOR_PPIU} &bull; PIHK: {NOMOR_PIHK}</p>
+                <p className="text-[11px] text-[#D8EFEB]/70">PPIU: {NOMOR_PPIU}{NOMOR_PIHK && <> &bull; PIHK: {NOMOR_PIHK}</>}</p>
               </div>
             </div>
 
