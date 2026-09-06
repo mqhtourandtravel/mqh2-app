@@ -26,6 +26,7 @@ export const NOMOR_PIHK = ''
 export const INSTAGRAM_HANDLE = 'mqhtourandtravel'
 export const INSTAGRAM_URL = `https://www.instagram.com/${INSTAGRAM_HANDLE}`
 export const INSTAGRAM_BIO = 'Pemberangkatan Umroh & Haji. Fasilitas Terbaik, Amanah, Nyaman, Profesional dan Sesuai Syariat.'
+export const BEHOLD_FEED_ID = process.env.NEXT_PUBLIC_BEHOLD_FEED_ID || '783O3bePOilREjhAMorv'
 
 // Kategori paket yang didukung
 export const KATEGORI_PAKET = ['umroh', 'haji', 'badal', 'tour'] as const

@@ -99,6 +99,11 @@ export default function SiteHeader() {
   const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({})
   const pathname = usePathname()
 
+  const drawerRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const wasOpenRef = useRef(false)
+
   const toggleCategory = (label: string) => {
     setExpandedCategories((prev) => ({
       ...prev,
@@ -123,8 +128,68 @@ export default function SiteHeader() {
   }, [pathname])
 
   useEffect(() => {
+    wasOpenRef.current = false
     setMenuOpen(false)
   }, [pathname])
+
+  // Focus management: focus close button when drawer opens, return to trigger when closed
+  useEffect(() => {
+    if (menuOpen) {
+      wasOpenRef.current = true
+      const timer = setTimeout(() => {
+        closeButtonRef.current?.focus()
+      }, 50)
+      return () => clearTimeout(timer)
+    } else if (wasOpenRef.current) {
+      wasOpenRef.current = false
+      triggerRef.current?.focus()
+    }
+  }, [menuOpen])
+
+  // Keyboard navigation focus trap & Escape to close
+  useEffect(() => {
+    if (!menuOpen) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        setMenuOpen(false)
+        return
+      }
+
+      if (e.key === 'Tab') {
+        const drawer = drawerRef.current
+        if (!drawer) return
+
+        const focusableElements = drawer.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+        const visibleFocusable = Array.from(focusableElements).filter(
+          (el) => !el.hasAttribute('disabled') && el.offsetParent !== null
+        )
+
+        if (visibleFocusable.length === 0) return
+
+        const firstElement = visibleFocusable[0]
+        const lastElement = visibleFocusable[visibleFocusable.length - 1]
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault()
+            lastElement.focus()
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault()
+            firstElement.focus()
+          }
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [menuOpen])
 
   const isGlassActive = scrolled || menuOpen || pathname !== '/'
 
@@ -217,6 +282,7 @@ export default function SiteHeader() {
 
             {/* Mobile Hamburger toggle */}
             <button
+              ref={triggerRef}
               type="button"
               id="tombol-menu"
               aria-expanded={menuOpen}
@@ -244,7 +310,11 @@ export default function SiteHeader() {
 
           {/* Mobile Panel: Slide from RIGHT to LEFT, width 85% */}
           <div
+            ref={drawerRef}
             id="menu-mobile"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu Navigasi Mobile"
             className="fixed top-0 right-0 h-full w-[85%] max-w-[360px] bg-neutral-900/35 backdrop-blur-2xl backdrop-saturate-[1.8] border-l border-white/10 shadow-[-12px_0_40px_rgba(0,0,0,0.6)] px-5 pt-6 pb-8 animate-in slide-in-from-right duration-300 flex flex-col justify-between overflow-y-auto"
           >
             <div className="space-y-6 text-white">
@@ -260,6 +330,7 @@ export default function SiteHeader() {
                   />
                 </Link>
                 <button
+                  ref={closeButtonRef}
                   type="button"
                   onClick={() => setMenuOpen(false)}
                   aria-label="Tutup Menu"

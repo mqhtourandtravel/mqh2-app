@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESC, HERO_IMG } from '@/lib/config'
 import './globals.css'
@@ -20,10 +20,25 @@ const playfair = Playfair_Display({
   display: 'swap',
 })
 
+export const viewport: Viewport = {
+  themeColor: '#002A27',
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: `${SITE_NAME} — ${SITE_TAGLINE}`,
   description: SITE_DESC,
+  manifest: '/manifest.json',
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
   openGraph: {
     type: 'website',
     locale: 'id_ID',

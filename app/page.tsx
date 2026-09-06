@@ -1,6 +1,6 @@
 import { getKeberangkatanAktif, getMaskapaiList, getHotelList, getArtikelTerbit } from '@/lib/queries'
 import { TESTIMONI_LIST } from '@/lib/config'
-import { INSTAGRAM_URL, INSTAGRAM_BIO, HERO_IMG, HERO_VIDEO } from '@/lib/config'
+import { INSTAGRAM_URL, INSTAGRAM_BIO, HERO_IMG, HERO_VIDEO, BEHOLD_FEED_ID } from '@/lib/config'
 import Link from 'next/link'
 import Image from 'next/image'
 import SiteHeader from '@/components/SiteHeader'
@@ -236,7 +236,7 @@ export default async function Home() {
 
           {/* Embed Behold.so — feed IG resmi tanpa API key di server */}
           <div className="mx-auto max-w-3xl rounded-[16px] overflow-hidden">
-            <InstagramEmbed feedId="783O3bePOilREjhAMorv" />
+            <InstagramEmbed feedId={BEHOLD_FEED_ID} />
           </div>
           <div className="mt-10 flex justify-center">
             <Button asChild>
