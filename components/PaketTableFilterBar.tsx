@@ -100,10 +100,10 @@ export default function PaketTableFilterBar({
           </Label>
           <Select value={currentDurasi} onValueChange={(v) => updateFilter('durasi', v)}>
             <SelectTrigger id="tbl-filter-durasi" className="bg-white/80 border-white/60">
-              <SelectValue placeholder="Semua Durasi" />
+              <SelectValue placeholder="Durasi" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="_semua">Semua Durasi</SelectItem>
+              <SelectItem value="_semua">Semua</SelectItem>
               {semuaDurasi.map((d) => (
                 <SelectItem key={d} value={String(d)}>
                   {d} Hari
