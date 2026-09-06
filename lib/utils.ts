@@ -22,6 +22,25 @@ export function formatRupiah(n?: number | null): string {
   }).format(num)
 }
 
+// Format ringkas khusus mobile (contoh: 38.600.000 -> 38,6jt)
+export function formatRupiahSingkat(n?: number | null): string {
+  const num = n ?? 0
+  if (!Number.isFinite(num) || num === 0) return '0'
+  if (num >= 1_000_000_000) {
+    const m = (num / 1_000_000_000).toFixed(1).replace('.', ',').replace(',0', '')
+    return `${m}M`
+  }
+  if (num >= 1_000_000) {
+    const jt = (num / 1_000_000).toFixed(1).replace('.', ',').replace(',0', '')
+    return `${jt}jt`
+  }
+  if (num >= 1_000) {
+    const rb = (num / 1_000).toFixed(0)
+    return `${rb}rb`
+  }
+  return String(num)
+}
+
 export function formatTanggal(dateStr?: string | Date | null): string {
   if (!dateStr) return '-'
   try {

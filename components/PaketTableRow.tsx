@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Keberangkatan } from '@/lib/supabase'
 import PhotoBlock from '@/components/PhotoBlock'
-import { formatRupiah, formatTanggal } from '@/lib/utils'
+import { formatRupiah, formatRupiahSingkat, formatTanggal } from '@/lib/utils'
 import { TableRow, TableCell } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -167,11 +167,21 @@ export default function PaketTableRow({ k }: { k: Keberangkatan }) {
           <TableCell className="w-[30%] md:w-auto text-right whitespace-nowrap overflow-hidden">
             {k.harga_promo && (
               <div className="text-[10px] md:text-[11.5px] text-muted-foreground line-through">
-                {formatRupiah(k.harga_normal)}
+                <span className="md:hidden">
+                  {formatRupiahSingkat(k.harga_normal)}
+                </span>
+                <span className="hidden md:inline">
+                  {formatRupiah(k.harga_normal)}
+                </span>
               </div>
             )}
             <div className="font-serif text-[11px] md:text-[16px] font-bold text-secondary-hover">
-              {formatRupiah(k.harga_promo ?? k.harga_normal)}
+              <span className="md:hidden">
+                {formatRupiahSingkat(k.harga_promo ?? k.harga_normal)}
+              </span>
+              <span className="hidden md:inline">
+                {formatRupiah(k.harga_promo ?? k.harga_normal)}
+              </span>
             </div>
           </TableCell>
 
