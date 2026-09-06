@@ -54,18 +54,18 @@ export default function PaketHomeFilter({
 
   return (
     <div className="glass-panel rounded-xl p-4 md:p-5 mb-8 border border-white/40">
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 items-end">
+      <div className="grid grid-cols-3 gap-1.5 sm:gap-3 md:gap-4 items-center">
         {/* Filter Bulan */}
         <div>
-          <Label htmlFor="home-filter-bulan" className="text-[12px] font-semibold text-primary mb-1.5 block">
+          <Label htmlFor="home-filter-bulan" className="sr-only">
             Bulan Keberangkatan
           </Label>
           <Select value={currentBulan} onValueChange={(v) => updateFilter('bulan', v)}>
             <SelectTrigger id="home-filter-bulan" className="bg-white/80 border-white/60">
-              <SelectValue placeholder="Semua Bulan" />
+              <SelectValue placeholder="Bulan" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="_semua">Semua Bulan</SelectItem>
+              <SelectItem value="_semua">Semua</SelectItem>
               {NAMA_BULAN.map((nama, i) => (
                 <SelectItem key={i} value={String(i + 1)}>
                   {nama}
@@ -77,15 +77,15 @@ export default function PaketHomeFilter({
 
         {/* Filter Lokasi */}
         <div>
-          <Label htmlFor="home-filter-lokasi" className="text-[12px] font-semibold text-primary mb-1.5 block">
+          <Label htmlFor="home-filter-lokasi" className="sr-only">
             Kota Keberangkatan
           </Label>
           <Select value={currentLokasi} onValueChange={(v) => updateFilter('lokasi', v)}>
             <SelectTrigger id="home-filter-lokasi" className="bg-white/80 border-white/60">
-              <SelectValue placeholder="Semua Kota" />
+              <SelectValue placeholder="Kota" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="_semua">Semua Kota</SelectItem>
+              <SelectItem value="_semua">Semua</SelectItem>
               {semuaLokasi.map((lokasi) => (
                 <SelectItem key={lokasi} value={lokasi}>
                   {lokasi}
@@ -97,15 +97,15 @@ export default function PaketHomeFilter({
 
         {/* Filter Durasi */}
         <div>
-          <Label htmlFor="home-filter-durasi" className="text-[12px] font-semibold text-primary mb-1.5 block">
+          <Label htmlFor="home-filter-durasi" className="sr-only">
             Durasi Perjalanan
           </Label>
           <Select value={currentDurasi} onValueChange={(v) => updateFilter('durasi', v)}>
             <SelectTrigger id="home-filter-durasi" className="bg-white/80 border-white/60">
-              <SelectValue placeholder="Semua Durasi" />
+              <SelectValue placeholder="Durasi" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="_semua">Semua Durasi</SelectItem>
+              <SelectItem value="_semua">Semua</SelectItem>
               {semuaDurasi.map((d) => (
                 <SelectItem key={d} value={String(d)}>
                   {d} Hari
