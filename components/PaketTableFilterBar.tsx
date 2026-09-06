@@ -60,10 +60,10 @@ export default function PaketTableFilterBar({
           </Label>
           <Select value={currentBulan} onValueChange={(v) => updateFilter('bulan', v)}>
             <SelectTrigger id="tbl-filter-bulan" className="bg-white/80 border-white/60">
-              <SelectValue placeholder="Semua Bulan" />
+              <SelectValue placeholder="Bulan" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="_semua">Semua Bulan</SelectItem>
+              <SelectItem value="_semua">Semua</SelectItem>
               {NAMA_BULAN.map((nama, i) => (
                 <SelectItem key={i} value={String(i + 1)}>
                   {nama}
@@ -80,10 +80,10 @@ export default function PaketTableFilterBar({
           </Label>
           <Select value={currentLokasi} onValueChange={(v) => updateFilter('lokasi', v)}>
             <SelectTrigger id="tbl-filter-lokasi" className="bg-white/80 border-white/60">
-              <SelectValue placeholder="Semua Kota" />
+              <SelectValue placeholder="Kota" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="_semua">Semua Kota</SelectItem>
+              <SelectItem value="_semua">Semua</SelectItem>
               {semuaLokasi.map((lokasi) => (
                 <SelectItem key={lokasi} value={lokasi}>
                   {lokasi}
