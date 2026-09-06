@@ -52,10 +52,10 @@ export default function PaketTableFilterBar({
 
   return (
     <div className="p-4 md:p-5 border-b border-white/30">
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 items-end">
+      <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 items-center">
         {/* Filter Bulan */}
         <div>
-          <Label htmlFor="tbl-filter-bulan" className="text-[12px] font-semibold text-primary mb-1.5 block">
+          <Label htmlFor="tbl-filter-bulan" className="sr-only">
             Bulan Keberangkatan
           </Label>
           <Select value={currentBulan} onValueChange={(v) => updateFilter('bulan', v)}>
@@ -75,7 +75,7 @@ export default function PaketTableFilterBar({
 
         {/* Filter Lokasi */}
         <div>
-          <Label htmlFor="tbl-filter-lokasi" className="text-[12px] font-semibold text-primary mb-1.5 block">
+          <Label htmlFor="tbl-filter-lokasi" className="sr-only">
             Kota Keberangkatan
           </Label>
           <Select value={currentLokasi} onValueChange={(v) => updateFilter('lokasi', v)}>
@@ -95,7 +95,7 @@ export default function PaketTableFilterBar({
 
         {/* Filter Durasi */}
         <div>
-          <Label htmlFor="tbl-filter-durasi" className="text-[12px] font-semibold text-primary mb-1.5 block">
+          <Label htmlFor="tbl-filter-durasi" className="sr-only">
             Durasi Perjalanan
           </Label>
           <Select value={currentDurasi} onValueChange={(v) => updateFilter('durasi', v)}>
