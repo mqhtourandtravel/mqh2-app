@@ -100,7 +100,7 @@ export default function PaketTableFilterBar({
           </Label>
           <Select value={currentDurasi} onValueChange={(v) => updateFilter('durasi', v)}>
             <SelectTrigger id="tbl-filter-durasi" className="bg-white/80 border-white/60">
-              <SelectValue placeholder="Durasi" />
+              <SelectValue placeholder="Tahun" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="_semua">Semua</SelectItem>
