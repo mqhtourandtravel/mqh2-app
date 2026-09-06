@@ -73,19 +73,20 @@ export default function PaketTable({
       {data.length === 0 ? emptyState : (
         /* ── Responsive Table ───────────────────────────────────────────── */
         /* Mobile: table-fixed, no scroll, explicit widths on th & td       */
-        /* Desktop: md:overflow-x-auto md:table-auto                       */
-        <div className="md:overflow-x-auto w-full">
+        /* Desktop: md:overflow-x-auto md:table-auto                        */
+        /* Scroll internal: max-h + overflow-y-auto, header sticky           */
+        <div className="md:overflow-x-auto w-full max-h-[70vh] overflow-y-auto">
           <Table className="w-full table-fixed md:table-auto">
             <TableHeader>
-              <TableRow className="border-white/60 hover:bg-transparent">
+              <TableRow className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-white/60 hover:bg-transparent">
                 {/* 1. Nama Paket — 45% di mobile, auto di desktop */}
                 <TableHead className="w-[45%] md:w-auto pl-3 md:pl-6 whitespace-normal overflow-hidden">
-                  Nama Paket
+                  PAKET
                 </TableHead>
 
                 {/* 2. Keberangkatan — 30% di mobile, auto di desktop */}
                 <TableHead className="w-[30%] md:w-auto whitespace-nowrap overflow-hidden">
-                  Keberangkatan
+                  TANGGAL
                 </TableHead>
 
                 {/* 3. Maskapai — desktop only */}
@@ -100,7 +101,7 @@ export default function PaketTable({
 
                 {/* 5. Harga — 20% di mobile, auto di desktop */}
                 <TableHead className="w-[20%] md:w-auto text-right whitespace-nowrap overflow-hidden">
-                  Harga
+                  HARGA
                 </TableHead>
 
                 {/* 6. Aksi — desktop only */}
