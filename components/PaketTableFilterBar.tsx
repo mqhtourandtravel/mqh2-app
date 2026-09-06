@@ -51,8 +51,8 @@ export default function PaketTableFilterBar({
   }
 
   return (
-    <div className="p-4 md:p-5 border-b border-white/30">
-      <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 items-center">
+    <div className="p-2 sm:p-3 md:p-5 border-b border-white/30">
+      <div className="grid grid-cols-3 gap-1.5 sm:gap-3 md:gap-4 items-center">
         {/* Filter Bulan */}
         <div>
           <Label htmlFor="tbl-filter-bulan" className="sr-only">
