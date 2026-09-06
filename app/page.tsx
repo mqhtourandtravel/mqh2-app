@@ -194,7 +194,7 @@ export default async function Home() {
                   testimonials={TESTIMONI_LIST.map((t) => ({
                     text: t.isi,
                     name: t.namaSumber,
-                    role: 'Jamaah MQH Tour & Travel',
+                    role: t.role || 'Jamaah MQH Tour & Travel',
                   }))}
                   duration={24}
                 />
@@ -203,16 +203,16 @@ export default async function Home() {
                   testimonials={[...TESTIMONI_LIST].reverse().map((t) => ({
                     text: t.isi,
                     name: t.namaSumber,
-                    role: 'Jamaah MQH Tour & Travel',
+                    role: t.role || 'Jamaah MQH Tour & Travel',
                   }))}
                   duration={28}
                 />
                 <TestimonialsColumn
                   className="hidden lg:block"
-                  testimonials={TESTIMONI_LIST.map((t, i) => ({
+                  testimonials={TESTIMONI_LIST.map((t) => ({
                     text: t.isi,
                     name: t.namaSumber,
-                    role: i % 2 === 0 ? 'Jamaah Terdaftar' : 'Jamaah MQH Tour & Travel',
+                    role: t.role || 'Jamaah MQH Tour & Travel',
                   }))}
                   duration={22}
                 />

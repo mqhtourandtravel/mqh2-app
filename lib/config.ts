@@ -84,8 +84,44 @@ export const CABANG_LIST = [
 ]
 
 export const TESTIMONI_LIST = [
-  { isi: 'Pelayanan sangat memuaskan, mulai dari pendaftaran hingga kepulangan berjalan tertib dan profesional.', namaSumber: 'Jamaah Kloter 12' },
-  { isi: 'Pembimbing ibadahnya sabar dan berpengalaman, jamaah lansia pun terbantu dengan baik.', namaSumber: 'Jamaah Kloter 08' },
-  { isi: 'Alhamdulillah keberangkatan sesuai jadwal, hotel dekat dengan Masjidil Haram, sangat nyaman.', namaSumber: 'Jamaah Kloter 15' },
-  { isi: 'Tim MQH sangat responsif menjawab pertanyaan, dari sebelum berangkat sampai selesai ibadah.', namaSumber: 'Jamaah Kloter 21' },
+  {
+    isi: 'Pelayanan sangat memuaskan, mulai dari pendaftaran hingga kepulangan berjalan tertib dan profesional.',
+    namaSumber: 'Jamaah Kloter 12',
+    role: 'Jamaah MQH Tour & Travel',
+  },
+  {
+    isi: 'Pembimbing ibadahnya sabar dan berpengalaman, jamaah lansia pun terbantu dengan baik.',
+    namaSumber: 'Jamaah Kloter 08',
+    role: 'Jamaah MQH Tour & Travel',
+  },
+  {
+    isi: 'Alhamdulillah keberangkatan sesuai jadwal, hotel dekat dengan Masjidil Haram, sangat nyaman.',
+    namaSumber: 'Jamaah Kloter 15',
+    role: 'Jamaah MQH Tour & Travel',
+  },
+  {
+    isi: 'Tim MQH sangat responsif menjawab pertanyaan, dari sebelum berangkat sampai selesai ibadah.',
+    namaSumber: 'Jamaah Kloter 21',
+    role: 'Jamaah MQH Tour & Travel',
+  },
+  {
+    isi: 'Alhamdulillah pelayanan haji khususnya sangat rapi, dari keberangkatan sampai pulang selalu didampingi tim MQH.',
+    namaSumber: 'Bapak Musbihin (Pekalongan)',
+    role: 'Jamaah Haji Khusus',
+  },
+  {
+    isi: 'Proses pendaftaran haji khusus dibantu penuh oleh tim MQH, komunikasinya jelas dan tidak berbelit-belit.',
+    namaSumber: 'Bapak Ahmad Assabty (Pekalongan)',
+    role: 'Jamaah Haji Khusus',
+  },
+  {
+    isi: 'Alhamdulillah bimbingan manasik dan pendampingan selama di Tanah Suci sangat baik, jadi lebih tenang menjalankan ibadah.',
+    namaSumber: 'Ibu Sumiyati (Batang)',
+    role: 'Jamaah Haji Khusus',
+  },
+  {
+    isi: 'Pelayanan tim MQH ramah dan sabar membimbing dari awal pendaftaran sampai pulang kembali ke Batang.',
+    namaSumber: 'Ibu Lilis (Batang)',
+    role: 'Jamaah Haji Khusus',
+  },
 ]
