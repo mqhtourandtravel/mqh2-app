@@ -123,10 +123,6 @@ export default function SiteHeader() {
   }, [pathname])
 
   useEffect(() => {
-    if (heroActive && !menuOpen) setMenuOpen(false)
-  }, [heroActive])
-
-  useEffect(() => {
     setMenuOpen(false)
   }, [pathname])
 

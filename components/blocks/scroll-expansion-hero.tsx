@@ -166,7 +166,6 @@ const ScrollExpandMedia = ({
       window.removeEventListener('touchend', handleTouchEnd as EventListener);
     };
     // Listener terdaftar SEKALI — nilai mutable diakses via ref, bukan closure state.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
