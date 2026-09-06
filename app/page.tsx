@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import SiteHeader from '@/components/SiteHeader'
 import PaketTable from '@/components/PaketTable'
+import PaketHomeFilter from '@/components/PaketHomeFilter'
 import PhotoBlock from '@/components/PhotoBlock'
 import { waLink, formatTanggal } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -26,15 +27,41 @@ const MITRA_LOGOS = [
   { nama: 'Hilton Hotels', src: '/images/logos/hilton.png', w: 100, h: 36 },
 ]
 
-export default async function Home() {
+export default async function Home(props: {
+  searchParams?: Promise<{ bulan?: string; lokasi?: string; durasi?: string }>
+}) {
+  const sp = (await props.searchParams) ?? {}
   const [keberangkatanList, maskapaiList, hotelList, artikelList] = await Promise.all([
-    getKeberangkatanAktif({ limit: 5 }),
+    getKeberangkatanAktif(),
     getMaskapaiList(),
     getHotelList(),
     getArtikelTerbit({ limit: 3 }),
   ])
 
-  const highlight = keberangkatanList
+  const semuaLokasi = Array.from(
+    new Set(keberangkatanList.map((k) => k.lokasi_keberangkatan).filter(Boolean))
+  ) as string[]
+
+  const semuaDurasi = (
+    Array.from(
+      new Set(keberangkatanList.map((k) => k.durasi_hari).filter(Boolean))
+    ) as number[]
+  ).sort((a, b) => a - b)
+
+  const hasFilter = Boolean(sp.bulan || sp.lokasi || sp.durasi)
+
+  const filtered = keberangkatanList.filter((k) => {
+    if (sp.bulan && new Date(k.tanggal_berangkat).getMonth() + 1 !== Number(sp.bulan)) {
+      return false
+    }
+    if (sp.lokasi && k.lokasi_keberangkatan !== sp.lokasi) {
+      return false
+    }
+    if (sp.durasi && k.durasi_hari !== Number(sp.durasi)) {
+      return false
+    }
+    return true
+  })
 
   return (
     <div className="bg-background text-foreground overflow-x-hidden">
@@ -92,7 +119,9 @@ export default async function Home() {
             </p>
           </div>
 
-          <PaketTable data={highlight} />
+          <PaketHomeFilter semuaLokasi={semuaLokasi} semuaDurasi={semuaDurasi} />
+
+          <PaketTable data={filtered} hasFilter={hasFilter} />
 
           <div className="text-center mt-10">
             <Button asChild variant="outline" size="lg">
