@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Keberangkatan } from '@/lib/supabase'
@@ -9,7 +8,17 @@ import { formatRupiah, formatTanggal } from '@/lib/utils'
 import { TableRow, TableCell } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Hotel as HotelIcon, Plane, ExternalLink, ChevronDown } from 'lucide-react'
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from '@/components/ui/popover'
+import {
+  Hotel as HotelIcon,
+  Plane,
+  ExternalLink,
+  Menu,
+} from 'lucide-react'
 
 // ─── Maskapai logo mapping ──────────────────────────────────────────────────
 const MASKAPAI_LOGO_MAP: Record<string, string> = {
@@ -44,7 +53,7 @@ function KuotaBadge({ k }: { k: Keberangkatan }) {
   if (k.status === 'terbatas')
     return (
       <Badge variant="destructive" className="bg-destructive/10 text-destructive normal-case tracking-normal font-medium text-[11px]">
-        Sisa {k.kuota_tersisa} Seat
+        Sisa {k.kuota_tersisa}
       </Badge>
     )
   return (
@@ -54,159 +63,151 @@ function KuotaBadge({ k }: { k: Keberangkatan }) {
   )
 }
 
-// ─── Total columns: 7 on desktop (Nama, Keberangkatan, Maskapai, Hotel, Harga, Aksi, Toggle)
-// Toggle column is md:hidden, Maskapai and Hotel columns are hidden on mobile
-const TOTAL_COLS = 7
-
 export default function PaketTableRow({ k }: { k: Keberangkatan }) {
-  const [expanded, setExpanded] = useState(false)
   const logoSrc = getMaskapaiLogo(k.maskapai)
   const mekkahUrl = getHotelMapsUrl(k.hotel_mekkah, 'Mekkah')
   const madinahUrl = getHotelMapsUrl(k.hotel_madinah, 'Madinah')
 
   return (
-    <>
-      {/* ── Main Row ──────────────────────────────────────────────────── */}
-      <TableRow className="border-white/40 hover:bg-white/40">
-        {/* Toggle (mobile only) */}
-        <TableCell className="md:hidden w-10 px-2 text-center">
-          <button
-            type="button"
-            onClick={() => setExpanded((v) => !v)}
-            className="p-1.5 rounded-md hover:bg-white/30 transition-colors"
-            aria-label={expanded ? 'Tutup detail' : 'Lihat detail'}
-            aria-expanded={expanded}
-          >
-            <ChevronDown
-              className={`size-4 text-muted-foreground transition-transform duration-200 ${
-                expanded ? 'rotate-180' : ''
-              }`}
+    <TableRow className="border-white/40 hover:bg-white/40">
+      {/* Nama Paket — 44% di mobile (table-fixed), auto di desktop */}
+      <TableCell className="w-[44%] md:w-auto pl-3 md:pl-6 whitespace-normal overflow-hidden">
+        <div className="flex items-start gap-2 md:gap-4 min-w-0">
+          <div className="w-10 h-10 md:w-16 md:h-16 rounded overflow-hidden shrink-0 border border-white/60">
+            <PhotoBlock
+              imageUrl={k.paket?.gambar_url}
+              alt={k.paket?.nama_paket ?? ''}
+              className="w-full h-full"
+              sizes="64px"
             />
-          </button>
-        </TableCell>
-
-        {/* Nama Paket */}
-        <TableCell className="pl-3 md:pl-6 whitespace-normal">
-          <div className="flex items-start gap-2 md:gap-4">
-            <div className="w-10 h-10 md:w-16 md:h-16 rounded overflow-hidden shrink-0 border border-white/60">
-              <PhotoBlock
-                imageUrl={k.paket?.gambar_url}
-                alt={k.paket?.nama_paket ?? ''}
-                className="w-full h-full"
-                sizes="64px"
-              />
-            </div>
-            <div className="min-w-0">
-              <h3 className="text-[12px] md:text-[14px] font-semibold text-primary mb-1 leading-snug">
-                {k.paket?.nama_paket}
-              </h3>
-              {k.durasi_hari && (
-                <Badge
-                  variant="outline"
-                  className="bg-info/70 text-info-foreground border-transparent normal-case tracking-normal font-semibold rounded text-[10px] md:text-[11px]"
-                >
-                  {k.durasi_hari} Hari
-                </Badge>
-              )}
-            </div>
           </div>
-        </TableCell>
+          <div className="min-w-0 flex-1">
+            <h3 className="text-[12px] md:text-[14px] font-semibold text-primary mb-1 leading-snug line-clamp-2 break-words">
+              {k.paket?.nama_paket}
+            </h3>
+            {k.durasi_hari && (
+              <Badge
+                variant="outline"
+                className="bg-info/70 text-info-foreground border-transparent normal-case tracking-normal font-semibold rounded text-[10px] md:text-[11px]"
+              >
+                {k.durasi_hari} Hari
+              </Badge>
+            )}
+          </div>
+        </div>
+      </TableCell>
 
-        {/* Keberangkatan */}
-        <TableCell className="whitespace-normal">
-          <div className="flex flex-col gap-1">
-            <span className="text-[12px] md:text-[14px] font-semibold text-primary">
-              {formatTanggal(k.tanggal_berangkat)}
+      {/* Keberangkatan — 22% di mobile (table-fixed), auto di desktop */}
+      <TableCell className="w-[22%] md:w-auto whitespace-normal overflow-hidden">
+        <div className="flex flex-col gap-1 min-w-0">
+          <span className="text-[11px] md:text-[14px] font-semibold text-primary leading-tight">
+            {formatTanggal(k.tanggal_berangkat)}
+          </span>
+          <KuotaBadge k={k} />
+        </div>
+      </TableCell>
+
+      {/* Maskapai (hidden on mobile) */}
+      <TableCell className="hidden md:table-cell whitespace-normal">
+        {logoSrc ? (
+          <Image
+            src={logoSrc}
+            alt={k.maskapai?.nama ?? ''}
+            width={80}
+            height={28}
+            className="h-7 w-auto object-contain"
+          />
+        ) : (
+          <div className="flex items-center gap-2">
+            <Plane className="text-muted-foreground size-[18px] shrink-0" aria-hidden />
+            <span className="text-[13px] text-muted-foreground font-medium">
+              {k.maskapai?.nama ?? '—'}
             </span>
-            <KuotaBadge k={k} />
           </div>
-        </TableCell>
+        )}
+      </TableCell>
 
-        {/* Maskapai (hidden on mobile) */}
-        <TableCell className="hidden md:table-cell whitespace-normal">
-          {logoSrc ? (
-            <Image
-              src={logoSrc}
-              alt={k.maskapai?.nama ?? ''}
-              width={80}
-              height={28}
-              className="h-7 w-auto object-contain"
-            />
-          ) : (
-            <div className="flex items-center gap-2">
-              <Plane className="text-muted-foreground size-[18px] shrink-0" aria-hidden />
-              <span className="text-[13px] text-muted-foreground font-medium">
-                {k.maskapai?.nama ?? '—'}
-              </span>
-            </div>
+      {/* Hotel (hidden on mobile) */}
+      <TableCell className="hidden md:table-cell whitespace-normal">
+        <div className="flex flex-col gap-1.5">
+          {k.hotel_mekkah?.nama && (
+            <a
+              href={mekkahUrl!}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-[11.5px] text-primary font-medium hover:text-secondary transition-colors group"
+            >
+              <HotelIcon className="text-secondary size-[15px] shrink-0" aria-hidden />
+              <span>Mekkah: {k.hotel_mekkah.nama}</span>
+              <ExternalLink className="size-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" aria-hidden />
+            </a>
           )}
-        </TableCell>
-
-        {/* Hotel (hidden on mobile) */}
-        <TableCell className="hidden md:table-cell whitespace-normal">
-          <div className="flex flex-col gap-1.5">
-            {k.hotel_mekkah?.nama && (
-              <a
-                href={mekkahUrl!}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-[11.5px] text-primary font-medium hover:text-secondary transition-colors group"
-              >
-                <HotelIcon className="text-secondary size-[15px] shrink-0" aria-hidden />
-                <span>Mekkah: {k.hotel_mekkah.nama}</span>
-                <ExternalLink className="size-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" aria-hidden />
-              </a>
-            )}
-            {k.hotel_madinah?.nama && (
-              <a
-                href={madinahUrl!}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-[11.5px] text-primary font-medium hover:text-secondary transition-colors group"
-              >
-                <HotelIcon className="text-secondary size-[15px] shrink-0" aria-hidden />
-                <span>Madinah: {k.hotel_madinah.nama}</span>
-                <ExternalLink className="size-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" aria-hidden />
-              </a>
-            )}
-            {!k.hotel_mekkah?.nama && !k.hotel_madinah?.nama && (
-              <span className="text-muted-foreground text-[12px]">—</span>
-            )}
-          </div>
-        </TableCell>
-
-        {/* Harga */}
-        <TableCell className="text-right whitespace-normal">
-          {k.harga_promo && (
-            <div className="text-[10px] md:text-[11.5px] text-muted-foreground line-through">
-              {formatRupiah(k.harga_normal)}
-            </div>
+          {k.hotel_madinah?.nama && (
+            <a
+              href={madinahUrl!}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-[11.5px] text-primary font-medium hover:text-secondary transition-colors group"
+            >
+              <HotelIcon className="text-secondary size-[15px] shrink-0" aria-hidden />
+              <span>Madinah: {k.hotel_madinah.nama}</span>
+              <ExternalLink className="size-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" aria-hidden />
+            </a>
           )}
-          <div className="font-serif text-[14px] md:text-[16px] font-bold text-secondary-hover">
-            {formatRupiah(k.harga_promo ?? k.harga_normal)}
+          {!k.hotel_mekkah?.nama && !k.hotel_madinah?.nama && (
+            <span className="text-muted-foreground text-[12px]">—</span>
+          )}
+        </div>
+      </TableCell>
+
+      {/* Harga — 22% di mobile (table-fixed), auto di desktop */}
+      <TableCell className="w-[22%] md:w-auto text-right whitespace-nowrap overflow-hidden">
+        {k.harga_promo && (
+          <div className="text-[10px] md:text-[11.5px] text-muted-foreground line-through">
+            {formatRupiah(k.harga_normal)}
           </div>
-        </TableCell>
+        )}
+        <div className="font-serif text-[12px] md:text-[16px] font-bold text-secondary-hover">
+          {formatRupiah(k.harga_promo ?? k.harga_normal)}
+        </div>
+      </TableCell>
 
-        {/* Aksi (hidden on mobile — shown in expand row instead) */}
-        <TableCell className="hidden md:table-cell pr-6 text-center">
-          <Button asChild size="sm" className="rounded">
-            <Link href={`/paket/${k.paket?.slug}?jadwal=${k.id}`}>Detail</Link>
-          </Button>
-        </TableCell>
-      </TableRow>
+      {/* Aksi (hidden on mobile — Detail shown via popover trigger) */}
+      <TableCell className="hidden md:table-cell pr-6 text-center">
+        <Button asChild size="sm" className="rounded">
+          <Link href={`/paket/${k.paket?.slug}?jadwal=${k.id}`}>Detail</Link>
+        </Button>
+      </TableCell>
 
-      {/* ── Expanded Sub-Row (mobile only) ────────────────────────────── */}
-      {expanded && (
-        <TableRow className="md:hidden border-white/20 bg-white/20">
-          <TableCell colSpan={TOTAL_COLS} className="px-4 py-3">
-            <div className="space-y-3">
+      {/* Toggle Popover (mobile only) — kolom terakhir, w-10 fixed */}
+      <TableCell className="md:hidden w-10 min-w-[40px] px-1 text-center align-middle">
+        <Popover>
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              className="p-1.5 rounded-md hover:bg-white/30 transition-colors inline-flex items-center justify-center"
+              aria-label="Lihat detail paket"
+            >
+              <Menu className="size-4 text-muted-foreground" aria-hidden />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent align="end" side="left" sideOffset={8} className="w-72 p-0 overflow-hidden">
+            <div className="px-4 py-3 border-b border-accent/30 bg-primary/5">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-1">
+                Detail Cepat
+              </p>
+              <p className="text-[13px] font-semibold text-primary line-clamp-2 leading-snug">
+                {k.paket?.nama_paket}
+              </p>
+            </div>
+            <div className="px-4 py-3 space-y-3">
               {/* Maskapai */}
               {k.maskapai && (
                 <div className="space-y-1">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                     Maskapai
                   </p>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 min-h-[24px]">
                     {logoSrc ? (
                       <Image
                         src={logoSrc}
@@ -238,7 +239,7 @@ export default function PaketTableRow({ k }: { k: Keberangkatan }) {
                     className="flex items-center gap-1.5 text-[13px] font-medium text-primary hover:text-secondary transition-colors group"
                   >
                     <HotelIcon className="size-3.5 text-secondary shrink-0" aria-hidden />
-                    <span>{k.hotel_mekkah.nama}</span>
+                    <span className="truncate">{k.hotel_mekkah.nama}</span>
                     <ExternalLink className="size-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" aria-hidden />
                   </a>
                 </div>
@@ -257,22 +258,22 @@ export default function PaketTableRow({ k }: { k: Keberangkatan }) {
                     className="flex items-center gap-1.5 text-[13px] font-medium text-primary hover:text-secondary transition-colors group"
                   >
                     <HotelIcon className="size-3.5 text-secondary shrink-0" aria-hidden />
-                    <span>{k.hotel_madinah.nama}</span>
+                    <span className="truncate">{k.hotel_madinah.nama}</span>
                     <ExternalLink className="size-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" aria-hidden />
                   </a>
                 </div>
               )}
 
               {/* Detail Button */}
-              <div className="pt-2">
+              <div className="pt-1">
                 <Button asChild size="sm" className="rounded w-full">
                   <Link href={`/paket/${k.paket?.slug}?jadwal=${k.id}`}>Detail →</Link>
                 </Button>
               </div>
             </div>
-          </TableCell>
-        </TableRow>
-      )}
-    </>
+          </PopoverContent>
+        </Popover>
+      </TableCell>
+    </TableRow>
   )
 }

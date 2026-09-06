@@ -29,9 +29,9 @@ function groupByBulan(data: Keberangkatan[]): { label: string; items: Keberangka
 }
 
 // Total columns (superset of mobile + desktop for colSpan):
-// Mobile:  [toggle] [Nama Paket] [Keberangkatan] [Harga]           = 4 visible
+// Mobile:  [Nama Paket] [Keberangkatan] [Harga] [Toggle ≡]           = 4 visible
 // Desktop: [Nama Paket] [Keberangkatan] [Maskapai] [Hotel] [Harga] [Aksi] = 6 visible
-// Header row has 7 <th> total (toggle col is md:hidden)
+// Header row has 7 <th> total (Aksi col is hidden md:table-cell, Toggle col is md:hidden)
 const TOTAL_COLS = 7
 
 // ─── Main Component (Server) ────────────────────────────────────────────────
@@ -72,22 +72,44 @@ export default function PaketTable({
 
       {data.length === 0 ? emptyState : (
         /* ── Responsive Table ───────────────────────────────────────────── */
-        <div className="overflow-x-auto w-full">
-          <Table className="w-full">
+        /* Mobile: table-fixed, no scroll, explicit widths on th & td       */
+        /* Desktop: md:overflow-x-auto md:table-auto                       */
+        <div className="md:overflow-x-auto w-full">
+          <Table className="w-full table-fixed md:table-auto">
             <TableHeader>
               <TableRow className="border-white/60 hover:bg-transparent">
-                {/* Toggle expand/collapse column — mobile only */}
-                <TableHead className="md:hidden w-10 px-2" aria-label="Detail" />
-                <TableHead className="pl-3 md:pl-6 whitespace-nowrap">Nama Paket</TableHead>
-                <TableHead className="whitespace-nowrap">Keberangkatan</TableHead>
-                {/* Hidden on mobile */}
-                <TableHead className="hidden md:table-cell whitespace-nowrap">Maskapai</TableHead>
-                <TableHead className="hidden md:table-cell whitespace-nowrap">Hotel</TableHead>
-                <TableHead className="text-right whitespace-nowrap">Harga</TableHead>
-                {/* Hidden on mobile — shown in expand row instead */}
+                {/* 1. Nama Paket — 44% di mobile, auto di desktop */}
+                <TableHead className="w-[44%] md:w-auto pl-3 md:pl-6 whitespace-nowrap">
+                  Nama Paket
+                </TableHead>
+
+                {/* 2. Keberangkatan — 22% di mobile, auto di desktop */}
+                <TableHead className="w-[22%] md:w-auto whitespace-nowrap">
+                  Keberangkatan
+                </TableHead>
+
+                {/* 3. Maskapai — desktop only */}
+                <TableHead className="hidden md:table-cell whitespace-nowrap">
+                  Maskapai
+                </TableHead>
+
+                {/* 4. Hotel — desktop only */}
+                <TableHead className="hidden md:table-cell whitespace-nowrap">
+                  Hotel
+                </TableHead>
+
+                {/* 5. Harga — 22% di mobile, auto di desktop */}
+                <TableHead className="w-[22%] md:w-auto text-right whitespace-nowrap">
+                  Harga
+                </TableHead>
+
+                {/* 6. Aksi — desktop only */}
                 <TableHead className="hidden md:table-cell text-center pr-6 whitespace-nowrap">
                   Aksi
                 </TableHead>
+
+                {/* 7. Toggle ≡ — w-10 (40px) di mobile, hidden di desktop */}
+                <TableHead className="md:hidden w-10 px-1 text-center" aria-label="Detail" />
               </TableRow>
             </TableHeader>
             <TableBody>
