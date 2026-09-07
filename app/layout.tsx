@@ -4,6 +4,7 @@ import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESC, HERO_IMG } from '@/lib/co
 import './globals.css'
 import SiteFooter from '@/components/SiteFooter'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { DarkGradientBg } from '@/components/ui/elegant-dark-pattern'
 
 // Body font — Inter (sesuai referensi)
 const inter = Inter({
@@ -64,8 +65,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${inter.variable} ${playfair.variable} bg-background text-foreground antialiased`}>
         <ThemeProvider>
-          {children}
-          <SiteFooter />
+          <DarkGradientBg>
+            {children}
+            <SiteFooter />
+          </DarkGradientBg>
         </ThemeProvider>
       </body>
     </html>

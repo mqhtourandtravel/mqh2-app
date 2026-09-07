@@ -204,19 +204,19 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 /* Dark Mode — 9router palette: hitam netral, aksen teal/gold MQH */
 .dark {
   /* Background structural — 9router #1a1a1a / #1f1f1e / #262626 */
-  --background: #1a1a1a;
-  --foreground: #ededed;
-  --card: #262626;
-  --card-foreground: #ededed;
-  --popover: #262626;
-  --popover-foreground: #ededed;
-  --muted: #1f1f1e;
-  --muted-foreground: #9ca3af;
-  --border: #333333;
-  --input: #333333;
-  --sidebar-muted: #1a1a1a;
-  --info: #1f1f1e;
-  --info-foreground: #ededed;
+  --background: #0f172a; /* Slate 900 — kompatibel dengan gradient streaks */
+  --foreground: #f8fafc;
+  --card: #1e293b; /* Slate 800 */
+  --card-foreground: #f8fafc;
+  --popover: #1e293b;
+  --popover-foreground: #f8fafc;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --border: #334155;
+  --input: #334155;
+  --sidebar-muted: #0f172a;
+  --info: #1e293b;
+  --info-foreground: #f8fafc;
 
   /* Brand aksen — teal/gold MQH (dipertahankan) */
   --primary: #4A8E87;
