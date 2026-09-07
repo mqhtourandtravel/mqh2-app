@@ -159,7 +159,7 @@ export default function AdminUsers() {
         {/* Table Content */}
         <CardContent className="p-0">
           <Table>
-            <TableHeader className="bg-gray-50/70 border-b border-gray-200/80">
+            <TableHeader className="bg-gray-50/70">
               <TableRow className="hover:bg-transparent">
                 <TableHead className="pl-6 text-xs font-bold text-gray-600">Pengguna</TableHead>
                 <TableHead className="text-xs font-bold text-gray-600">Email Akun</TableHead>
@@ -167,7 +167,7 @@ export default function AdminUsers() {
                 <TableHead className="text-right pr-6 text-xs font-bold text-gray-600">Ubah Role</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="divide-y divide-gray-100">
+            <TableBody>
               {filtered.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={4} className="text-center py-12 text-xs text-gray-500">

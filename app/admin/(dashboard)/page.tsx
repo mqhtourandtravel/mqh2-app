@@ -195,7 +195,7 @@ export default function AdminDashboard() {
                 </Link>
               </Button>
             </CardHeader>
-            <CardContent className="p-0 divide-y divide-gray-100">
+            <CardContent className="p-0 divide-y divide-gray-100/60">
               {recentUsers.length === 0 ? (
                 <p className="text-xs text-gray-400 text-center py-8">Belum ada pengguna terdaftar.</p>
               ) : (

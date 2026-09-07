@@ -125,7 +125,7 @@ export default function KelolaMasterData() {
             </form>
 
             {/* Airline List */}
-            <div className="divide-y divide-gray-100 rounded-lg border border-gray-100 overflow-hidden bg-gray-50/30">
+            <div className="divide-y divide-gray-100/70 rounded-lg border border-gray-100/60 overflow-hidden bg-gray-50/30">
               {maskapaiList.length === 0 ? (
                 <p className="text-xs text-gray-400 text-center py-6">Belum ada maskapai.</p>
               ) : (
@@ -191,7 +191,7 @@ export default function KelolaMasterData() {
             </form>
 
             {/* Hotel List */}
-            <div className="divide-y divide-gray-100 rounded-lg border border-gray-100 overflow-hidden bg-gray-50/30">
+            <div className="divide-y divide-gray-100/70 rounded-lg border border-gray-100/60 overflow-hidden bg-gray-50/30">
               {hotelList.length === 0 ? (
                 <p className="text-xs text-gray-400 text-center py-6">Belum ada hotel.</p>
               ) : (

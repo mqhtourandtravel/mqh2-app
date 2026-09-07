@@ -105,7 +105,7 @@ export default function AdminListArtikel() {
         {/* Table */}
         <CardContent className="p-0">
           <Table>
-            <TableHeader className="bg-gray-50/70 border-b border-gray-200/80">
+            <TableHeader className="bg-gray-50/70">
               <TableRow className="hover:bg-transparent">
                 <TableHead className="w-[80px] pl-6 text-xs font-bold text-gray-600">Thumbnail</TableHead>
                 <TableHead className="text-xs font-bold text-gray-600">Judul Artikel</TableHead>
@@ -114,7 +114,7 @@ export default function AdminListArtikel() {
                 <TableHead className="text-right pr-6 text-xs font-bold text-gray-600">Aksi</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="divide-y divide-gray-100">
+            <TableBody>
               {filtered.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5} className="text-center py-12 text-xs text-gray-500">

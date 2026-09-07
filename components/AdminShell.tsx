@@ -91,7 +91,6 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
   const activeItem = menu.find((item) => (item.exact ? pathname === item.href : pathname?.startsWith(item.href)))
   const pageTitle = activeItem ? activeItem.label : 'Dashboard'
-  const groups = Array.from(new Set(menu.map((i) => i.group || 'MENU')))
 
   return (
     <div className="min-h-screen bg-background text-foreground flex font-sans antialiased selection:bg-[#E6B472]/30 selection:text-foreground">
@@ -120,41 +119,29 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
         {/* Menu Items List — flat, tanpa background block */}
         <nav className="flex-1 px-2 pt-2 pb-4 space-y-5 overflow-y-auto custom-scrollbar">
-          {groups.map((group) => {
-            const items = menu.filter((i) => (i.group || 'MENU') === group)
+          {menu.map((item) => {
+            const active = item.exact ? pathname === item.href : pathname?.startsWith(item.href)
+            const Icon = item.icon
             return (
-              <div key={group} className="space-y-0.5">
+              <Link
+                key={item.href}
+                href={item.href}
+                title={!sidebarOpen ? item.label : undefined}
+                className={`flex h-11 w-full items-center rounded-xl transition-colors duration-200 ${
+                  active
+                    ? 'text-primary font-semibold'
+                    : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground'
+                }`}
+              >
+                <div className="grid h-full w-12 place-content-center shrink-0">
+                  <Icon className="h-4 w-4" />
+                </div>
                 {sidebarOpen && (
-                  <p className="px-3 pb-1.5 text-[10px] font-medium uppercase tracking-widest text-muted-foreground/70">
-                    {group}
-                  </p>
+                  <span className="text-sm transition-opacity duration-200 truncate pr-2">
+                    {item.label}
+                  </span>
                 )}
-                {items.map((item) => {
-                  const active = item.exact ? pathname === item.href : pathname?.startsWith(item.href)
-                  const Icon = item.icon
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      title={!sidebarOpen ? item.label : undefined}
-                      className={`flex h-11 w-full items-center rounded-xl transition-colors duration-200 ${
-                        active
-                          ? 'text-primary font-semibold'
-                          : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground'
-                      }`}
-                    >
-                      <div className="grid h-full w-12 place-content-center shrink-0">
-                        <Icon className="h-4 w-4" />
-                      </div>
-                      {sidebarOpen && (
-                        <span className="text-sm transition-opacity duration-200 truncate pr-2">
-                          {item.label}
-                        </span>
-                      )}
-                    </Link>
-                  )
-                })}
-              </div>
+              </Link>
             )
           })}
         </nav>
