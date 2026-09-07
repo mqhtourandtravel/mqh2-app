@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import Image from 'next/image'
+import { useTheme } from 'next-themes'
 import { supabase } from '@/lib/supabase'
 import {
   LayoutDashboard,
@@ -18,6 +20,8 @@ import {
   ChevronsRight,
   Menu as MenuIcon,
   X,
+  Sun,
+  Moon,
 } from 'lucide-react'
 
 type MenuItem = {
@@ -54,6 +58,9 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [userProfile, setUserProfile] = useState<{ email?: string; name?: string; role?: string } | null>(null)
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
   const isLoginPage = pathname === '/admin/login' || pathname?.startsWith('/admin/login')
 
@@ -100,25 +107,25 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           sidebarOpen ? 'w-64' : 'w-16'
         }`}
       >
-        {/* Brand: logo mark kecil saja */}
+        {/* Brand: logo MQH */}
         <div className="px-3 pt-5 pb-2">
           <Link
             href="/"
-            className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-muted/60 transition-colors overflow-hidden"
+            className="flex items-center p-1.5 rounded-xl hover:bg-muted/60 transition-colors overflow-hidden"
           >
-            <div className="grid size-9 shrink-0 place-content-center rounded-xl bg-gradient-to-br from-[#E6B472] to-[#D9A25C] text-[#111827] font-serif font-bold text-base">
-              M
-            </div>
-            {sidebarOpen && (
-              <span className="transition-opacity duration-200 min-w-0 text-sm font-semibold text-foreground leading-tight truncate">
-                MQH<span className="text-[#E6B472]">·</span>Tour
-              </span>
-            )}
+            <Image
+              src="/logo.png"
+              alt="MQH Logo"
+              width={120}
+              height={44}
+              className="h-7 w-auto object-contain"
+              priority
+            />
           </Link>
         </div>
 
         {/* Menu Items List — flat, tanpa background block */}
-        <nav className="flex-1 px-2 pt-2 pb-4 space-y-1 overflow-y-auto custom-scrollbar">
+        <nav className="flex-1 px-2 pt-2 pb-4 space-y-0 overflow-y-auto custom-scrollbar">
           {menu.map((item) => {
             const active = item.exact ? pathname === item.href : pathname?.startsWith(item.href)
             const Icon = item.icon
@@ -127,7 +134,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                 key={item.href}
                 href={item.href}
                 title={!sidebarOpen ? item.label : undefined}
-                className={`flex h-11 w-full items-center rounded-xl transition-colors duration-200 ${
+                className={`flex h-9 w-full items-center rounded-xl transition-colors duration-200 ${
                   active
                     ? 'text-primary font-semibold'
                     : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground'
@@ -146,7 +153,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           })}
         </nav>
 
-        {/* User Info — compact 1 baris + 2 ikon kecil */}
+        {/* User Info — compact 1 baris + 2 ikon kecil + theme toggle */}
         {userProfile && (
           <div className="px-3 pb-2">
             <div className="flex items-center gap-2 rounded-xl border border-border/60 bg-card/60 p-2">
@@ -159,6 +166,14 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                     <p className="text-xs font-medium text-foreground truncate leading-tight">{userProfile.name}</p>
                     <p className="text-[10px] text-muted-foreground truncate leading-tight">{userProfile.role}</p>
                   </div>
+                  <button
+                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                    title={mounted ? (theme === 'dark' ? 'Mode Terang' : 'Mode Gelap') : 'Ganti tema'}
+                    aria-label="Ganti tema terang/gelap"
+                    className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
+                  >
+                    {mounted && theme === 'dark' ? <Sun className="size-3.5" /> : <Moon className="size-3.5" />}
+                  </button>
                   <a
                     href="/"
                     target="_blank"
@@ -180,8 +195,6 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             </div>
           </div>
         )}
-
-        {/* Collapsible Toggle — icon kecil saja */}
         <button
           onClick={() => setSidebarOpen((prev) => !prev)}
           className="border-t border-border/60 transition-colors hover:bg-muted/60 grid place-content-center p-3 text-muted-foreground hover:text-foreground w-full"

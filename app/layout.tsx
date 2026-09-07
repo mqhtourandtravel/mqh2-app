@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from 'next/font/google'
 import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESC, HERO_IMG } from '@/lib/config'
 import './globals.css'
 import SiteFooter from '@/components/SiteFooter'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 // Body font — Inter (sesuai referensi)
 const inter = Inter({
@@ -62,8 +63,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
       </head>
       <body className={`${inter.variable} ${playfair.variable} bg-background text-foreground antialiased`}>
-        {children}
-        <SiteFooter />
+        <ThemeProvider>
+          {children}
+          <SiteFooter />
+        </ThemeProvider>
       </body>
     </html>
   )
