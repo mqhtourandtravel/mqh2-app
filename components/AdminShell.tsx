@@ -103,7 +103,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
     <div className="min-h-screen bg-background text-foreground flex font-sans antialiased selection:bg-[#E6B472]/30 selection:text-foreground">
       {/* Desktop Collapsible Sidebar — clean minimal (referensi flat list) */}
       <aside
-        className={`sticky top-0 h-screen shrink-0 border-r border-border/60 bg-background transition-all duration-300 ease-in-out z-20 hidden md:flex flex-col relative ${
+        className={`sticky top-0 h-screen shrink-0 border-r border-border/60 bg-background sidebar-glass transition-all duration-300 ease-in-out z-20 hidden md:flex flex-col relative ${
           sidebarOpen ? 'w-64' : 'w-16'
         }`}
       >
@@ -156,7 +156,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         {/* User Info — compact 1 baris + 2 ikon kecil + theme toggle */}
         {userProfile && (
           <div className="px-3 pb-2">
-            <div className="flex items-center gap-2 rounded-xl border border-border/60 bg-card/60 p-2">
+            <div className="flex items-center gap-2 rounded-xl border border-border/60 bg-card/60 p-2 user-card">
               <div className="w-7 h-7 rounded-full bg-[#E6B472] text-[#111827] flex items-center justify-center font-bold text-[10px] shrink-0">
                 {(userProfile.name ?? 'A').charAt(0).toUpperCase()}
               </div>
