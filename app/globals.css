@@ -201,36 +201,62 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   --shadow-overlay: var(--shadow-lg);
 }
 
-/* Dark Mode — hitam/abu netral, aksen teal/gold tetap */
+/* Dark Mode — 9router palette: hitam netral, aksen teal/gold MQH */
 .dark {
-  --background: #0a0a0a;
-  --foreground: #fafafa;
-  --card: #18181b;
-  --card-foreground: #fafafa;
-  --popover: #18181b;
-  --popover-foreground: #fafafa;
+  /* Background structural — 9router #1a1a1a / #1f1f1e / #262626 */
+  --background: #1a1a1a;
+  --foreground: #ededed;
+  --card: #262626;
+  --card-foreground: #ededed;
+  --popover: #262626;
+  --popover-foreground: #ededed;
+  --muted: #1f1f1e;
+  --muted-foreground: #9ca3af;
+  --border: #333333;
+  --input: #333333;
+  --sidebar-muted: #1a1a1a;
+  --info: #1f1f1e;
+  --info-foreground: #ededed;
+
+  /* Brand aksen — teal/gold MQH (dipertahankan) */
   --primary: #4A8E87;
   --primary-foreground: #0a0a0a;
   --primary-hover: #00443F;
   --secondary: #E6B472;
   --secondary-foreground: #111827;
   --secondary-hover: #D9A25C;
-  --muted: #18181b;
-  --muted-foreground: #a1a1aa;
   --accent: rgba(230, 180, 114, 0.2);
   --accent-foreground: #E6B472;
+  --ring: #E6B472;
+
+  /* Status */
   --destructive: #E05252;
   --destructive-foreground: #FFFFFF;
-  --border: #27272a;
-  --input: #27272a;
-  --ring: #E6B472;
-  --sidebar-muted: #0a0a0a;
-  --info: #18181b;
-  --info-foreground: #fafafa;
   --success: #2F9E6F;
   --success-foreground: #FFFFFF;
   --warning: #D9A25C;
   --warning-foreground: #111827;
+
+  /* Shadow elevasi 9router */
+  --shadow-elev: inset 0 1px 0 0 rgba(255,255,255,0.06), 0 1px 2px rgba(0,0,0,0.4), 0 16px 48px -8px rgba(0,0,0,0.55);
+}
+
+/* Sidebar admin — glassmorphism khusus dark mode (efek navbar homepage) */
+.dark .sidebar-glass {
+  background: rgba(30, 30, 30, 0.85); /* 9router --color-sidebar: #1e1e1ed9 */
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border-right-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
+    12px 0 40px rgba(0, 0, 0, 0.45);
+}
+.dark .sidebar-glass .user-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.dark .card {
+  box-shadow: var(--shadow-elev);
 }
 
 body {
