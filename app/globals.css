@@ -322,6 +322,45 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   box-shadow: var(--glass-inset), var(--glass-shadow);
 }
 
+/* ===== Uniform hover — dashboard admin (light & dark) ===== */
+/* Semua hover tipis diseragamkan ke token glass; tombol solid tidak disentuh. */
+.admin-glass .hover\:bg-gray-50:hover,
+.admin-glass .hover\:bg-gray-100:hover,
+.admin-glass .hover\:bg-emerald-50:hover,
+.admin-glass .hover\:bg-emerald-50\/20:hover,
+.admin-glass .hover\:bg-emerald-50\/30:hover,
+.admin-glass .hover\:bg-emerald-100\/60:hover,
+.admin-glass .hover\:bg-amber-50:hover,
+.admin-glass .hover\:bg-amber-50\/20:hover,
+.admin-glass .hover\:bg-amber-100\/60:hover,
+.admin-glass .hover\:bg-blue-50:hover,
+.admin-glass .hover\:bg-blue-100\/60:hover,
+.admin-glass .hover\:bg-white:hover {
+  background: var(--glass-hover);
+}
+/* Hover destruktif tetap merah (affordance hapus) di kedua mode */
+.admin-glass .hover\:bg-red-50:hover {
+  background: rgba(224, 82, 82, 0.12);
+}
+.admin-glass .hover\:bg-transparent:hover {
+  background: transparent;
+}
+.admin-glass .hover\:text-gray-900:hover,
+.admin-glass .hover\:text-gray-700:hover,
+.admin-glass .hover\:text-emerald-700:hover,
+.admin-glass .hover\:text-emerald-800:hover,
+.admin-glass .hover\:text-amber-700:hover,
+.admin-glass .hover\:text-amber-800:hover {
+  color: var(--foreground);
+}
+.admin-glass .hover\:text-red-600:hover,
+.admin-glass .hover\:text-red-700:hover {
+  color: var(--destructive);
+}
+.admin-glass a {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
 /* Dark mode — override hardcoded Tailwind utility classes to theme tokens */
 .dark .admin-glass .text-gray-900,
 .dark .admin-glass .text-gray-800,
