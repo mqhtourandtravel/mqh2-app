@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
-import { Button } from '@/components/ui/button'
 import {
   LayoutDashboard,
   Package,
@@ -19,8 +18,6 @@ import {
   ChevronsRight,
   Menu as MenuIcon,
   X,
-  Bell,
-  Sparkles,
 } from 'lucide-react'
 
 type MenuItem = {
@@ -98,42 +95,37 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
   return (
     <div className="min-h-screen bg-background text-foreground flex font-sans antialiased selection:bg-[#E6B472]/30 selection:text-foreground">
-      {/* Desktop Collapsible Sidebar (gaya dashboard-with-collapsible-sidebar) */}
+      {/* Desktop Collapsible Sidebar — clean minimal (referensi flat list) */}
       <aside
-        className={`sticky top-0 h-screen shrink-0 border-r border-border bg-card/95 backdrop-blur-2xl transition-all duration-300 ease-in-out z-20 hidden md:flex flex-col shadow-sm relative ${
+        className={`sticky top-0 h-screen shrink-0 border-r border-border/60 bg-background transition-all duration-300 ease-in-out z-20 hidden md:flex flex-col relative ${
           sidebarOpen ? 'w-64' : 'w-16'
         }`}
       >
-        {/* Title / Brand Header */}
-        <div className="p-3 border-b border-border">
+        {/* Brand: logo mark kecil saja */}
+        <div className="px-3 pt-5 pb-2">
           <Link
             href="/"
-            className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-muted transition-colors overflow-hidden"
+            className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-muted/60 transition-colors overflow-hidden"
           >
-            <div className="grid size-10 shrink-0 place-content-center rounded-xl bg-gradient-to-br from-[#E6B472] to-[#D9A25C] shadow-md text-[#111827] font-serif font-bold text-lg">
+            <div className="grid size-9 shrink-0 place-content-center rounded-xl bg-gradient-to-br from-[#E6B472] to-[#D9A25C] text-[#111827] font-serif font-bold text-base">
               M
             </div>
             {sidebarOpen && (
-              <div className="transition-opacity duration-200 min-w-0">
-                <span className="block text-sm font-bold text-foreground leading-tight truncate">
-                  MQH<span className="text-[#E6B472]">·</span>Tour
-                </span>
-                <span className="text-[10px] uppercase tracking-wider text-[#E6B472] flex items-center gap-1 font-medium truncate">
-                  <Sparkles className="size-2.5 inline" /> {panelTitle}
-                </span>
-              </div>
+              <span className="transition-opacity duration-200 min-w-0 text-sm font-semibold text-foreground leading-tight truncate">
+                MQH<span className="text-[#E6B472]">·</span>Tour
+              </span>
             )}
           </Link>
         </div>
 
-        {/* Menu Items List */}
-        <nav className="flex-1 p-2 space-y-4 overflow-y-auto custom-scrollbar">
+        {/* Menu Items List — flat, tanpa background block */}
+        <nav className="flex-1 px-2 pt-2 pb-4 space-y-5 overflow-y-auto custom-scrollbar">
           {groups.map((group) => {
             const items = menu.filter((i) => (i.group || 'MENU') === group)
             return (
-              <div key={group} className="space-y-1">
+              <div key={group} className="space-y-0.5">
                 {sidebarOpen && (
-                  <p className="px-3 text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
+                  <p className="px-3 pb-1.5 text-[10px] font-medium uppercase tracking-widest text-muted-foreground/70">
                     {group}
                   </p>
                 )}
@@ -145,10 +137,10 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                       key={item.href}
                       href={item.href}
                       title={!sidebarOpen ? item.label : undefined}
-                      className={`relative flex h-11 w-full items-center rounded-xl transition-all duration-200 ${
+                      className={`flex h-11 w-full items-center rounded-xl transition-colors duration-200 ${
                         active
-                          ? 'bg-[#E6B472]/15 text-[#b07d3b] dark:text-[#E6B472] font-semibold border-l-2 border-[#E6B472] shadow-xs'
-                          : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                          ? 'text-primary font-semibold'
+                          : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground'
                       }`}
                     >
                       <div className="grid h-full w-12 place-content-center shrink-0">
@@ -167,59 +159,52 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           })}
         </nav>
 
-        {/* User Info & Actions */}
-        {sidebarOpen && userProfile && (
-          <div className="p-3 border-t border-border bg-muted/40">
-            <div className="flex items-center gap-2.5 p-2 rounded-xl bg-card border border-border mb-2">
-              <div className="w-8 h-8 rounded-full bg-[#E6B472] text-[#111827] flex items-center justify-center font-bold text-xs shrink-0">
+        {/* User Info — compact 1 baris + 2 ikon kecil */}
+        {userProfile && (
+          <div className="px-3 pb-2">
+            <div className="flex items-center gap-2 rounded-xl border border-border/60 bg-card/60 p-2">
+              <div className="w-7 h-7 rounded-full bg-[#E6B472] text-[#111827] flex items-center justify-center font-bold text-[10px] shrink-0">
                 {(userProfile.name ?? 'A').charAt(0).toUpperCase()}
               </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-foreground truncate">{userProfile.name}</p>
-                <p className="text-[10px] text-muted-foreground truncate">{userProfile.role}</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-1.5">
-              <Button
-                asChild
-                variant="ghost"
-                size="sm"
-                className="h-8 text-xs text-muted-foreground hover:text-foreground hover:bg-muted justify-center gap-1 rounded-lg"
-              >
-                <a href="/" target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="size-3" /> Web
-                </a>
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleLogout}
-                className="h-8 text-xs text-red-600 dark:text-red-300 hover:text-red-700 hover:bg-red-500/10 justify-center gap-1 rounded-lg"
-              >
-                <LogOut className="size-3" /> Keluar
-              </Button>
+              {sidebarOpen && (
+                <>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-medium text-foreground truncate leading-tight">{userProfile.name}</p>
+                    <p className="text-[10px] text-muted-foreground truncate leading-tight">{userProfile.role}</p>
+                  </div>
+                  <a
+                    href="/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Buka Web"
+                    className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
+                  >
+                    <ExternalLink className="size-3.5" />
+                  </a>
+                  <button
+                    onClick={handleLogout}
+                    title="Keluar"
+                    className="p-1.5 rounded-lg text-muted-foreground hover:text-red-600 hover:bg-red-500/10 transition-colors"
+                  >
+                    <LogOut className="size-3.5" />
+                  </button>
+                </>
+              )}
             </div>
           </div>
         )}
 
-        {/* Collapsible Toggle Button */}
+        {/* Collapsible Toggle — icon kecil saja */}
         <button
           onClick={() => setSidebarOpen((prev) => !prev)}
-          className="border-t border-border transition-colors hover:bg-muted flex items-center p-3 text-muted-foreground hover:text-foreground"
+          className="border-t border-border/60 transition-colors hover:bg-muted/60 grid place-content-center p-3 text-muted-foreground hover:text-foreground w-full"
           aria-label={sidebarOpen ? 'Perkecil Sidebar' : 'Perbesar Sidebar'}
         >
-          <div className="grid size-10 place-content-center shrink-0">
-            <ChevronsRight
-              className={`h-4 w-4 transition-transform duration-300 text-[#E6B472] ${
-                sidebarOpen ? 'rotate-180' : ''
-              }`}
-            />
-          </div>
-          {sidebarOpen && (
-            <span className="text-xs font-medium tracking-wide">
-              Perkecil Menu
-            </span>
-          )}
+          <ChevronsRight
+            className={`h-4 w-4 transition-transform duration-300 text-muted-foreground ${
+              sidebarOpen ? 'rotate-180' : ''
+            }`}
+          />
         </button>
       </aside>
 
@@ -257,7 +242,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                      active ? 'bg-[#E6B472] text-[#111827] font-semibold shadow-md' : 'text-muted-foreground hover:bg-muted'
+                      active ? 'text-primary font-semibold' : 'text-muted-foreground hover:bg-muted'
                     }`}
                   >
                     <Icon className="size-4" />
@@ -267,14 +252,12 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
               })}
             </div>
             <div className="pt-4 border-t border-border">
-              <Button
-                variant="outline"
-                size="sm"
+              <button
                 onClick={handleLogout}
-                className="w-full border-red-400/30 text-red-500 hover:bg-red-500/10 rounded-xl"
+                className="w-full flex items-center justify-center gap-2 rounded-xl border border-border py-2 text-sm text-muted-foreground hover:text-red-600 hover:bg-red-500/10 transition-colors"
               >
-                <LogOut className="size-4 mr-2" /> Keluar
-              </Button>
+                <LogOut className="size-4" /> Keluar
+              </button>
             </div>
           </div>
         </div>
@@ -283,23 +266,17 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden pt-14 md:pt-0 bg-background">
         {/* Content Header */}
-        <header className="h-16 border-b border-border bg-card/60 backdrop-blur-xl px-6 flex items-center justify-between shrink-0">
+        <header className="h-16 border-b border-border/60 bg-background px-6 flex items-center justify-between shrink-0">
           <div>
-            <h1 className="text-lg font-bold text-foreground">{pageTitle}</h1>
+            <h1 className="text-lg font-semibold text-foreground">{pageTitle}</h1>
           </div>
-          <div className="flex items-center gap-3">
-            <button className="relative p-2 rounded-xl bg-card hover:bg-muted border border-border text-muted-foreground hover:text-foreground transition-colors">
-              <Bell className="size-4" />
-              <span className="absolute top-1.5 right-1.5 size-2 bg-[#E6B472] rounded-full" />
-            </button>
-            <div className="flex items-center gap-2 pl-2 border-l border-border">
-              <div className="size-8 rounded-full bg-[#E6B472] text-[#111827] flex items-center justify-center font-bold text-xs">
-                {(userProfile?.name ?? 'A').charAt(0).toUpperCase()}
-              </div>
-              <span className="text-xs font-medium text-foreground hidden sm:inline">
-                {userProfile?.name}
-              </span>
+          <div className="flex items-center gap-2 pl-2 border-l border-border/60">
+            <div className="size-8 rounded-full bg-[#E6B472] text-[#111827] flex items-center justify-center font-bold text-xs">
+              {(userProfile?.name ?? 'A').charAt(0).toUpperCase()}
             </div>
+            <span className="text-xs font-medium text-foreground hidden sm:inline">
+              {userProfile?.name}
+            </span>
           </div>
         </header>
 
