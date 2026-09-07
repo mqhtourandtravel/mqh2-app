@@ -115,20 +115,19 @@ export default function AdminDashboard() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
-      {/* Welcome Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#0c2417] via-[#123623] to-[#1a4a31] p-6 md:p-8 text-white shadow-xl border border-emerald-800/40">
-        <div className="absolute right-0 top-0 translate-x-8 -translate-y-8 size-64 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
+      {/* Welcome Banner — transparan, clean */}
+      <div className="relative overflow-hidden rounded-2xl bg-transparent p-6 md:p-8">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-amber-300 text-xs font-semibold backdrop-blur-md mb-1 border border-white/10">
-              <Sparkles className="size-3 text-amber-400" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 text-primary text-xs font-semibold mb-1">
+              <Sparkles className="size-3 text-[#E6B472]" />
               <span>Admin Control Center</span>
             </div>
-            <h1 className="font-serif text-xl md:text-2xl font-bold tracking-tight">
-              Ahlan wa Sahlan, <span className="text-amber-300">{adminName}</span>
+            <h1 className="font-serif text-xl md:text-2xl font-bold tracking-tight text-foreground">
+              Ahlan wa Sahlan, <span className="text-primary">{adminName}</span>
             </h1>
-            <p className="text-xs md:text-sm text-emerald-100/70 flex items-center gap-2">
-              <Clock className="size-3.5 text-amber-400/80" /> {currentDate}
+            <p className="text-xs md:text-sm text-muted-foreground flex items-center gap-2">
+              <Clock className="size-3.5 text-[#E6B472]" /> {currentDate}
             </p>
           </div>
           <div className="flex flex-wrap gap-2.5">
@@ -137,7 +136,7 @@ export default function AdminDashboard() {
                 <Plus className="size-4" /> Tambah Paket
               </Link>
             </Button>
-            <Button asChild variant="outline" size="sm" className="text-white border-white/20 hover:bg-white/10 gap-1.5 h-9 rounded-lg">
+            <Button asChild variant="outline" size="sm" className="text-foreground border-border hover:bg-muted gap-1.5 h-9 rounded-lg">
               <Link href="/admin/artikel/baru">
                 <FileText className="size-4" /> Tulis Artikel
               </Link>
