@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useTheme } from 'next-themes'
-import { DarkGradientBg } from '@/components/ui/elegant-dark-pattern'
 import { supabase } from '@/lib/supabase'
 import {
   LayoutDashboard,
@@ -277,9 +276,9 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         {/* Header row removed — content starts directly with page title inside main */}
 
         {/* Body Content */}
-        <DarkGradientBg className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8">
+        <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8 bg-background">
           {children}
-        </DarkGradientBg>
+        </main>
       </div>
     </div>
   )
