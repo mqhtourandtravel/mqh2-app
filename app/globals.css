@@ -241,6 +241,87 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   --shadow-elev: inset 0 1px 0 0 rgba(255,255,255,0.06), 0 1px 2px rgba(0,0,0,0.4), 0 16px 48px -8px rgba(0,0,0,0.55);
 }
 
+/* ===== Glassmorphism — KHUSUS dashboard admin (.admin-glass) ===== */
+/* Berlaku di light & dark; background dasar halaman TIDAK diubah. */
+.admin-glass {
+  --glass-blur: blur(18px) saturate(1.6);
+  --glass-surface: rgba(255, 255, 255, 0.55);
+  --glass-surface-strong: rgba(255, 255, 255, 0.72);
+  --glass-elev: rgba(255, 255, 255, 0.5);
+  --glass-hover: rgba(0, 68, 63, 0.05);
+  --glass-border: rgba(0, 68, 63, 0.10);
+  --glass-inset: inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+  --glass-shadow: 0 8px 30px -8px rgba(0, 42, 39, 0.12);
+}
+.dark .admin-glass {
+  --glass-surface: rgba(38, 38, 38, 0.55);
+  --glass-surface-strong: rgba(38, 38, 38, 0.7);
+  --glass-elev: rgba(255, 255, 255, 0.05);
+  --glass-hover: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-inset: inset 0 1px 0 0 rgba(255, 255, 255, 0.07);
+  --glass-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.45);
+}
+
+/* Card */
+.admin-glass [data-slot="card"] {
+  background: var(--glass-surface-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-inset), var(--glass-shadow);
+}
+
+/* Header toolbar / filter bar di dalam card */
+.admin-glass [data-slot="card"] > div[class*="border-b"] {
+  background: var(--glass-elev);
+  border-bottom-color: var(--glass-border);
+}
+
+/* Tabel: transparan supaya kaca card terlihat */
+.admin-glass [data-slot="table"] { background: transparent; }
+.admin-glass [data-slot="table-header"] tr {
+  background: var(--glass-elev);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--glass-border);
+}
+.admin-glass [data-slot="table-head"] { background: transparent; }
+.admin-glass [data-slot="table-row"] { border-bottom: 1px solid var(--glass-border); }
+.admin-glass [data-slot="table-row"]:hover { background: var(--glass-hover); }
+
+/* Input & select trigger */
+.admin-glass [data-slot="input"],
+.admin-glass [data-slot="select-trigger"] {
+  background: var(--glass-elev);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+}
+
+/* Button — blur kaca: hanya terlihat pada varian transparan (outline/ghost),
+   solid (default/destructive) tetap warna aslinya. */
+.admin-glass [data-slot="button"] {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Badge — pill kaca */
+.admin-glass [data-slot="badge"] {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Popover / dropdown / select content */
+.admin-glass [data-slot="popover-content"],
+.admin-glass [data-slot="select-content"] {
+  background: var(--glass-surface-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-inset), var(--glass-shadow);
+}
+
 /* Sidebar admin — glassmorphism khusus dark mode (efek navbar homepage) */
 .dark .sidebar-glass {
   background: rgba(30, 30, 30, 0.85); /* 9router --color-sidebar: #1e1e1ed9 */
@@ -254,9 +335,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 .dark .sidebar-glass .user-card {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.1);
-}
-.dark .card {
-  box-shadow: var(--shadow-elev);
 }
 
 body {

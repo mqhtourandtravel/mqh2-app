@@ -62,6 +62,13 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
 
+  // Glassmorphism scope: seluruh konten admin termasuk portal Radix
+  // (select/popover dirender via portal ke document.body)
+  useEffect(() => {
+    document.body.classList.add('admin-glass')
+    return () => document.body.classList.remove('admin-glass')
+  }, [])
+
   const isLoginPage = pathname === '/admin/login' || pathname?.startsWith('/admin/login')
 
   useEffect(() => {
