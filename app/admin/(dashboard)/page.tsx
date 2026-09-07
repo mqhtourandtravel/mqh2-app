@@ -124,7 +124,7 @@ export default function AdminDashboard() {
               <Sparkles className="size-3 text-amber-400" />
               <span>Admin Control Center</span>
             </div>
-            <h1 className="font-serif text-2xl md:text-3xl font-bold tracking-tight">
+            <h1 className="font-serif text-xl md:text-2xl font-bold tracking-tight">
               Ahlan wa Sahlan, <span className="text-amber-300">{adminName}</span>
             </h1>
             <p className="text-xs md:text-sm text-emerald-100/70 flex items-center gap-2">

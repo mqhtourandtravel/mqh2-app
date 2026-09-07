@@ -93,7 +93,7 @@ export default function AdminUsers() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="font-serif text-2xl md:text-3xl font-bold text-gray-900 tracking-tight flex items-center gap-2.5">
+          <h1 className="font-serif text-xl md:text-2xl font-bold text-gray-900 tracking-tight flex items-center gap-2.5">
             <Users className="size-7 text-emerald-700" /> Kelola Pengguna & Role
           </h1>
           <p className="text-xs md:text-sm text-gray-500 mt-1">

@@ -118,7 +118,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         </div>
 
         {/* Menu Items List — flat, tanpa background block */}
-        <nav className="flex-1 px-2 pt-2 pb-4 space-y-5 overflow-y-auto custom-scrollbar">
+        <nav className="flex-1 px-2 pt-2 pb-4 space-y-1 overflow-y-auto custom-scrollbar">
           {menu.map((item) => {
             const active = item.exact ? pathname === item.href : pathname?.startsWith(item.href)
             const Icon = item.icon
@@ -253,19 +253,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden pt-14 md:pt-0 bg-background">
         {/* Content Header */}
-        <header className="h-16 border-b border-border/60 bg-background px-6 flex items-center justify-between shrink-0">
-          <div>
-            <h1 className="text-lg font-semibold text-foreground">{pageTitle}</h1>
-          </div>
-          <div className="flex items-center gap-2 pl-2 border-l border-border/60">
-            <div className="size-8 rounded-full bg-[#E6B472] text-[#111827] flex items-center justify-center font-bold text-xs">
-              {(userProfile?.name ?? 'A').charAt(0).toUpperCase()}
-            </div>
-            <span className="text-xs font-medium text-foreground hidden sm:inline">
-              {userProfile?.name}
-            </span>
-          </div>
-        </header>
+        {/* Header row removed — content starts directly with page title inside main */}
 
         {/* Body Content */}
         <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8 bg-background">
