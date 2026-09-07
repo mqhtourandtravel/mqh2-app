@@ -201,32 +201,32 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   --shadow-overlay: var(--shadow-lg);
 }
 
-/* Dark Mode */
+/* Dark Mode — hitam/abu netral, aksen teal/gold tetap */
 .dark {
-  --background: #001f1c;
-  --foreground: #F4FBFA;
-  --card: #002A27;
-  --card-foreground: #F4FBFA;
-  --popover: #002A27;
-  --popover-foreground: #F4FBFA;
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --card: #18181b;
+  --card-foreground: #fafafa;
+  --popover: #18181b;
+  --popover-foreground: #fafafa;
   --primary: #4A8E87;
-  --primary-foreground: #001f1c;
+  --primary-foreground: #0a0a0a;
   --primary-hover: #00443F;
   --secondary: #E6B472;
   --secondary-foreground: #111827;
   --secondary-hover: #D9A25C;
-  --muted: #002A27;
-  --muted-foreground: #9CA3AF;
+  --muted: #18181b;
+  --muted-foreground: #a1a1aa;
   --accent: rgba(230, 180, 114, 0.2);
   --accent-foreground: #E6B472;
   --destructive: #E05252;
   --destructive-foreground: #FFFFFF;
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.1);
+  --border: #27272a;
+  --input: #27272a;
   --ring: #E6B472;
-  --sidebar-muted: #001f1c;
-  --info: #002A27;
-  --info-foreground: #F4FBFA;
+  --sidebar-muted: #0a0a0a;
+  --info: #18181b;
+  --info-foreground: #fafafa;
   --success: #2F9E6F;
   --success-foreground: #FFFFFF;
   --warning: #D9A25C;
