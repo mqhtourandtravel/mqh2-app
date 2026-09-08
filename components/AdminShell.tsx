@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { useTheme } from 'next-themes'
+
 import { supabase } from '@/lib/supabase'
 import {
   LayoutDashboard,
@@ -58,9 +58,24 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [userProfile, setUserProfile] = useState<{ email?: string; name?: string; role?: string } | null>(null)
-  const { theme, setTheme } = useTheme()
+  const [adminDark, setAdminDark] = useState(false)
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
+  useEffect(() => {
+    const stored = localStorage.getItem('adminDark')
+    if (stored !== null) {
+      setAdminDark(stored === 'true')
+    }
+  }, [])
+  useEffect(() => {
+    if (adminDark) {
+      document.documentElement.classList.add('admin-dark')
+    } else {
+      document.documentElement.classList.remove('admin-dark')
+    }
+    localStorage.setItem('adminDark', String(adminDark))
+    return () => document.documentElement.classList.remove('admin-dark')
+  }, [adminDark])
 
   // Glassmorphism scope: seluruh konten admin termasuk portal Radix
   // (select/popover dirender via portal ke document.body)
@@ -174,12 +189,12 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                     <p className="text-[10px] text-muted-foreground truncate leading-tight">{userProfile.role}</p>
                   </div>
                   <button
-                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    title={mounted ? (theme === 'dark' ? 'Mode Terang' : 'Mode Gelap') : 'Ganti tema'}
+                    onClick={() => setAdminDark(!adminDark)}
+                    title={mounted ? (adminDark ? 'Mode Terang' : 'Mode Gelap') : 'Ganti tema'}
                     aria-label="Ganti tema terang/gelap"
                     className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
                   >
-                    {mounted && theme === 'dark' ? <Sun className="size-3.5" /> : <Moon className="size-3.5" />}
+                    {mounted && adminDark ? <Sun className="size-3.5" /> : <Moon className="size-3.5" />}
                   </button>
                   <a
                     href="/"
