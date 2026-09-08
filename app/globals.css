@@ -489,77 +489,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   color: var(--foreground);
 }
 
-.dark .admin-glass .text-blue-800,
-.dark .admin-glass .text-blue-900 {
-  color: #60a5fa;
-}
-.dark .admin-glass .text-amber-900 {
-  color: var(--secondary);
-}
-.dark .admin-glass .text-emerald-900,
-.dark .admin-glass .text-emerald-100 {
-  color: var(--primary);
-}
-.dark .admin-glass .text-emerald-400 {
-  color: var(--primary);
-}
-.dark .admin-glass .text-amber-300 {
-  color: var(--secondary);
-}
-.dark .admin-glass .text-red-400,
-.dark .admin-glass .text-red-500 {
-  color: var(--destructive);
-}
-.dark .admin-glass .bg-amber-400,
-.dark .admin-glass .bg-amber-600,
-.dark .admin-glass .bg-amber-700 {
-  background: var(--secondary);
-}
-.dark .admin-glass .bg-blue-100 {
-  background: rgba(96, 165, 250, 0.25);
-}
-.dark .admin-glass .bg-blue-500,
-.dark .admin-glass .bg-blue-600 {
-  background: #60a5fa;
-}
-.dark .admin-glass .bg-purple-500 {
-  background: #a78bfa;
-}
-.dark .admin-glass .bg-emerald-100 {
-  background: rgba(74, 142, 135, 0.25);
-}
-.dark .admin-glass .bg-emerald-400 {
-  background: var(--primary-light);
-}
-.dark .admin-glass .bg-emerald-800 {
-  background: var(--primary);
-}
-.dark .admin-glass .bg-emerald-50\/60 {
-  background: rgba(74, 142, 135, 0.15);
-}
-.dark .admin-glass .bg-blue-50\/60 {
-  background: rgba(96, 165, 250, 0.15);
-}
-.dark .admin-glass .bg-amber-50\/60 {
-  background: rgba(230, 180, 114, 0.15);
-}
-.dark .admin-glass .bg-amber-50\/30 {
-  background: rgba(230, 180, 114, 0.08);
-}
-.dark .admin-glass .border-amber-100,
-.dark .admin-glass .border-amber-300 {
-  border-color: rgba(230, 180, 114, 0.3);
-}
-.dark .admin-glass .border-blue-100 {
-  border-color: rgba(96, 165, 250, 0.3);
-}
-.dark .admin-glass .border-emerald-100,
-.dark .admin-glass .border-emerald-300,
-.dark .admin-glass .border-emerald-600,
-.dark .admin-glass .border-emerald-900 {
-  border-color: rgba(74, 142, 135, 0.3);
-}
-/* Sidebar admin — glassmorphism khusus dark mode */
+/* Sidebar admin — glassmorphism khusus dark mode (efek navbar homepage) */
 .dark .sidebar-glass {
   background: rgba(30, 30, 30, 0.85); /* 9router --color-sidebar: #1e1e1ed9 */
   backdrop-filter: blur(24px) saturate(1.8);
