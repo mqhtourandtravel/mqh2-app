@@ -2,12 +2,13 @@
 
 import { useEffect, useState, use } from 'react'
 import { supabase, Paket, Keberangkatan, Maskapai, Hotel } from '@/lib/supabase'
-import { adminGet, adminList, adminCreate, adminUpdate, adminDelete } from '@/lib/adminApi'
+import { adminGetChecked, adminList, adminCreate, adminUpdate, adminDelete, fetchCascadeCounts } from '@/lib/adminApi'
 import { useRouter } from 'next/navigation'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Separator } from '@/components/ui/separator'
 import {
   Select,
@@ -34,10 +35,19 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
   const [formJadwal, setFormJadwal] = useState(KOSONG_JADWAL)
   const [editJadwalId, setEditJadwalId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState<string | null>(null)
+  const [infoError, setInfoError] = useState<string | null>(null)
+  const [jadwalError, setJadwalError] = useState<string | null>(null)
 
   async function muatSemua() {
-    const [p, j, m, h] = await Promise.all([
-      adminGet<Paket>('paket', id),
+    setLoadError(null)
+    const { data: p, error: pErr } = await adminGetChecked<Paket>('paket', id)
+    if (pErr || !p) {
+      setLoadError(pErr ?? 'Gagal memuat data paket.')
+      setLoading(false)
+      return
+    }
+    const [j, m, h] = await Promise.all([
       adminList<Keberangkatan>('keberangkatan', { orderBy: 'tanggal_berangkat', filter: { paket_id: id } }),
       adminList<Maskapai>('maskapai', { orderBy: 'nama' }),
       adminList<Hotel>('hotel', { orderBy: 'nama' }),
@@ -62,15 +72,21 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
   async function simpanInfoPaket(e: React.FormEvent) {
     e.preventDefault()
     if (!paket) return
-    await adminUpdate('paket', paket.id, {
+    setInfoError(null)
+    const { error } = await adminUpdate('paket', paket.id, {
       nama_paket: paket.nama_paket, kategori: paket.kategori, tier: paket.tier,
       deskripsi: paket.deskripsi, gambar_url: paket.gambar_url, status: paket.status,
     })
+    if (error) {
+      setInfoError(error)
+      return
+    }
     alert('Info paket tersimpan.')
   }
 
   async function simpanJadwal(e: React.FormEvent) {
     e.preventDefault()
+    setJadwalError(null)
     const payload = {
       paket_id: id,
       tanggal_berangkat: formJadwal.tanggal_berangkat,
@@ -84,10 +100,13 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
       kuota_total: Number(formJadwal.kuota_total),
       kuota_tersisa: Number(formJadwal.kuota_tersisa),
     }
-    if (editJadwalId) {
-      await adminUpdate('keberangkatan', editJadwalId, payload)
-    } else {
-      await adminCreate('keberangkatan', payload)
+    const res = editJadwalId
+      ? await adminUpdate('keberangkatan', editJadwalId, payload)
+      : await adminCreate('keberangkatan', payload)
+
+    if (res.error) {
+      setJadwalError(res.error)
+      return
     }
     setFormJadwal(KOSONG_JADWAL)
     setEditJadwalId(null)
@@ -111,12 +130,28 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
   }
 
   async function hapusJadwal(jadwalId: string) {
-    if (!confirm('Hapus jadwal keberangkatan ini?')) return
-    await adminDelete('keberangkatan', jadwalId)
+    setJadwalError(null)
+    const { data: counts } = await fetchCascadeCounts('keberangkatan', jadwalId)
+    const msg = counts
+      ? `Hapus jadwal ini? ${counts.booking} booking jamaah pada jadwal ini akan IKUT TERHAPUS PERMANEN.`
+      : `Hapus jadwal keberangkatan ini? Booking jamaah pada jadwal ini akan IKUT TERHAPUS PERMANEN.`
+    if (!confirm(msg)) return
+    const { ok, error } = await adminDelete('keberangkatan', jadwalId)
+    if (!ok) {
+      setJadwalError(error ?? 'Gagal menghapus jadwal.')
+      return
+    }
     muatSemua()
   }
 
-  if (loading || !paket) return <p className="p-8 text-muted-foreground text-sm">Memuat...</p>
+  if (loading) return <p className="p-8 text-muted-foreground text-sm">Memuat...</p>
+  if (loadError || !paket) return (
+    <div className="p-8 max-w-xl mx-auto">
+      <Alert variant="destructive">
+        <AlertDescription>{loadError ?? 'Paket tidak ditemukan.'}</AlertDescription>
+      </Alert>
+    </div>
+  )
 
   return (
     <>
@@ -166,6 +201,11 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
                     <SelectItem value="nonaktif">Nonaktif (disembunyikan)</SelectItem>
                   </SelectContent>
                 </Select>
+                {infoError && (
+                  <Alert variant="destructive">
+                    <AlertDescription>{infoError}</AlertDescription>
+                  </Alert>
+                )}
                 <Button type="submit" variant="secondary">Simpan Info Paket</Button>
               </form>
             </section>
@@ -267,6 +307,11 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
                     onChange={(e) => setFormJadwal({ ...formJadwal, kuota_tersisa: e.target.value })}
                   />
                 </div>
+                {jadwalError && (
+                  <Alert variant="destructive">
+                    <AlertDescription>{jadwalError}</AlertDescription>
+                  </Alert>
+                )}
                 <div className="flex gap-2">
                   <Button type="submit" variant="secondary">
                     {editJadwalId ? 'Update Jadwal' : 'Tambah Jadwal'}

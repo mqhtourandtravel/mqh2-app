@@ -33,6 +33,45 @@ export async function adminList<T = unknown>(
   return res.json()
 }
 
+// Varian dengan error visible — TIDAK mengubah adminGet/adminList lama
+// (dipakai halaman edit/list paket; halaman lain tetap perilaku lama).
+// id boleh berupa query string lengkap utk endpoint non-CRUD (mis. 'counts' → 'paket&id=x').
+export async function adminGetChecked<T = unknown>(
+  resource: string,
+  id: string
+): Promise<{ data: T | null; error: string | null }> {
+  const headers = await authHeader()
+  try {
+    const res = await fetch(`/api/admin/${resource}/${id}`, { headers })
+    if (!res.ok) {
+      const json = await res.json().catch(() => ({ error: `HTTP ${res.status}` }))
+      return { data: null, error: typeof json.error === 'string' ? json.error : `HTTP ${res.status}` }
+    }
+    return { data: (await res.json()) as T, error: null }
+  } catch {
+    return { data: null, error: 'Jaringan ke server gagal.' }
+  }
+}
+
+// Count efek cascade delete utk dialog konfirmasi (GET /api/admin/counts?resource=&id=).
+// null = gagal ambil — caller WAJIB pakai fallback pesan yang tetap memperingatkan.
+export async function fetchCascadeCounts(
+  resource: 'paket' | 'keberangkatan',
+  id: string
+): Promise<{ data: { jadwal: number; booking: number } | null; error: string | null }> {
+  const headers = await authHeader()
+  try {
+    const res = await fetch(`/api/admin/counts?resource=${resource}&id=${id}`, { headers })
+    if (!res.ok) {
+      const json = await res.json().catch(() => ({ error: `HTTP ${res.status}` }))
+      return { data: null, error: typeof json.error === 'string' ? json.error : `HTTP ${res.status}` }
+    }
+    return { data: await res.json(), error: null }
+  } catch {
+    return { data: null, error: 'Jaringan ke server gagal.' }
+  }
+}
+
 export async function adminGet<T = unknown>(resource: string, id: string): Promise<T | null> {
   const headers = await authHeader()
   const res = await fetch(`/api/admin/${resource}/${id}`, { headers })

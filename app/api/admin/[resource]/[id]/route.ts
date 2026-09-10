@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getResource, isReadOnly } from '@/lib/adminResources'
 import { verifyAdmin } from '@/lib/adminAuth'
+import { validateAdminPayload } from '@/lib/adminValidation'
 import { keysToCamel, keysToSnake } from '@/lib/case'
 
 type Ctx = { params: Promise<{ resource: string; id: string }> }
@@ -37,6 +38,11 @@ export async function PATCH(request: NextRequest, { params }: Ctx) {
   if (isReadOnly(config)) return NextResponse.json({ error: 'Resource ini read-only.' }, { status: 405 })
 
   const body = await request.json()
+
+  // Validasi di body asli (snake_case) SEBELUM convert ke camelCase.
+  const valError = validateAdminPayload(resource, body)
+  if (valError) return NextResponse.json({ error: valError }, { status: 400 })
+
   const data = keysToCamel(body) as Record<string, unknown>
   delete data.id
 

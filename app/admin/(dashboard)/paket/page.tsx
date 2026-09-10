@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { supabase, Paket } from '@/lib/supabase'
-import { adminList, adminDelete } from '@/lib/adminApi'
+import { adminList, adminDelete, fetchCascadeCounts } from '@/lib/adminApi'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -50,7 +50,12 @@ export default function AdminListPaket() {
   }, [router])
 
   async function hapusPaket(id: string, nama: string) {
-    if (!confirm(`Yakin hapus paket "${nama}"? Semua jadwal keberangkatan pada paket ini juga akan dihapus.`)) return
+    // Fetch jumlah terdampak cascade DULU supaya admin tahu booking jamaah ikut hilang.
+    const { data: counts } = await fetchCascadeCounts('paket', id)
+    const msg = counts
+      ? `Yakin hapus paket "${nama}"? ${counts.jadwal} jadwal keberangkatan dan ${counts.booking} booking jamaah akan IKUT TERHAPUS PERMANEN.`
+      : `Yakin hapus paket "${nama}"? Semua jadwal keberangkatan dan booking jamaah pada paket ini akan IKUT TERHAPUS PERMANEN.`
+    if (!confirm(msg)) return
     setDeletingId(id)
     const { ok, error } = await adminDelete('paket', id)
     if (ok) {
