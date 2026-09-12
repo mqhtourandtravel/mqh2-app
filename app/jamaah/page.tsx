@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { supabase, Booking } from '@/lib/supabase'
 import { bookingList, bookingUpdateStatus } from '@/lib/adminApi'
+import { confirmDialog } from '@/components/admin/ConfirmDialog'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -43,7 +44,13 @@ export default function JamaahDashboard() {
   }, [router])
 
   async function handleCancel(id: string) {
-    if (!confirm('Yakin ingin membatalkan booking ini?')) return
+    const okConfirm = await confirmDialog({
+      title: 'Batalkan Booking Ini?',
+      description: 'Booking akan dibatalkan dan kuota dikembalikan.',
+      actionLabel: 'Batalkan Booking',
+      destructive: true,
+    })
+    if (!okConfirm) return
     setCancellingId(id)
     const { error } = await bookingUpdateStatus(id, 'cancelled')
     if (!error) {

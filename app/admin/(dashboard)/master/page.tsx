@@ -15,6 +15,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Trash2, Plane, Building2, Plus, MapPin } from 'lucide-react'
+import { toast } from 'sonner'
+import { confirmDialog } from '@/components/admin/ConfirmDialog'
 
 export default function KelolaMasterData() {
   const router = useRouter()
@@ -25,6 +27,7 @@ export default function KelolaMasterData() {
   const [kotaHotel, setKotaHotel] = useState<'mekkah' | 'madinah'>('mekkah')
   const [mapsHotel, setMapsHotel] = useState('')
   const [loading, setLoading] = useState(true)
+  const [busyAdd, setBusyAdd] = useState<'maskapai' | 'hotel' | null>(null)
 
   async function muatSemua() {
     const [m, h] = await Promise.all([
@@ -48,30 +51,53 @@ export default function KelolaMasterData() {
 
   async function tambahMaskapai(e: React.FormEvent) {
     e.preventDefault()
-    if (!namaMaskapai.trim()) return
-    await adminCreate('maskapai', { nama: namaMaskapai })
+    if (!namaMaskapai.trim() || busyAdd) return
+    setBusyAdd('maskapai')
+    const { error } = await adminCreate('maskapai', { nama: namaMaskapai })
+    setBusyAdd(null)
+    if (error) { toast.error(error); return }
+    toast.success('Maskapai ditambahkan.')
     setNamaMaskapai('')
     muatSemua()
   }
 
   async function hapusMaskapai(id: string) {
-    if (!confirm('Hapus maskapai ini? Jadwal yang memakainya akan kehilangan info maskapai.')) return
-    await adminDelete('maskapai', id)
+    const okConfirm = await confirmDialog({
+      title: 'Hapus maskapai ini?',
+      description: 'Jadwal yang memakainya akan kehilangan info maskapai.',
+      actionLabel: 'Hapus',
+      destructive: true,
+    })
+    if (!okConfirm) return
+    const { ok, error } = await adminDelete('maskapai', id)
+    if (!ok) { toast.error(error ?? 'Gagal menghapus maskapai.'); return }
+    toast.success('Maskapai terhapus.')
     muatSemua()
   }
 
   async function tambahHotel(e: React.FormEvent) {
     e.preventDefault()
-    if (!namaHotel.trim()) return
-    await adminCreate('hotel', { nama: namaHotel, kota: kotaHotel, google_maps_url: mapsHotel || null })
+    if (!namaHotel.trim() || busyAdd) return
+    setBusyAdd('hotel')
+    const { error } = await adminCreate('hotel', { nama: namaHotel, kota: kotaHotel, google_maps_url: mapsHotel || null })
+    setBusyAdd(null)
+    if (error) { toast.error(error); return }
+    toast.success('Hotel ditambahkan.')
     setNamaHotel('')
     setMapsHotel('')
     muatSemua()
   }
 
   async function hapusHotel(id: string) {
-    if (!confirm('Hapus hotel ini?')) return
-    await adminDelete('hotel', id)
+    const okConfirm = await confirmDialog({
+      title: 'Hapus hotel ini?',
+      actionLabel: 'Hapus',
+      destructive: true,
+    })
+    if (!okConfirm) return
+    const { ok, error } = await adminDelete('hotel', id)
+    if (!ok) { toast.error(error ?? 'Gagal menghapus hotel.'); return }
+    toast.success('Hotel terhapus.')
     muatSemua()
   }
 
@@ -119,7 +145,7 @@ export default function KelolaMasterData() {
                 placeholder="Contoh: Saudi Airlines, Garuda Indonesia..."
                 className="flex-1 h-9 text-xs bg-gray-50/50 border-gray-300"
               />
-              <Button type="submit" size="sm" className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs h-9 gap-1 font-semibold px-4">
+              <Button type="submit" size="sm" disabled={busyAdd !== null} className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs h-9 gap-1 font-semibold px-4">
                 <Plus className="size-3.5" /> Tambah
               </Button>
             </form>
@@ -185,7 +211,7 @@ export default function KelolaMasterData() {
                   className="flex-1 h-8 text-xs bg-white border-gray-300"
                 />
               </div>
-              <Button type="submit" size="sm" className="w-full bg-amber-600 hover:bg-amber-700 text-white text-xs h-8 gap-1 font-semibold">
+              <Button type="submit" size="sm" disabled={busyAdd !== null} className="w-full bg-amber-600 hover:bg-amber-700 text-white text-xs h-8 gap-1 font-semibold">
                 <Plus className="size-3.5" /> Tambah Hotel
               </Button>
             </form>

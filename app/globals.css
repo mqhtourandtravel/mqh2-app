@@ -504,6 +504,30 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   border-color: rgba(255, 255, 255, 0.1);
 }
 
+/* ===== Sonner toast — selaraskan dgn design system MQH (teal sukses, merah destruktif) ===== */
+[data-sonner-toaster] {
+  --success-bg: #e7f3f1;
+  --success-color: #00443f;
+  --success-border: rgba(0, 68, 63, 0.18);
+  --error-bg: #fdecec;
+  --error-color: #a52a2a;
+  --error-border: rgba(224, 82, 82, 0.25);
+  --normal-bg: #ffffff;
+  --normal-color: #111827;
+  --normal-border: rgba(0, 68, 63, 0.12);
+}
+.admin-dark [data-sonner-toaster] {
+  --success-bg: #123b36;
+  --success-color: #d9f2ee;
+  --success-border: rgba(74, 142, 135, 0.4);
+  --error-bg: #3a2020;
+  --error-color: #f5d6d6;
+  --error-border: rgba(224, 82, 82, 0.45);
+  --normal-bg: #262626;
+  --normal-color: #ededed;
+  --normal-border: #4a4a52;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

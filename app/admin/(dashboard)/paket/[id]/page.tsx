@@ -19,6 +19,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Pencil, Trash2 } from 'lucide-react'
+import { toast } from 'sonner'
+import { confirmDialog } from '@/components/admin/ConfirmDialog'
 
 const KOSONG_JADWAL = {
   tanggal_berangkat: '', durasi_hari: '', lokasi_keberangkatan: '',
@@ -39,6 +41,8 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
   const [loadError, setLoadError] = useState<string | null>(null)
   const [infoError, setInfoError] = useState<string | null>(null)
   const [jadwalError, setJadwalError] = useState<string | null>(null)
+  const [savingInfo, setSavingInfo] = useState(false)
+  const [savingJadwal, setSavingJadwal] = useState(false)
 
   async function muatSemua() {
     setLoadError(null)
@@ -72,21 +76,26 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
 
   async function simpanInfoPaket(e: React.FormEvent) {
     e.preventDefault()
-    if (!paket) return
+    if (!paket || savingInfo) return
+    setSavingInfo(true)
     setInfoError(null)
     const { error } = await adminUpdate('paket', paket.id, {
       nama_paket: paket.nama_paket, kategori: paket.kategori, tier: paket.tier,
       deskripsi: paket.deskripsi, gambar_url: paket.gambar_url, status: paket.status,
     })
+    setSavingInfo(false)
     if (error) {
       setInfoError(error)
+      toast.error(error)
       return
     }
-    alert('Info paket tersimpan.')
+    toast.success('Info paket tersimpan.')
   }
 
   async function simpanJadwal(e: React.FormEvent) {
     e.preventDefault()
+    if (savingJadwal) return
+    setSavingJadwal(true)
     setJadwalError(null)
     const payload = {
       paket_id: id,
@@ -105,10 +114,13 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
       ? await adminUpdate('keberangkatan', editJadwalId, payload)
       : await adminCreate('keberangkatan', payload)
 
+    setSavingJadwal(false)
     if (res.error) {
       setJadwalError(res.error)
+      toast.error(res.error)
       return
     }
+    toast.success(editJadwalId ? 'Jadwal diperbarui.' : 'Jadwal ditambahkan.')
     setFormJadwal(KOSONG_JADWAL)
     setEditJadwalId(null)
     muatSemua()
@@ -134,14 +146,22 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
     setJadwalError(null)
     const { data: counts } = await fetchCascadeCounts('keberangkatan', jadwalId)
     const msg = counts
-      ? `Hapus jadwal ini? ${counts.booking} booking jamaah pada jadwal ini akan IKUT TERHAPUS PERMANEN.`
-      : `Hapus jadwal keberangkatan ini? Booking jamaah pada jadwal ini akan IKUT TERHAPUS PERMANEN.`
-    if (!confirm(msg)) return
+      ? `${counts.booking} booking jamaah pada jadwal ini akan IKUT TERHAPUS PERMANEN.`
+      : `Booking jamaah pada jadwal ini akan IKUT TERHAPUS PERMANEN.`
+    const okConfirm = await confirmDialog({
+      title: 'Hapus Jadwal Keberangkatan?',
+      description: msg,
+      actionLabel: 'Hapus',
+      destructive: true,
+    })
+    if (!okConfirm) return
     const { ok, error } = await adminDelete('keberangkatan', jadwalId)
     if (!ok) {
       setJadwalError(error ?? 'Gagal menghapus jadwal.')
+      toast.error(error ?? 'Gagal menghapus jadwal.')
       return
     }
+    toast.success('Jadwal terhapus.')
     muatSemua()
   }
 
@@ -207,7 +227,9 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
                     <AlertDescription>{infoError}</AlertDescription>
                   </Alert>
                 )}
-                <Button type="submit" variant="secondary">Simpan Info Paket</Button>
+                <Button type="submit" variant="secondary" disabled={savingInfo}>
+                  {savingInfo ? 'Menyimpan...' : 'Simpan Info Paket'}
+                </Button>
               </form>
             </section>
 
@@ -314,8 +336,8 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
                   </Alert>
                 )}
                 <div className="flex gap-2">
-                  <Button type="submit" variant="secondary">
-                    {editJadwalId ? 'Update Jadwal' : 'Tambah Jadwal'}
+                  <Button type="submit" variant="secondary" disabled={savingJadwal}>
+                    {savingJadwal ? 'Menyimpan...' : (editJadwalId ? 'Update Jadwal' : 'Tambah Jadwal')}
                   </Button>
                   {editJadwalId && (
                     <Button

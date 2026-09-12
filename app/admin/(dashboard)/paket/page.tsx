@@ -18,6 +18,8 @@ import {
   TableCell,
 } from '@/components/ui/table'
 import { Plus, Pencil, Trash2, Search, Database, Package } from 'lucide-react'
+import { toast } from 'sonner'
+import { confirmDialog } from '@/components/admin/ConfirmDialog'
 
 const KATEGORI_TABS = [
   { id: 'semua', label: 'Semua Kategori' },
@@ -53,17 +55,24 @@ export default function AdminListPaket() {
     // Fetch jumlah terdampak cascade DULU supaya admin tahu booking jamaah ikut hilang.
     const { data: counts } = await fetchCascadeCounts('paket', id)
     const msg = counts
-      ? `Yakin hapus paket "${nama}"? ${counts.jadwal} jadwal keberangkatan dan ${counts.booking} booking jamaah akan IKUT TERHAPUS PERMANEN.`
-      : `Yakin hapus paket "${nama}"? Semua jadwal keberangkatan dan booking jamaah pada paket ini akan IKUT TERHAPUS PERMANEN.`
-    if (!confirm(msg)) return
+      ? `${counts.jadwal} jadwal keberangkatan dan ${counts.booking} booking jamaah akan IKUT TERHAPUS PERMANEN.`
+      : `Semua jadwal keberangkatan dan booking jamaah pada paket ini akan IKUT TERHAPUS PERMANEN.`
+    const okConfirm = await confirmDialog({
+      title: `Hapus paket "${nama}"?`,
+      description: msg,
+      actionLabel: 'Hapus',
+      destructive: true,
+    })
+    if (!okConfirm) return
     setDeletingId(id)
     const { ok, error } = await adminDelete('paket', id)
+    setDeletingId(null)
     if (ok) {
+      toast.success('Paket terhapus.')
       setPaketList((prev) => prev.filter((p) => p.id !== id))
     } else {
-      alert(error ?? 'Gagal menghapus paket')
+      toast.error(error ?? 'Gagal menghapus paket')
     }
-    setDeletingId(null)
   }
 
   const filtered = paketList.filter((p) => {

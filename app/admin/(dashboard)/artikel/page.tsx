@@ -18,6 +18,8 @@ import {
   TableCell,
 } from '@/components/ui/table'
 import { Plus, Pencil, Trash2, FileText, Search } from 'lucide-react'
+import { toast } from 'sonner'
+import { confirmDialog } from '@/components/admin/ConfirmDialog'
 
 export default function AdminListArtikel() {
   const [list, setList] = useState<Artikel[]>([])
@@ -38,15 +40,21 @@ export default function AdminListArtikel() {
   }, [router])
 
   async function hapus(id: string, judul: string) {
-    if (!confirm(`Hapus artikel "${judul}"?`)) return
+    const okConfirm = await confirmDialog({
+      title: `Hapus artikel "${judul}"?`,
+      actionLabel: 'Hapus',
+      destructive: true,
+    })
+    if (!okConfirm) return
     setDeletingId(id)
     const { ok, error } = await adminDelete('artikel', id)
+    setDeletingId(null)
     if (ok) {
+      toast.success('Artikel terhapus.')
       setList((prev) => prev.filter((a) => a.id !== id))
     } else {
-      alert(error ?? 'Gagal menghapus artikel')
+      toast.error(error ?? 'Gagal menghapus artikel')
     }
-    setDeletingId(null)
   }
 
   const filtered = list.filter((a) =>

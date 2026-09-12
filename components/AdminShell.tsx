@@ -6,6 +6,8 @@ import { usePathname, useRouter } from 'next/navigation'
 import Image from 'next/image'
 
 import { supabase } from '@/lib/supabase'
+import { AppToaster } from '@/components/AppToaster'
+import { ConfirmDialogHost } from '@/components/admin/ConfirmDialog'
 import {
   LayoutDashboard,
   Package,
@@ -295,6 +297,10 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           {children}
         </main>
       </div>
+
+      {/* Toast global + dialog konfirmasi destruktif (pengganti alert/confirm browser) */}
+      <AppToaster />
+      <ConfirmDialogHost />
     </div>
   )
 }

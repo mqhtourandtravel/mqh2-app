@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { supabase, Keberangkatan } from '@/lib/supabase'
 import { bookingCreate } from '@/lib/adminApi'
+import { confirmDialog } from '@/components/admin/ConfirmDialog'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Card, CardContent } from '@/components/ui/card'
@@ -42,7 +43,12 @@ export default function JamaahPaket() {
   }, [router])
 
   async function handleBook(keberangkatanId: string) {
-    if (!confirm('Yakin ingin booking jadwal ini?')) return
+    const okConfirm = await confirmDialog({
+      title: 'Booking Jadwal Ini?',
+      description: 'Kuota akan dipesan dan menunggu konfirmasi dari admin.',
+      actionLabel: 'Booking',
+    })
+    if (!okConfirm) return
     setBookingId(keberangkatanId)
     setError('')
     setSuccess('')
