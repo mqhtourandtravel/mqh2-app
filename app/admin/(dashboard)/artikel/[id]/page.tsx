@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
+import { ImageUpload } from '@/components/admin/ImageUpload'
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -72,10 +73,12 @@ export default function EditArtikel({ params }: { params: Promise<{ id: string }
                 <Label htmlFor="konten">Isi Artikel</Label>
                 <Textarea id="konten" value={artikel.konten} onChange={(e) => setArtikel({ ...artikel, konten: e.target.value })} rows={10} />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="gambar_url">Gambar Sampul</Label>
-                <Input id="gambar_url" value={artikel.gambar_url ?? ''} onChange={(e) => setArtikel({ ...artikel, gambar_url: e.target.value })} placeholder="URL gambar" />
-              </div>
+              <ImageUpload
+                id="gambar_url"
+                label="Gambar Sampul"
+                value={artikel.gambar_url}
+                onChange={(url) => setArtikel({ ...artikel, gambar_url: url })}
+              />
               <div className="space-y-2">
                 <Label htmlFor="status">Status</Label>
                 <Select value={artikel.status} onValueChange={(v) => setArtikel({ ...artikel, status: v as Artikel['status'] })}>

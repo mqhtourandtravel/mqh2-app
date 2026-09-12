@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
+import { ImageUpload } from '@/components/admin/ImageUpload'
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -68,11 +69,12 @@ export default function TulisArtikel() {
                 <Textarea id="konten" required placeholder="Isi artikel lengkap" value={form.konten}
                   onChange={(e) => setForm({ ...form, konten: e.target.value })} rows={10} />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="gambar_url">Gambar Sampul</Label>
-                <Input id="gambar_url" placeholder="URL gambar sampul" value={form.gambar_url}
-                  onChange={(e) => setForm({ ...form, gambar_url: e.target.value })} />
-              </div>
+              <ImageUpload
+                id="gambar_url"
+                label="Gambar Sampul"
+                value={form.gambar_url}
+                onChange={(url) => setForm({ ...form, gambar_url: url ?? '' })}
+              />
               <div className="space-y-2">
                 <Label htmlFor="status">Status</Label>
                 <Select value={form.status} onValueChange={(v) => setForm({ ...form, status: v })}>

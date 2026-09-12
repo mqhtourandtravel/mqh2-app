@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Separator } from '@/components/ui/separator'
+import { ImageUpload } from '@/components/admin/ImageUpload'
 import {
   Select,
   SelectContent,
@@ -189,10 +190,10 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
                   rows={3}
                   placeholder="Deskripsi"
                 />
-                <Input
-                  value={paket.gambar_url ?? ''}
-                  onChange={(e) => setPaket({ ...paket, gambar_url: e.target.value })}
-                  placeholder="URL gambar"
+                <ImageUpload
+                  label="Gambar Paket"
+                  value={paket.gambar_url}
+                  onChange={(url) => setPaket({ ...paket, gambar_url: url })}
                 />
                 <Select value={paket.status} onValueChange={(v) => setPaket({ ...paket, status: v as Paket['status'] })}>
                   <SelectTrigger><SelectValue /></SelectTrigger>

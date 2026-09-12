@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
+import { ImageUpload } from '@/components/admin/ImageUpload'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import {
@@ -105,15 +106,12 @@ export default function TambahPaket() {
                   rows={4}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="gambar_url">URL Gambar</Label>
-                <Input
-                  id="gambar_url"
-                  value={form.gambar_url}
-                  onChange={(e) => setForm({ ...form, gambar_url: e.target.value })}
-                  placeholder="/images/paket-baru.jpg"
-                />
-              </div>
+              <ImageUpload
+                id="gambar_url"
+                label="Gambar Paket"
+                value={form.gambar_url}
+                onChange={(url) => setForm({ ...form, gambar_url: url ?? '' })}
+              />
               {error && (
                 <Alert variant="destructive">
                   <AlertDescription>{error}</AlertDescription>

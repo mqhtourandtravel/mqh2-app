@@ -36,6 +36,7 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: '*.supabase.in' },
       { protocol: 'https', hostname: '*.cdninstagram.com' },
       { protocol: 'https', hostname: '*.fbcdn.net' },
+      { protocol: 'https', hostname: 'l4nthxa0ahvaqngj.public.blob.vercel-storage.com' }, // Vercel Blob: store mqh2-images
     ],
   },
 };

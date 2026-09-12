@@ -36,3 +36,4 @@ next-env.d.ts
 # prisma
 /generated/prisma
 .db-dump-backup.json
+.env*
