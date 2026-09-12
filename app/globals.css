@@ -211,8 +211,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   --popover: #262626;
   --popover-foreground: #ededed;
   --muted: #1f1f1e;
-  --muted-foreground: #9ca3af;
-  --border: #333333;
+  --muted-foreground: #b4b4b8;
+  --border: #4a4a52;
   --input: #333333;
   --sidebar-muted: #1a1a1a;
   --info: #1f1f1e;
@@ -258,7 +258,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   --glass-surface-strong: rgba(38, 38, 38, 0.7);
   --glass-elev: rgba(255, 255, 255, 0.05);
   --glass-hover: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-border: rgba(255, 255, 255, 0.16);
   --glass-inset: inset 0 1px 0 0 rgba(255, 255, 255, 0.07);
   --glass-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.45);
 }
@@ -373,12 +373,12 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   color: var(--muted-foreground);
 }
 .admin-dark .admin-glass .text-gray-300 {
-  color: #d1d5db;
+  color: #a1a1aa;
 }
 .admin-dark .admin-glass .text-emerald-700,
 .admin-dark .admin-glass .text-emerald-600,
 .admin-dark .admin-glass .text-emerald-800 {
-  color: var(--primary);
+  color: #5fb3a9;
 }
 .admin-dark .admin-glass .text-amber-700,
 .admin-dark .admin-glass .text-amber-800 {
@@ -404,13 +404,13 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   background: var(--muted);
 }
 .admin-dark .admin-glass .bg-gray-100 {
-  background: var(--muted);
+  background: #3a3a3a;
 }
 .admin-dark .admin-glass .bg-gray-400 {
   background: var(--muted-foreground);
 }
 .admin-dark .admin-glass .bg-emerald-50 {
-  background: rgba(74, 142, 135, 0.15);
+  background: rgba(74, 142, 135, 0.25);
 }
 .admin-dark .admin-glass .bg-emerald-700 {
   background: var(--primary);
@@ -444,7 +444,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 }
 .admin-dark .admin-glass .border-emerald-200,
 .admin-dark .admin-glass .border-emerald-200\/60 {
-  border-color: rgba(74, 142, 135, 0.3);
+  border-color: rgba(74, 142, 135, 0.35);
 }
 .admin-dark .admin-glass .border-amber-200 {
   border-color: rgba(230, 180, 114, 0.3);

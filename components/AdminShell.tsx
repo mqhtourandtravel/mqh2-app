@@ -130,10 +130,10 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         }`}
       >
         {/* Brand: logo MQH */}
-        <div className="px-3 pt-5 pb-2">
+        <div className="px-3 pt-5 pb-2 text-center">
           <Link
             href="/"
-            className="flex items-center p-1.5 rounded-xl hover:bg-muted/60 transition-colors overflow-hidden"
+            className="flex items-center justify-center p-1.5 rounded-xl hover:bg-muted/60 transition-colors overflow-hidden"
           >
             <Image
               src="/logo.png"
