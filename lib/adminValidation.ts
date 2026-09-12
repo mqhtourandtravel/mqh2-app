@@ -34,6 +34,15 @@ export function validateAdminPayload(
     return null
   }
 
+  if (resource === 'hotel') {
+    // Kunci domain kota — cegah drift ejaan masuk DB lewat API langsung
+    // (form UI sudah Select 2 opsi; ini pagar server-side-nya).
+    if ('kota' in data && !['mekkah', 'madinah'].includes(String(data.kota))) {
+      return 'Field kota harus "mekkah" atau "madinah".'
+    }
+    return null
+  }
+
   if (resource === 'keberangkatan') {
     for (const f of NUMERIC_FIELDS) {
       if (f in data && data[f] !== null) {

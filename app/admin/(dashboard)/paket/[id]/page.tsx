@@ -15,9 +15,11 @@ import {
   Select,
   SelectContent,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { isKotaMekkah, isKotaMadinah } from '@/lib/utils'
 import { Pencil, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { confirmDialog } from '@/components/admin/ConfirmDialog'
@@ -296,13 +298,19 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
                   <Select value={formJadwal.hotel_mekkah_id} onValueChange={(v) => setFormJadwal({ ...formJadwal, hotel_mekkah_id: v })}>
                     <SelectTrigger><SelectValue placeholder="Hotel Mekkah" /></SelectTrigger>
                     <SelectContent>
-                      {hotelList.filter(h => h.kota === 'mekkah').map((h) => <SelectItem key={h.id} value={h.id}>{h.nama}</SelectItem>)}
+                      {hotelList.filter(h => isKotaMekkah(h.kota)).map((h) => <SelectItem key={h.id} value={h.id}>{h.nama}</SelectItem>)}
+                      {hotelList.filter(h => isKotaMekkah(h.kota)).length === 0 && (
+                        <SelectLabel className="normal-case font-medium">Belum ada hotel Mekkah — tambahkan via Master Data</SelectLabel>
+                      )}
                     </SelectContent>
                   </Select>
                   <Select value={formJadwal.hotel_madinah_id} onValueChange={(v) => setFormJadwal({ ...formJadwal, hotel_madinah_id: v })}>
                     <SelectTrigger><SelectValue placeholder="Hotel Madinah" /></SelectTrigger>
                     <SelectContent>
-                      {hotelList.filter(h => h.kota === 'madinah').map((h) => <SelectItem key={h.id} value={h.id}>{h.nama}</SelectItem>)}
+                      {hotelList.filter(h => isKotaMadinah(h.kota)).map((h) => <SelectItem key={h.id} value={h.id}>{h.nama}</SelectItem>)}
+                      {hotelList.filter(h => isKotaMadinah(h.kota)).length === 0 && (
+                        <SelectLabel className="normal-case font-medium">Belum ada hotel Madinah — tambahkan via Master Data</SelectLabel>
+                      )}
                     </SelectContent>
                   </Select>
                 </div>

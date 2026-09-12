@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Trash2, Plane, Building2, Plus, MapPin } from 'lucide-react'
+import { isKotaMekkah, isKotaMadinah } from '@/lib/utils'
 import { toast } from 'sonner'
 import { confirmDialog } from '@/components/admin/ConfirmDialog'
 
@@ -200,7 +201,7 @@ export default function KelolaMasterData() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="mekkah" className="text-xs">Makkah</SelectItem>
+                    <SelectItem value="mekkah" className="text-xs">Mekkah</SelectItem>
                     <SelectItem value="madinah" className="text-xs">Madinah</SelectItem>
                   </SelectContent>
                 </Select>
@@ -233,9 +234,9 @@ export default function KelolaMasterData() {
                         )}
                       </p>
                       <span className={`inline-block text-[10px] font-semibold px-2 py-0.2 rounded ${
-                        h.kota === 'mekkah' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'
-                      } capitalize`}>
-                        {h.kota}
+                        isKotaMekkah(h.kota) ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'
+                      }`}>
+                        {isKotaMekkah(h.kota) ? 'Mekkah' : isKotaMadinah(h.kota) ? 'Madinah' : h.kota}
                       </span>
                     </div>
                     <Button

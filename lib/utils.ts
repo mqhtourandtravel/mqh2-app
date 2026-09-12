@@ -76,3 +76,17 @@ export function buatSlug(text: string): string {
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
 }
+
+/**
+ * Pembanding kota hotel yang tahan-variasi ejaan (drift lama: "Makkah"/"Madinah"
+ * kapital di DB vs canonical "mekkah"/"madinah" lowercase dari form).
+ * Bandingkan SELALU lewat helper ini, jangan `=== 'mekkah'` langsung.
+ */
+export function isKotaMekkah(kota?: string | null): boolean {
+  const k = (kota ?? '').toLowerCase()
+  return k === 'mekkah' || k === 'makkah' || k === 'makah'
+}
+export function isKotaMadinah(kota?: string | null): boolean {
+  const k = (kota ?? '').toLowerCase()
+  return k === 'madinah' || k === 'medinah'
+}
