@@ -89,7 +89,7 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
     setJadwalError(null)
     const payload = {
       paket_id: id,
-      tanggal_berangkat: formJadwal.tanggal_berangkat,
+      tanggal_berangkat: new Date(formJadwal.tanggal_berangkat).toISOString(),
       durasi_hari: formJadwal.durasi_hari ? Number(formJadwal.durasi_hari) : null,
       lokasi_keberangkatan: formJadwal.lokasi_keberangkatan || null,
       maskapai_id: formJadwal.maskapai_id || null,
@@ -116,7 +116,7 @@ export default function EditPaket({ params }: { params: Promise<{ id: string }> 
   function mulaiEditJadwal(j: Keberangkatan) {
     setEditJadwalId(j.id)
     setFormJadwal({
-      tanggal_berangkat: j.tanggal_berangkat,
+      tanggal_berangkat: j.tanggal_berangkat.slice(0, 10),
       durasi_hari: j.durasi_hari?.toString() ?? '',
       lokasi_keberangkatan: j.lokasi_keberangkatan ?? '',
       maskapai_id: j.maskapai_id ?? '',
