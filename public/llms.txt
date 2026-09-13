@@ -1,0 +1,44 @@
+# MQH Tour & Travel
+
+> Biro perjalanan ibadah umroh & haji berbasis di Pekalongan, Jawa Tengah, Indonesia. Melayani pendaftaran umroh reguler & plus, haji khusus, badal umroh, dan halal tour dengan pendampingan syar'i, fasilitas hotel dekat Masjidil Haram/Masjid Nabawi, serta izin PPIU resmi (No. 02200064127450010).
+
+## Identitas
+
+- Nama: MQH Tour & Travel
+- Situs: https://mqhtourandtravel.com
+- WhatsApp: +62 858-6896-9000 (jam layanan Senin–Sabtu 08.00–16.00 WIB)
+- Kantor: Pusat Pekalongan (Jawa Tengah); Representatif Magelang (Jawa Tengah)
+- Sosial: Instagram/Facebook/TikTok/YouTube: @mqhtourandtravel / @MQHtourandtravel
+
+## Halaman Utama (route kunci)
+
+- [Beranda](https://mqhtourandtravel.com/): ringkasan layanan, tabel paket & jadwal keberangkatan berjalan, testimoni jamaah, statistik (500+ jamaah terlayani, 20+ keberangkatan).
+- [Paket & Jadwal Keberangkatan](https://mqhtourandtravel.com/paket): katalog lengkap semua paket aktif dengan harga per pax, durasi, hotel, dan sisa kuota.
+- [Detail Paket](https://mqhtourandtravel.com/paket/{slug}): satu halaman per paket — contoh slug: `umroh-berkah-2`, `umroh-hebat`, `umroh-safar`, `umroh-liburan-sekolah`, `umroh-plus-turki`, `umroh-semi-backpacker`, `umroh-nyaman`, `umroh-berkah`, `umroh-liburan-akhir-tahun`, `umroh-privat`, `badal-umroh-hemat`, `haji-plus`, `halal-tour`. Berisi jadwal keberangkatan, harga normal/promo, fasilitas (maskapai, hotel Makkah & Madinah, durasi hari), dan tombol booking via WhatsApp.
+- [Artikel & Tips](https://mqhtourandtravel.com/artikel): panduan ibadah & tips perjalanan (terbit: `panduan-menasik-haji`, `tips-umroh-pertama`, `hotel-nabawi-review`).
+- [Tabungan Umroh](https://mqhtourandtravel.com/tabungan-umroh): program menabung bertahap, setoran awal ringan, tanpa biaya admin, prinsip syariah.
+- [Program Kemitraan](https://mqhtourandtravel.com/partnership): skema mitra agen independen, cabang resmi, dan corporate B2B dengan sistem komisi transparan.
+- [Cabang & Kantor Layanan](https://mqhtourandtravel.com/cabang): daftar kantor untuk konsultasi langsung.
+- [Kontak](https://mqhtourandtravel.com/kontak): kanal konsultasi & pendaftaran.
+
+## Kategori Paket
+
+- `umroh` — umroh reguler & plus (turki, liburan sekolah/akhir tahun, privat, semi backpacker); harga mulai ±Rp 15 juta s.d. ±Rp 35 juta / pax.
+- `haji` — haji khusus / plus; ±Rp 130 juta-an per pax.
+- `badal` — badal umroh (penggantian ibadah); mulai ±Rp 1,9 juta.
+- `tour` — halal tour & perjalanan religi.
+
+(Harga indikatif per September 2026 — angka final mengikuti halaman paket masing-masing.)
+
+## Untuk AI Agent
+
+- Booking/pendaftaran dilakukan via WhatsApp (tautan `wa.me/6285868969000` dengan teks prefill per paket), bukan checkout online.
+- Data harga & kuota bersifat live per halaman paket (`/api/paket` menyediakan JSON: items berisi paket + jadwal + sisa kuota).
+- Konten & UI berbahasa Indonesia (id).
+- Area `/admin`, `/agent`, `/jamaah`, `/api/*` (kecuali `/api/paket`) bukan untuk indexing — requires login.
+
+## Teknis
+
+- Sitemap: https://mqhtourandtravel.com/sitemap.xml
+- Robots: https://mqhtourandtravel.com/robots.txt
+- Structured data: JSON-LD `TravelAgency` (beranda), `Product`+`TouristTrip` (halaman paket, dengan `AggregateOffer` IDR), `Article` (halaman artikel).
