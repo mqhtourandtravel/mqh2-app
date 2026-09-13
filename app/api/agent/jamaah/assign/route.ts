@@ -11,12 +11,19 @@ export async function POST(request: NextRequest) {
   const auth = await verifyRole(request, ['staff_admin'])
   if (!auth.ok) return NextResponse.json({ error: auth.error }, { status: auth.status })
 
-  const body = await request.json()
-  const { user_id, agen_id } = body
+  let body: Record<string, unknown>
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ error: 'Format JSON tidak valid.' }, { status: 400 })
+  }
+
+  const { user_id, agen_id } = body as { user_id?: string; agen_id?: string | null }
 
   if (!user_id) {
     return NextResponse.json({ error: 'user_id wajib diisi.' }, { status: 400 })
   }
+
 
   // Validasi user target ada
   const targetUser = await prisma.user.findUnique({ where: { id: user_id } })

@@ -33,6 +33,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   const where: Record<string, unknown> = {}
   sp.forEach((value, key) => {
     if (key === 'orderBy' || key === 'dir') return
+    // Sanitasi: hanya izinkan key alfanumerik biasa (bukan Prisma operators seperti OR, AND, NOT dsb)
+    if (!/^[a-zA-Z0-9_]+$/.test(key)) return
     where[snakeToCamel(key)] = value
   })
 
@@ -53,7 +55,13 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   if (!config) return NextResponse.json({ error: 'Resource tidak dikenal.' }, { status: 404 })
   if (isReadOnly(config)) return NextResponse.json({ error: 'Resource ini read-only.' }, { status: 405 })
 
-  const body = await request.json()
+  let body: Record<string, unknown>
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ error: 'Format JSON tidak valid.' }, { status: 400 })
+  }
+
 
   // Validasi di body asli (snake_case) SEBELUM convert ke camelCase —
   // adminValidation pakai key snake_case: nama_paket, slug, harga_normal, dll.

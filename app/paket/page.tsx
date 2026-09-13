@@ -14,7 +14,25 @@ export const metadata: Metadata = {
     'Daftar lengkap paket umroh & haji MQH Tour & Travel beserta jadwal keberangkatan, harga per pax, hotel Makkah & Madinah, dan sisa kuota seat.',
   // Canonical URL bersih listing — variasi query (?bulan= dkk) tidak dianggap halaman baru.
   alternates: { canonical: '/paket' },
+  openGraph: {
+    title: `Paket & Jadwal Keberangkatan | ${SITE_NAME}`,
+    description:
+      'Daftar lengkap paket umroh & haji MQH Tour & Travel beserta jadwal keberangkatan, harga per pax, hotel Makkah & Madinah, dan sisa kuota seat.',
+    url: '/paket',
+    siteName: SITE_NAME,
+    images: [{ url: '/images/hero.webp', width: 1200, height: 630, alt: 'Katalog Paket MQH' }],
+    locale: 'id_ID',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Paket & Jadwal Keberangkatan | ${SITE_NAME}`,
+    description:
+      'Daftar lengkap paket umroh & haji MQH Tour & Travel beserta jadwal keberangkatan, harga per pax, hotel Makkah & Madinah, dan sisa kuota seat.',
+    images: ['/images/hero.webp'],
+  },
 }
+
 
 export default async function KatalogPaket({
   searchParams,

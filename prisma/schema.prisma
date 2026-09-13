@@ -14,6 +14,7 @@ model Maskapai {
   logoUrl       String?         @map("logo_url")
   keberangkatan Keberangkatan[]
 
+  @@index([nama], map: "idx_maskapai_nama")
   @@map("maskapai")
 }
 
@@ -25,8 +26,11 @@ model Hotel {
   keberangkatanMadinah Keberangkatan[] @relation("HotelMadinah")
   keberangkatanMekkah  Keberangkatan[] @relation("HotelMekkah")
 
+  @@index([nama], map: "idx_hotel_nama")
+  @@index([kota], map: "idx_hotel_kota")
   @@map("hotel")
 }
+
 
 model Paket {
   id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
@@ -71,8 +75,12 @@ model Keberangkatan {
   @@index([paketId], map: "idx_keberangkatan_paket")
   @@index([status], map: "idx_keberangkatan_status")
   @@index([tanggalBerangkat], map: "idx_keberangkatan_tanggal")
+  @@index([maskapaiId], map: "idx_keberangkatan_maskapai")
+  @@index([hotelMekkahId], map: "idx_keberangkatan_hotel_mekkah")
+  @@index([hotelMadinahId], map: "idx_keberangkatan_hotel_madinah")
   @@map("keberangkatan")
 }
+
 
 model Artikel {
   id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid

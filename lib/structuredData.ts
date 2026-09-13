@@ -24,8 +24,9 @@ export function travelAgencySchema() {
     description: SITE_DESC,
     url: SITE_URL,
     logo: abs('/logo.png'),
-    image: abs('/images/hero.jpg'),
+    image: abs('/images/hero.webp'),
     telephone: `+${NOMOR_WA}`,
+
     priceRange: 'Rp 1.900.000 - Rp 130.000.000', // rentang riil layanan (badal s.d. haji khusus) per katalog Sept 2026
     address: {
       '@type': 'PostalAddress',

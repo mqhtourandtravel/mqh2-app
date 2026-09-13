@@ -37,7 +37,12 @@ export async function PATCH(request: NextRequest, { params }: Ctx) {
   if (!config) return NextResponse.json({ error: 'Resource tidak dikenal.' }, { status: 404 })
   if (isReadOnly(config)) return NextResponse.json({ error: 'Resource ini read-only.' }, { status: 405 })
 
-  const body = await request.json()
+  let body: Record<string, unknown>
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ error: 'Format JSON tidak valid.' }, { status: 400 })
+  }
 
   // Validasi di body asli (snake_case) SEBELUM convert ke camelCase.
   const valError = validateAdminPayload(resource, body)

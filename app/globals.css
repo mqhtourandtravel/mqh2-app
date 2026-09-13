@@ -244,8 +244,9 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 /* ===== Glassmorphism — KHUSUS dashboard admin (.admin-glass) ===== */
 /* Berlaku di light & dark; background dasar halaman TIDAK diubah. */
 .admin-glass {
-  --glass-blur: blur(18px) saturate(1.6);
+  --glass-blur: blur(12px) saturate(1.4);
   --glass-surface: rgba(255, 255, 255, 0.55);
+
   --glass-surface-strong: rgba(255, 255, 255, 0.72);
   --glass-elev: rgba(255, 255, 255, 0.5);
   --glass-hover: rgba(0, 68, 63, 0.05);

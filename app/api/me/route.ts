@@ -38,7 +38,12 @@ export async function PATCH(request: NextRequest) {
   const auth = await getUser(request)
   if (!auth.ok) return NextResponse.json({ error: auth.error }, { status: auth.status })
 
-  const body = await request.json()
+  let body: Record<string, unknown>
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ error: 'Format JSON tidak valid.' }, { status: 400 })
+  }
 
   // Hanya field yang boleh diubah user sendiri (whitelist)
   const data: Record<string, unknown> = {}
