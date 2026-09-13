@@ -113,15 +113,12 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const isJamaah = pathname?.startsWith('/jamaah')
   const isAgent = pathname?.startsWith('/agent')
   const menu = isAgent ? AGENT_MENU : isJamaah ? JAMAAH_MENU : ADMIN_MENU
-  const panelTitle = isJamaah ? 'Portal Jamaah' : isAgent ? 'Portal Agen' : 'Control Hub'
 
   async function handleLogout() {
     await supabase.auth.signOut()
     router.push('/admin/login')
   }
 
-  const activeItem = menu.find((item) => (item.exact ? pathname === item.href : pathname?.startsWith(item.href)))
-  const pageTitle = activeItem ? activeItem.label : 'Dashboard'
 
   return (
     <div className="min-h-screen bg-background text-foreground flex font-sans antialiased selection:bg-[#E6B472]/30 selection:text-foreground">
