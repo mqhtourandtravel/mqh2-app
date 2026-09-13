@@ -147,7 +147,7 @@ export default async function Home(props: {
         <section className="bg-background-cream">
           <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-[40px] md:py-[60px]">
             <div className="relative rounded-[16px] overflow-hidden">
-              <PhotoBlock imageUrl="/images/savings-growth.jpg" className="h-[300px] md:h-[380px] w-full" sizes="100vw" />
+              <PhotoBlock imageUrl="/images/savings-growth.jpg" alt="Foto produk kamera vintage Canon dengan lensa Pentax 50mm — latar visual banner" className="h-[300px] md:h-[380px] w-full" sizes="100vw" />
               <div className="absolute inset-0 bg-gradient-to-r from-primary-darker/90 via-primary-dark/70 to-transparent flex items-center">
                 <div className="px-8 md:px-14 max-w-lg">
                   <p className="text-[0.85rem] font-semibold text-secondary uppercase tracking-[3px] mb-3">Tabungan Umroh</p>
