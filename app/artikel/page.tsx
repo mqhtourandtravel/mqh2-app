@@ -23,7 +23,7 @@ export default async function DaftarArtikel() {
       <SiteHeader />
       <PageHero title="Artikel & Tips" breadcrumb="Artikel" desc="Informasi seputar ibadah dan perjalanan spiritual" />
       <div className="max-w-[1280px] mx-auto px-5 md:px-20 pb-24">
-        <h2 className="sr-only">Daftar Artikel &amp; Panduan Ibadah</h2>
+        <h2 className="sr-only">Daftar Artikel & Panduan Ibadah</h2>
         <div className="grid md:grid-cols-3 gap-8">
           {artikelList.map((a) => (
             <Link key={a.id} href={`/artikel/${a.slug}`} className="group">
