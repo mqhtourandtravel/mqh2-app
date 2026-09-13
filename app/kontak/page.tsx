@@ -30,6 +30,7 @@ export default async function KontakPage() {
       <SiteHeader />
       <PageHero title="Hubungi Kami" breadcrumb="Contact" />
       <div className="max-w-[820px] mx-auto px-5 md:px-20 pb-24">
+        <h2 className="sr-only">Informasi Kontak &amp; Jam Layanan</h2>
         <div className="grid md:grid-cols-2 gap-6">
           <div className="bg-white rounded-xl border border-accent p-7">
             <MapPin className="text-secondary text-3xl mb-3 block" aria-hidden="true" />

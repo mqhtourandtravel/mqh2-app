@@ -22,6 +22,7 @@ export default function TentangKamiPage() {
         {cerita && (
           <div className="text-[15px] leading-relaxed text-primary/90 whitespace-pre-wrap mb-14">{cerita}</div>
         )}
+        <h2 className="sr-only">Pencapaian &amp; Statistik Kami</h2>
         {angka.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {angka.map((a, i) => (

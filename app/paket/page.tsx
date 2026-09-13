@@ -56,6 +56,7 @@ export default async function KatalogPaket({
       </div>
 
       <div className="max-w-[1280px] mx-auto px-5 md:px-20 pb-24">
+        <h2 className="sr-only">Daftar Pilihan Paket &amp; Jadwal Keberangkatan</h2>
         <PaketFilterBar 
           semuaTier={semuaTier} 
           semuaLokasi={semuaLokasi} 
