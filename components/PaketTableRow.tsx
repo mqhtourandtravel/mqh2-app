@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Keberangkatan } from '@/lib/supabase'
 import PhotoBlock from '@/components/PhotoBlock'
-import { formatRupiah, formatRupiahSingkat, formatTanggal } from '@/lib/utils'
+import { formatRupiah, formatRupiahSingkat, formatTanggal, linkWhatsAppPaket } from '@/lib/utils'
 import { TableRow, TableCell } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -19,7 +19,9 @@ import {
   Plane,
   ExternalLink,
   Menu,
+  MessageCircle,
 } from 'lucide-react'
+
 
 // ─── Maskapai logo mapping ──────────────────────────────────────────────────
 const MASKAPAI_LOGO_MAP: Record<string, string> = {
@@ -307,12 +309,30 @@ export default function PaketTableRow({ k }: { k: Keberangkatan }) {
               </div>
             )}
 
-            {/* Detail Button */}
-            <div className="pt-1">
-              <Button asChild size="sm" className="rounded w-full">
-                <Link href={`/paket/${k.paket?.slug}?jadwal=${k.id}`}>Detail →</Link>
+            {/* Action Buttons: Detail & WhatsApp */}
+            <div className="pt-1 flex flex-col gap-1.5">
+              <Button asChild size="sm" className="rounded w-full text-[12px] h-8">
+                <Link href={`/paket/${k.paket?.slug}?jadwal=${k.id}`}>Detail Paket →</Link>
               </Button>
+              <a
+                href={linkWhatsAppPaket({
+                  namaPaket: k.paket?.nama_paket,
+                  tanggal: k.tanggal_berangkat,
+                  hotelMekkah: k.hotel_mekkah?.nama,
+                  hotelMadinah: k.hotel_madinah?.nama,
+                  maskapai: k.maskapai?.nama,
+                  harga: Number(k.harga_promo ?? k.harga_normal),
+                  kuotaTersisa: k.kuota_tersisa,
+                })}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-1.5 w-full py-1.5 px-3 rounded text-[11px] font-semibold bg-[#25D366]/10 text-[#128C7E] hover:bg-[#25D366]/20 transition-colors border border-[#25D366]/30 h-8"
+              >
+                <MessageCircle className="size-3.5 shrink-0" />
+                <span>Pesan via WA</span>
+              </a>
             </div>
+
           </div>
         </PopoverContent>
       </Popover>

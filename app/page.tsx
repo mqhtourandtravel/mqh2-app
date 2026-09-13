@@ -41,6 +41,7 @@ import { Camera, MessageCircle, ArrowRight, ShieldCheck, UserCheck, Hotel, Calen
 import ScrollExpandMedia from '@/components/blocks/scroll-expansion-hero'
 import { TestimonialsColumn } from '@/components/ui/testimonials-columns-1'
 import InstagramEmbed from '@/components/InstagramEmbed'
+import FaqSection from '@/components/FaqSection'
 
 export const revalidate = 60
 
@@ -164,6 +165,9 @@ export default async function Home(props: {
               <Link href="/paket">Lihat Semua Paket</Link>
             </Button>
           </div>
+
+          {/* FAQ Interaktif — di bawah tombol "Lihat Semua Paket" */}
+          <FaqSection className="border-t border-border/40 mt-10" />
         </section>
 
         {/* PROMO BANNER — Tabungan Umroh */}

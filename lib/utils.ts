@@ -68,6 +68,35 @@ export function linkWhatsApp(namaPaket: string, tanggal?: string): string {
   )
 }
 
+export function linkWhatsAppPaket(opts: {
+  namaPaket?: string | null
+  tanggal?: string | Date | null
+  hotelMekkah?: string | null
+  hotelMadinah?: string | null
+  maskapai?: string | null
+  harga?: number | null
+  kuotaTersisa?: number | null
+  referralCode?: string | null
+}): string {
+  const lines = ['Assalamualaikum MQH Tour & Travel, saya ingin konsultasi / pendaftaran paket:']
+  if (opts.namaPaket) lines.push(`• Paket: ${opts.namaPaket}`)
+  if (opts.tanggal) {
+    lines.push(`• Keberangkatan: ${formatTanggal(opts.tanggal)}`)
+  }
+  if (opts.hotelMekkah) lines.push(`• Hotel Mekkah: ${opts.hotelMekkah}`)
+  if (opts.hotelMadinah) lines.push(`• Hotel Madinah: ${opts.hotelMadinah}`)
+  if (opts.maskapai) lines.push(`• Maskapai: ${opts.maskapai}`)
+  if (opts.harga && opts.harga > 0) lines.push(`• Biaya: ${formatRupiah(opts.harga)}`)
+
+  lines.push('\nApakah kuota kursi masih tersedia dan bagaimana prosedur pendaftarannya?')
+  if (opts.referralCode) {
+    lines.push(`\n[Rekomendasi Mitra: ${opts.referralCode}]`)
+  }
+
+  return waLink(lines.join('\n'))
+}
+
+
 export function buatSlug(text: string): string {
   return text
     .toLowerCase()

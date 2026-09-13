@@ -4,7 +4,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import SiteHeader from '@/components/SiteHeader'
 import PhotoBlock from '@/components/PhotoBlock'
-import { formatRupiah, linkWhatsApp } from '@/lib/utils'
+import { formatRupiah, linkWhatsAppPaket } from '@/lib/utils'
+
 import { SITE_NAME } from '@/lib/config'
 import { paketJsonLd, jsonLdScript } from '@/lib/structuredData'
 import { CheckCircle2, Clock, Hotel, Plane } from 'lucide-react'
@@ -177,13 +178,22 @@ export default async function DetailPaket({
                 <p className="flex items-center gap-2"><CheckCircle2 className="text-[16px] text-secondary-hover" aria-hidden="true" /> Muthawwif &amp; Tour Guide</p>
               </div>
               <a
-                href={linkWhatsApp(paket.nama_paket, jadwalTerpilih ? new Date(jadwalTerpilih.tanggal_berangkat).toLocaleDateString('id-ID') : undefined)}
+                href={linkWhatsAppPaket({
+                  namaPaket: paket.nama_paket,
+                  tanggal: jadwalTerpilih?.tanggal_berangkat,
+                  hotelMekkah: jadwalTerpilih?.hotel_mekkah?.nama,
+                  hotelMadinah: jadwalTerpilih?.hotel_madinah?.nama,
+                  maskapai: jadwalTerpilih?.maskapai?.nama,
+                  harga: jadwalTerpilih ? Number(jadwalTerpilih.harga_promo ?? jadwalTerpilih.harga_normal) : null,
+                  kuotaTersisa: jadwalTerpilih?.kuota_tersisa,
+                })}
                 target="_blank" rel="noopener noreferrer"
-                className="block text-center bg-secondary text-primary font-semibold py-3.5 rounded-full hover:bg-secondary-hover hover:text-white transition"
+                className="block text-center bg-secondary text-primary font-semibold py-3.5 rounded-full hover:bg-secondary-hover hover:text-white transition shadow-sm"
               >
-                Pesan Sekarang
+                Pesan via WhatsApp
               </a>
-              <p className="text-[11px] text-muted-foreground text-center mt-3">Konsultasi gratis via WhatsApp</p>
+              <p className="text-[11px] text-muted-foreground text-center mt-3">Konsultasi gratis &amp; amankan kuota seat</p>
+
             </div>
           </div>
         </div>

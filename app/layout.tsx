@@ -57,15 +57,21 @@ export const metadata: Metadata = {
   },
 }
 
+import { AppToaster } from '@/components/AppToaster'
+import ReferralTracker from '@/components/ReferralTracker'
+
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id">
       <head>
       </head>
       <body className={`${inter.variable} ${playfair.variable} bg-background text-foreground antialiased`}>
+          <ReferralTracker />
+          <AppToaster />
           {children}
           <SiteFooter />
       </body>
     </html>
   )
-}
+}

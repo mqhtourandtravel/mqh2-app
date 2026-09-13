@@ -2,6 +2,7 @@ import { getKeberangkatanAktif } from '@/lib/queries'
 import SiteHeader from '@/components/SiteHeader'
 import PaketFilterBar from '@/components/PaketFilterBar'
 import PaketCard from '@/components/PaketCard'
+import FaqSection from '@/components/FaqSection'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { SITE_NAME } from '@/lib/config'
@@ -89,6 +90,10 @@ export default async function KatalogPaket({
           {filtered.map((k) => <PaketCard key={k.id} k={k} />)}
         </div>
       </div>
-</div>
+
+      {/* FAQ Section — pertanyaan umum seputar pendaftaran & ibadah */}
+      <FaqSection className="border-t border-border/40 bg-background" />
+
+    </div>
   )
 }
