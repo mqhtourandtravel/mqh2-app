@@ -21,6 +21,7 @@ export async function generateMetadata({
   return {
     title: `${artikel.judul} | ${SITE_NAME}`,
     description: artikel.ringkasan || `Baca artikel ${artikel.judul} di ${SITE_NAME}.`,
+    alternates: { canonical: `/artikel/${slug}` },
   }
 }
 

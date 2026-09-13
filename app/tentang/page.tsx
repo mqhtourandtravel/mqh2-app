@@ -7,6 +7,7 @@ import { SITE_NAME } from '@/lib/config'
 export const metadata: Metadata = {
   title: `Tentang Kami | ${SITE_NAME}`,
   description: 'Kenali lebih dekat MQH Tour & Travel — perjalanan ibadah umroh dan haji yang amanah dan profesional.',
+  alternates: { canonical: '/tentang' },
 }
 
 export default function TentangKamiPage() {

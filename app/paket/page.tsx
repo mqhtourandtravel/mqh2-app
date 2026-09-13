@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   title: `Paket & Jadwal Keberangkatan | ${SITE_NAME}`,
   description:
     'Daftar lengkap paket umroh & haji MQH Tour & Travel beserta jadwal keberangkatan, harga per pax, hotel Makkah & Madinah, dan sisa kuota seat.',
+  // Canonical URL bersih listing — variasi query (?bulan= dkk) tidak dianggap halaman baru.
+  alternates: { canonical: '/paket' },
 }
 
 export default async function KatalogPaket({

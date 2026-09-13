@@ -11,6 +11,7 @@ export const revalidate = 60
 export const metadata: Metadata = {
   title: `Hubungi Kami | ${SITE_NAME}`,
   description: 'Hubungi kantor pusat MQH Tour & Travel untuk konsultasi paket umroh dan haji.',
+  alternates: { canonical: '/kontak' },
 }
 
 export default async function KontakPage() {

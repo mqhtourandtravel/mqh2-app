@@ -23,6 +23,8 @@ export async function generateMetadata({
   return {
     title: `${paket.nama_paket} | ${SITE_NAME}`,
     description: deskripsi,
+    // Canonical SELALU URL bersih — variasi ?jadwal=X tidak dianggap halaman terpisah.
+    alternates: { canonical: `/paket/${slug}` },
   }
 }
 

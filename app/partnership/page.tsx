@@ -26,6 +26,7 @@ function Icon({ name, className }: { name: string; className?: string }) {
 export const metadata: Metadata = {
   title: `Program Kemitraan | ${SITE_NAME}`,
   description: 'Bergabung menjadi mitra resmi MQH Tour & Travel — agen independen, cabang resmi, atau kerjasama corporate B2B.',
+  alternates: { canonical: '/partnership' },
 }
 
 const KEUNGGULAN = [

@@ -12,6 +12,7 @@ export const revalidate = 60
 export const metadata: Metadata = {
   title: `Artikel & Tips | ${SITE_NAME}`,
   description: 'Informasi seputar ibadah umroh, haji, dan tips perjalanan spiritual dari MQH Tour & Travel.',
+  alternates: { canonical: '/artikel' },
 }
 
 export default async function DaftarArtikel() {

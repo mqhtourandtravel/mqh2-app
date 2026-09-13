@@ -24,6 +24,7 @@ function Icon({ name, className }: { name: string; className?: string }) {
 export const metadata: Metadata = {
   title: `Tabungan Umroh | ${SITE_NAME}`,
   description: 'Rencanakan ibadah umroh Anda dengan Tabungan Umroh MQH — setoran ringan, tanpa biaya admin, dan dikelola sesuai prinsip syariah.',
+  alternates: { canonical: '/tabungan-umroh' },
 }
 
 const linkWaTabungan = waLink('Assalamualaikum, saya ingin buka Tabungan Umroh MQH')

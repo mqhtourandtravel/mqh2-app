@@ -9,6 +9,7 @@ import { Clock, MapPin } from 'lucide-react'
 export const metadata: Metadata = {
   title: `Cabang & Kantor Layanan | ${SITE_NAME}`,
   description: 'Daftar kantor pusat dan cabang representatif MQH Tour & Travel untuk konsultasi langsung.',
+  alternates: { canonical: '/cabang' },
 }
 
 function KartuCabang({ c }: { c: (typeof CABANG_LIST)[number] }) {

@@ -1,6 +1,16 @@
 import { getKeberangkatanAktif, getMaskapaiList, getHotelList, getArtikelTerbit } from '@/lib/queries'
 import { TESTIMONI_LIST } from '@/lib/config'
 import { INSTAGRAM_URL, INSTAGRAM_BIO, HERO_IMG, HERO_VIDEO, BEHOLD_FEED_ID } from '@/lib/config'
+import { SITE_NAME, SITE_TAGLINE, SITE_DESC, SITE_URL } from '@/lib/config'
+
+// Metadata & canonical homepage eksplisit — tidak inherit generik dari root layout.
+export const metadata: Metadata = {
+  title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+  description: SITE_DESC,
+  // '' = relative ke metadataBase (NEXT_PUBLIC_SITE_URL).
+  alternates: { canonical: '/' },
+}
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import SiteHeader from '@/components/SiteHeader'
