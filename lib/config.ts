@@ -28,6 +28,12 @@ export const INSTAGRAM_URL = `https://www.instagram.com/${INSTAGRAM_HANDLE}`
 export const INSTAGRAM_BIO = 'Pemberangkatan Umroh & Haji. Fasilitas Terbaik, Amanah, Nyaman, Profesional dan Sesuai Syariat.'
 export const BEHOLD_FEED_ID = process.env.NEXT_PUBLIC_BEHOLD_FEED_ID || '783O3bePOilREjhAMorv'
 
+// Sosial media resmi lain (sumber: SiteFooter — profil publik MQH, dicek Sept 2026).
+// Dipakai sameAs JSON-LD; SiteFooter masih hardcode sendiri (tidak disentuh agar fokus).
+export const FACEBOOK_URL = 'https://www.facebook.com/p/MQH-Tour-Travel-61551546576358/'
+export const TIKTOK_URL = 'https://www.tiktok.com/@mqhtourandtravel'
+export const YOUTUBE_URL = 'https://www.youtube.com/@MQHtourandtravel'
+
 // Kategori paket yang didukung
 export const KATEGORI_PAKET = ['umroh', 'haji', 'badal', 'tour'] as const
 

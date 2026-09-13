@@ -6,6 +6,7 @@ import SiteHeader from '@/components/SiteHeader'
 import PhotoBlock from '@/components/PhotoBlock'
 import { formatTanggal } from '@/lib/utils'
 import { SITE_NAME } from '@/lib/config'
+import { artikelJsonLd, jsonLdScript } from '@/lib/structuredData'
 
 export const revalidate = 60
 
@@ -33,6 +34,12 @@ export default async function DetailArtikel({ params }: { params: Promise<{ slug
   return (
     <div className="bg-background text-foreground min-h-screen">
       <SiteHeader />
+
+      {/* Structured data: Article */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(artikelJsonLd(artikel))}
+      />
       <article className="pt-40 pb-24 px-5 md:px-20 max-w-[820px] mx-auto">
         <p className="text-[12px] text-muted-foreground mb-4">
           <Link href="/" className="hover:text-secondary-hover">Beranda</Link> / <Link href="/artikel" className="hover:text-secondary-hover">Artikel</Link>

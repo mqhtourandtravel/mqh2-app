@@ -1,6 +1,7 @@
 import { getKeberangkatanAktif, getMaskapaiList, getHotelList, getArtikelTerbit } from '@/lib/queries'
 import { TESTIMONI_LIST } from '@/lib/config'
 import { INSTAGRAM_URL, INSTAGRAM_BIO, HERO_IMG, HERO_VIDEO, BEHOLD_FEED_ID } from '@/lib/config'
+import { travelAgencySchema, jsonLdScript } from '@/lib/structuredData'
 import { SITE_NAME, SITE_TAGLINE, SITE_DESC, SITE_URL } from '@/lib/config'
 
 // Metadata & canonical homepage eksplisit — tidak inherit generik dari root layout.
@@ -76,6 +77,12 @@ export default async function Home(props: {
   return (
     <div className="bg-background text-foreground overflow-x-hidden">
       <SiteHeader />
+
+      {/* Structured data: entitas TravelAgency (MQH) — direferensikan halaman detail via @id */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(travelAgencySchema())}
+      />
 
       {/* HERO — Scroll Expansion: 1 Gambar Latar + 1 Video Mekkah */}
       <ScrollExpandMedia

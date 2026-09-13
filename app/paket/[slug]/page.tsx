@@ -6,6 +6,7 @@ import SiteHeader from '@/components/SiteHeader'
 import PhotoBlock from '@/components/PhotoBlock'
 import { formatRupiah, linkWhatsApp } from '@/lib/utils'
 import { SITE_NAME } from '@/lib/config'
+import { paketJsonLd, jsonLdScript } from '@/lib/structuredData'
 import { CheckCircle2, Clock, Hotel, Plane } from 'lucide-react'
 
 export const revalidate = 60
@@ -49,6 +50,12 @@ export default async function DetailPaket({
   return (
     <div className="bg-background text-foreground min-h-screen">
       <SiteHeader />
+
+      {/* Structured data: Product+TouristTrip dgn harga agregat dari jadwal aktif */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(paketJsonLd(paket, semuaJadwal))}
+      />
 
       <div className="pt-28 pb-16 px-5 md:px-20 max-w-[1280px] mx-auto">
         <p className="text-[12px] text-muted-foreground mb-4">
