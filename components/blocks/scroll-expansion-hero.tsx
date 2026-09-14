@@ -329,56 +329,62 @@ const ScrollExpandMedia = ({
                   )}
                 </div>
 
-                {/* === OVERLAY AFTER SCROLL — menempel kotak video ===
-                    Logo TOP, CTA CENTER, 4 pilar BOTTOM.
-                    Hidden before scroll (video masih kecil) — fade in via showContent. */}
-                {(logo || brandName) && (
-                  <motion.div
-                    className='absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5 pointer-events-none'
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: showContent ? 1 : 0 }}
-                    transition={{ duration: 0.7 }}
+                {/* === ONE AFTER-SCROLL CONTENT BLOCK ===
+                    Logo → brand → H1 → subtitle → CTA. Semua fade bersama.
+                    Pilar tetap terpisah di bottom-0. */}
+                <motion.div
+                  className='absolute z-20 top-[clamp(2rem,8vh,4rem)] left-1/2 -translate-x-1/2 flex w-[min(92vw,48rem)] flex-col items-center gap-2 text-center pointer-events-auto'
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: showContent ? 1 : 0 }}
+                  transition={{ duration: 0.7 }}
+                >
+                  {logo && (
+                    <Image
+                      src={logo.src}
+                      alt={logo.alt}
+                      width={(logo.width || 148) * 2}
+                      height={(logo.height || 66) * 2}
+                      className='h-28 md:h-32 w-auto object-contain'
+                      priority
+                    />
+                  )}
+                  {brandName && (
+                    <div className='text-white font-bold text-lg md:text-xl leading-tight'>
+                      {brandName}
+                    </div>
+                  )}
+                  <h1
+                    className={`flex w-full flex-col items-center justify-center text-center gap-1 transition-none ${
+                      textBlend ? 'mix-blend-difference' : 'mix-blend-normal'
+                    }`}
                   >
-                    {logo && (
-                      <Image
-                        src={logo.src}
-                        alt={logo.alt}
-                        width={(logo.width || 148) * 2}
-                        height={(logo.height || 66) * 2}
-                        className='h-28 md:h-32 w-auto object-contain'
-                        priority
-                      />
-                    )}
-                    {brandName && (
-                      <div className='text-white font-bold text-lg md:text-xl text-center leading-tight'>
-                        {brandName}
-                      </div>
-                    )}
-                  </motion.div>
-                )}
-
-                {(subtitle || cta) && (
-                  <motion.div
-                    className='absolute z-20 bottom-[clamp(9rem,21vh,14rem)] left-1/2 -translate-x-1/2 flex w-[min(90vw,42rem)] flex-col items-center gap-4 text-center pointer-events-auto'
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: showContent ? 1 : 0 }}
-                    transition={{ duration: 0.7 }}
-                  >
-                    {subtitle && (
-                      <p className='max-w-[min(90vw,42rem)] text-sm md:text-base leading-relaxed text-white/90 drop-shadow-md'>
-                        {subtitle}
-                      </p>
-                    )}
-                    {cta && (
-                      <a
-                        href={cta.href}
-                        className='inline-flex items-center justify-center rounded-full bg-[#E6B472] px-6 py-3 text-sm font-semibold text-[#111827] shadow-lg transition-transform hover:scale-105 hover:bg-[#D9A25C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E6B472] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
-                      >
-                        {cta.label}
-                      </a>
-                    )}
-                  </motion.div>
-                )}
+                    <motion.span
+                      className='text-4xl md:text-5xl lg:text-6xl font-bold text-blue-200 transition-none block'
+                      style={{ transform: `translateX(-${textTranslateX}vw)` }}
+                    >
+                      {firstWord}
+                    </motion.span>
+                    <motion.span
+                      className='text-4xl md:text-5xl lg:text-6xl font-bold text-center text-blue-200 transition-none block'
+                      style={{ transform: `translateX(${textTranslateX}vw)` }}
+                    >
+                      {restOfTitle}
+                    </motion.span>
+                  </h1>
+                  {subtitle && (
+                    <p className='max-w-[min(90vw,42rem)] text-sm md:text-base leading-relaxed text-white/90 drop-shadow-md'>
+                      {subtitle}
+                    </p>
+                  )}
+                  {cta && (
+                    <a
+                      href={cta.href}
+                      className='mt-1 inline-flex items-center justify-center rounded-full bg-[#E6B472] px-6 py-3 text-sm font-semibold text-[#111827] shadow-lg transition-transform hover:scale-105 hover:bg-[#D9A25C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E6B472] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
+                    >
+                      {cta.label}
+                    </a>
+                  )}
+                </motion.div>
 
                 {pillarsNode && (
                   <motion.div
@@ -390,27 +396,8 @@ const ScrollExpandMedia = ({
                     {pillarsNode}
                   </motion.div>
                 )}
+
               </div>
-
-              <h1
-                className={`flex items-center justify-center text-center gap-4 w-full relative z-10 transition-none flex-col ${
-                  textBlend ? 'mix-blend-difference' : 'mix-blend-normal'
-                }`}
-              >
-                <motion.span
-                  className='text-4xl md:text-5xl lg:text-6xl font-bold text-blue-200 transition-none block'
-                  style={{ transform: `translateX(-${textTranslateX}vw)` }}
-                >
-                  {firstWord}
-                </motion.span>
-                <motion.span
-                  className='text-4xl md:text-5xl lg:text-6xl font-bold text-center text-blue-200 transition-none block'
-                  style={{ transform: `translateX(${textTranslateX}vw)` }}
-                >
-                  {restOfTitle}
-                </motion.span>
-              </h1>
-
             </div>
           </div>
         </div>
