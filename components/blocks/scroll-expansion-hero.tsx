@@ -20,15 +20,14 @@ interface ScrollExpandMediaProps {
   date?: string;
   scrollToExpand?: string;
   textBlend?: boolean;
+  children?: ReactNode;
   // Logo overlay — selalu tampil (before & after scroll), center-top
   logo?: { src: string; alt: string; width?: number; height?: number };
   brandName?: string;
   // Overlay after-scroll — menempel kotak video (pilar bottom).
   // Node React dari caller (page.tsx), hanya tampil saat showContent.
-  pillarsNode?: ReactNode
-  subtitle?: string
-  cta?: { label: string; href: string }
-};
+  pillarsNode?: ReactNode;
+}
 
 const ScrollExpandMedia = ({
   mediaType = 'video',
@@ -39,11 +38,10 @@ const ScrollExpandMedia = ({
   date,
   scrollToExpand,
   textBlend,
+  children,
   logo,
   brandName,
   pillarsNode,
-  subtitle,
-  cta,
 }: ScrollExpandMediaProps) => {
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [showContent, setShowContent] = useState<boolean>(false);
@@ -357,28 +355,7 @@ const ScrollExpandMedia = ({
                   </motion.div>
                 )}
 
-                {(subtitle || cta) && (
-                  <motion.div
-                    className='absolute z-20 bottom-[clamp(9rem,21vh,14rem)] left-1/2 -translate-x-1/2 flex w-[min(90vw,42rem)] flex-col items-center gap-4 text-center pointer-events-auto'
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: showContent ? 1 : 0 }}
-                    transition={{ duration: 0.7 }}
-                  >
-                    {subtitle && (
-                      <p className='max-w-[min(90vw,42rem)] text-sm md:text-base leading-relaxed text-white/90 drop-shadow-md'>
-                        {subtitle}
-                      </p>
-                    )}
-                    {cta && (
-                      <a
-                        href={cta.href}
-                        className='inline-flex items-center justify-center rounded-full bg-[#E6B472] px-6 py-3 text-sm font-semibold text-[#111827] shadow-lg transition-transform hover:scale-105 hover:bg-[#D9A25C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E6B472] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
-                      >
-                        {cta.label}
-                      </a>
-                    )}
-                  </motion.div>
-                )}
+                {/* CTA node dihapus — hero tanpa tombol "Lihat Paket Umroh" */}
 
                 {pillarsNode && (
                   <motion.div
@@ -411,6 +388,18 @@ const ScrollExpandMedia = ({
                 </motion.span>
               </h1>
 
+
+              {/* Children (CTA) — tepat di bawah judul, masih dalam viewport hero */}
+              {children && (
+                <motion.div
+                  className='relative z-10 flex justify-center mt-6 transition-none'
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: showContent ? 1 : 0 }}
+                  transition={{ duration: 0.7 }}
+                >
+                  {children}
+                </motion.div>
+              )}
             </div>
           </div>
         </div>

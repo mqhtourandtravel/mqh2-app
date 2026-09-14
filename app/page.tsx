@@ -112,8 +112,6 @@ export default async function Home(props: {
         textBlend
         logo={{ src: '/logo.png', alt: 'MQH Tour & Travel', width: 148, height: 66 }}
         brandName="MQH Tour & Travel"
-        subtitle="Wujudkan perjalanan ibadah umroh & haji yang barokah dengan fasilitas premium dan pelayanan sepenuh hati."
-        cta={{ label: 'Pilih Paket Terbaik', href: '#paket' }}
         pillarsNode={
           <div className="relative overflow-hidden rounded-2xl md:rounded-3xl border border-white/15 bg-neutral-900/35 backdrop-blur-2xl backdrop-saturate-[1.8] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25),inset_0_-1px_0_0_rgba(255,255,255,0.04),0_12px_40px_-8px_rgba(0,0,0,0.5)] w-full flex flex-wrap justify-center gap-[clamp(0.75rem,2vw,2rem)] px-[clamp(0.75rem,2vw,1.5rem)] py-[clamp(1.125rem,3.75vh,2.25rem)]">
             {/* Ambient specular highlight like kafiyah navbar */}
