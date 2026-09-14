@@ -332,7 +332,7 @@ const ScrollExpandMedia = ({
                     Hidden before scroll (video masih kecil) — fade in via showContent. */}
                 {(logo || brandName) && (
                   <motion.div
-                    className='absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5 pointer-events-none'
+                    className='absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3 pointer-events-none'
                     initial={{ opacity: 0 }}
                     animate={{ opacity: showContent ? 1 : 0 }}
                     transition={{ duration: 0.7 }}
