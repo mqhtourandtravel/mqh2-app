@@ -329,6 +329,27 @@ const ScrollExpandMedia = ({
                   )}
                 </div>
 
+                {!showContent && (
+                  <h1
+                    className={`absolute z-20 left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center text-center gap-4 transition-none ${
+                      textBlend ? 'mix-blend-difference' : 'mix-blend-normal'
+                    }`}
+                  >
+                    <motion.span
+                      className='text-4xl md:text-5xl lg:text-6xl font-bold text-blue-200 transition-none block'
+                      style={{ transform: `translateX(-${textTranslateX}vw)` }}
+                    >
+                      {firstWord}
+                    </motion.span>
+                    <motion.span
+                      className='text-4xl md:text-5xl lg:text-6xl font-bold text-center text-blue-200 transition-none block'
+                      style={{ transform: `translateX(${textTranslateX}vw)` }}
+                    >
+                      {restOfTitle}
+                    </motion.span>
+                  </h1>
+                )}
+
                 {/* === ONE AFTER-SCROLL CONTENT BLOCK ===
                     Logo → brand → H1 → subtitle → CTA. Semua fade bersama.
                     Pilar tetap terpisah di bottom-0. */}
@@ -353,24 +374,26 @@ const ScrollExpandMedia = ({
                       {brandName}
                     </div>
                   )}
-                  <h1
-                    className={`flex w-full flex-col items-center justify-center text-center gap-1 transition-none ${
-                      textBlend ? 'mix-blend-difference' : 'mix-blend-normal'
-                    }`}
-                  >
-                    <motion.span
-                      className='text-4xl md:text-5xl lg:text-6xl font-bold text-blue-200 transition-none block'
-                      style={{ transform: `translateX(-${textTranslateX}vw)` }}
+                  {showContent && (
+                    <h1
+                      className={`flex w-full flex-col items-center justify-center text-center gap-1 transition-none ${
+                        textBlend ? 'mix-blend-difference' : 'mix-blend-normal'
+                      }`}
                     >
-                      {firstWord}
-                    </motion.span>
-                    <motion.span
-                      className='text-4xl md:text-5xl lg:text-6xl font-bold text-center text-blue-200 transition-none block'
-                      style={{ transform: `translateX(${textTranslateX}vw)` }}
-                    >
-                      {restOfTitle}
-                    </motion.span>
-                  </h1>
+                      <motion.span
+                        className='text-4xl md:text-5xl lg:text-6xl font-bold text-blue-200 transition-none block'
+                        style={{ transform: `translateX(-${textTranslateX}vw)` }}
+                      >
+                        {firstWord}
+                      </motion.span>
+                      <motion.span
+                        className='text-4xl md:text-5xl lg:text-6xl font-bold text-center text-blue-200 transition-none block'
+                        style={{ transform: `translateX(${textTranslateX}vw)` }}
+                      >
+                        {restOfTitle}
+                      </motion.span>
+                    </h1>
+                  )}
                   {subtitle && (
                     <p className='max-w-[min(90vw,42rem)] text-sm md:text-base leading-relaxed text-white/90 drop-shadow-md'>
                       {subtitle}
@@ -385,7 +408,6 @@ const ScrollExpandMedia = ({
                     </a>
                   )}
                 </motion.div>
-
                 {pillarsNode && (
                   <motion.div
                     className='absolute z-20 bottom-0 left-[0.5rem] right-[0.5rem] flex flex-wrap justify-center gap-[clamp(0.75rem,2vw,2rem)] pointer-events-auto'
