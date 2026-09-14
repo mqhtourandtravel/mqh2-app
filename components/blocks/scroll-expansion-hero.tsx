@@ -332,7 +332,7 @@ const ScrollExpandMedia = ({
                     Hidden before scroll (video masih kecil) — fade in via showContent. */}
                 {(logo || brandName) && (
                   <motion.div
-                    className='absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3 pointer-events-none'
+                    className='absolute z-20 top-[clamp(1rem,5vh,3rem)] left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 pointer-events-none'
                     initial={{ opacity: 0 }}
                     animate={{ opacity: showContent ? 1 : 0 }}
                     transition={{ duration: 0.7 }}
@@ -341,9 +341,9 @@ const ScrollExpandMedia = ({
                       <Image
                         src={logo.src}
                         alt={logo.alt}
-                        width={(logo.width || 148) * 2}
-                        height={(logo.height || 66) * 2}
-                        className='h-28 md:h-32 w-auto object-contain'
+                        width={logo.width || 148}
+                        height={logo.height || 66}
+                        className='h-14 md:h-16 w-auto object-contain'
                         priority
                       />
                     )}
